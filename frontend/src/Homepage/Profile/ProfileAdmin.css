@@ -1,0 +1,193 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&display=swap');
+
+.profil-bungkus {
+  display: flex;
+  padding: 3%;
+  width: 70%;
+  margin-top: 1%;
+  margin-left: 16%;
+  margin-bottom: 3%;
+  align-items: center;
+  border-radius: 0.5rem;
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-width: 2px 2px 2px 2px;
+}
+
+.profil-img {
+  text-align: center;
+}
+
+.profil-img img {
+  width: 80%;
+  margin-left: -50%;
+  height: 100%;
+  border-radius: 5%;
+}
+
+.profil-img .file {
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  margin-top: -22%;
+  width: 80%;
+  margin-left: -15%;
+  border: none;
+  border-radius: 5%;
+  font-size: 15px;
+  background: #212529b8;
+}
+
+.profil-title h5 {
+  display: flex;
+  font-family: 'Poppins', sans-serif;
+  color: #000000;
+  margin-top: 5%;
+  margin-left: -10%;
+}
+
+.profil-title h6 {
+  display: flex;
+  font-family: 'Poppins', sans-serif;
+  color: #000000;
+  margin-top: 5%;
+  margin-left: -10%;
+}
+
+.profil-title p {
+  color: #000000;
+  font-family: 'Poppins', sans-serif;
+  margin-top: 5%;
+  margin-left: -10%;
+}
+
+.profil-edit-btn {
+  border: none;
+  border-radius: 1.5rem;
+  width: 150%;
+  margin-left: -40%;
+  padding: 2%;
+  font-weight: 600;
+  color: #6c757d;
+  cursor: pointer;
+}
+
+.profil-email {
+  font-size: 12px;
+  color: #818182;
+  margin-top: 5%;
+}
+
+.profil-title .nav-tabs {
+  margin-bottom: 5%;
+}
+
+.nav-tabs {
+  border: 1px solid rgb(209, 209, 209);
+  width: 30rem;
+  margin-left:-81%;
+}
+
+.profil-teks label {
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  color: #000000;
+  margin-left: -15%;
+}
+
+.profil-teks p {
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  font-size: 85%;
+  width: 130%;
+  color: #2a3042;
+  margin-left: -40%;
+}
+
+@media only screen and (max-width: 600px) {
+  .profil-bungkus {
+    display: flex;
+    padding: 3%;
+    width: 65%;
+    right: 20%;
+    margin-top: 1%;
+    margin-bottom: 3%;
+    align-items: center;
+    border-radius: 0.5rem;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-width: 1px 0 1px 0;
+  }
+
+  .profil-img img {
+    width: 100%;
+    margin-left: -23%;
+    height: 100%;
+    border-radius: 5%;
+  }
+
+  .profil-title h5 {
+    display: flex;
+    font-size: 80%;
+    font-family: 'Poppins', sans-serif;
+    color: #000000;
+    margin-top: 5%;
+    margin-left: -10%;
+  }
+  
+  .profil-title h6 {
+    display: flex;
+    font-size: 80%;
+    font-family: 'Poppins', sans-serif;
+    color: #000000;
+    margin-top: 4%;
+    margin-left: -10%;
+  }
+  
+  .profil-title p {
+    color: #000000;
+    font-size: 70%;
+    font-family: 'Poppins', sans-serif;
+    margin-top: 4%;
+    margin-left: -10%;
+  }
+
+  .nav-tabs {
+    border: 1px solid rgb(209, 209, 209);
+    width: 105%;
+    margin-top: -35%;
+    margin-left: -10%;
+  }
+
+  .profil-edit-btn {
+    border: none;
+    border-radius: 1.5rem;
+    width: 105%;
+    margin-left: -10%;
+    font-size: 80%;
+    padding: 2%;
+    font-weight: 600;
+    color: #6c757d;
+    cursor: pointer;
+  }
+
+  .profil-teks label {
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    font-size: 70%;
+    margin-top: 10%;
+    color: #000000;
+    margin-left: -10%;
+  }
+  
+  .profil-teks p {
+    position: relative;
+    font-weight: 400;
+    font-family: 'Poppins', sans-serif;
+    font-size: 60%;
+    width:fit-content;
+    color: #2a3042;
+    margin-left: -10%;
+    word-break: break-word;
+  }
+}

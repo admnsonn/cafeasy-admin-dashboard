@@ -1,0 +1,182 @@
+.sidebar {
+  width: 285px;
+  height: 110%;
+  border-radius: 5%;
+  position: fixed;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  background-color: #1f2937;
+  margin-left: -1%;
+  padding: 0px 30px;
+}
+
+.sidebar-top {
+  width: 100%;
+  height: 90px;
+  line-height: 70px;
+}
+
+.sidebar-toggle {
+  width: 90%;
+  height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sidebar-bg {
+  background-color: #1a1a27;
+  border-radius: 8%;
+  position: absolute;
+  left: 0%;
+  top: -3px;
+}
+
+.sidebar-content {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: calc(100% - 5%);
+  margin-top: 100px;
+}
+
+.sidebar-list {
+  display: flex;
+  row-gap: 1.5rem;
+  flex-direction: column;
+}
+
+.sidebar-active {
+  display: flex;
+  justify-content: start;
+  background-color: #252525;
+  padding: 0 15px;
+  align-items: center;
+  list-style: none;
+  height: 60px;
+}
+
+.sidebar-text {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  padding: 8px 0px 8px -10px;
+  list-style: none;
+  height: 30px;
+}
+
+.sidebar-text a {
+  text-decoration: none;
+  color: #f5f5f5;
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+  width: 95%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0px -20px;
+  border-radius: 5px;
+}
+
+.sidebar-text a:hover {
+  height: 40px;
+}
+
+.sidebar-bottom {
+  height: 30%;
+}
+
+.sidebar-link,
+.sidebar-bottom span {
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.sidebar-bottom span {
+  color: white;
+  font-size: 15px;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+  margin-left: 15%;
+}
+
+@media only screen and (max-width: 600px) {
+  .sidebar {
+    width: 80px;
+  }
+
+  .sidebar-text a {
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .sidebar-active {
+    background-color: #1f2937;
+  }
+
+  .sidebar-bottom span {
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .icon-logout {
+    position: absolute;
+    top: 85%;
+    right: 30px;
+  }
+
+  .icon-profil {
+    position: absolute;
+    top: 19%;
+    right: 30px;
+  }
+
+  .icon-menu {
+    position: absolute;
+    top: 27%;
+    right: 30px;
+  }
+
+  .icon-transaksi {
+    position: absolute;
+    top: 35%;
+    right: 30px;
+  }
+
+  .icon-pelanggan {
+    position: absolute;
+    top: 43%;
+    right: 30px;
+  }
+
+  .icon-kategori {
+    position: absolute;
+    top: 52%;
+    right: 30px;
+  }
+
+  .icon-banner {
+    position: absolute;
+    top: 61%;
+    right: 30px;
+  }
+
+  .sidebar-toggle {
+    width: 266%;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.main__layout {
+  margin-left: 10px;
+}
