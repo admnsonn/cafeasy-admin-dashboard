@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 import Iconline1 from "../Photos/Iconline1.png";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { addAdmin, isUsernameTaken } from "../Utils/localAuth";
 
 const USER_DEFAULT = {
   username: "",
@@ -20,38 +20,43 @@ const Signupcomp = () => {
   const [user, setUser] = useState(USER_DEFAULT);
   const Navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    if (user.username.trim() === "") {
-      // Input is empty
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (user.username.trim() === "" || user.password.trim() === "") {
       Swal.fire({
         icon: "error",
         title: "Register Gagal!",
-        text: "Nama Pengguna atau Sandi tidak cocok!!!",
+        text: "Nama Pengguna dan kata sandi tidak boleh kosong!",
       });
-
       return;
     }
-    const formData = new FormData();
-    formData.append("username", user.username);
-    formData.append("emailCafe", user.emailCafe);
-    formData.append("password", user.password);
-    formData.append("namaCafe", user.namaCafe);
-    formData.append("alamatCafe", user.alamatCafe);
-    formData.append("deskripsiCafe", user.deskripsiCafe);
-    formData.append("namaPemilikCafe", user.namaPemilikCafe);
-    formData.append("noHpCafe", user.noHpCafe);
-    formData.append("image", user.image);
 
-    e.preventDefault();
-    await axios
-      .post(`${process.env.REACT_APP_API_URL}/registerAdmin`, formData)
-      .then((res) => {
-        Swal.fire("Daftar Berhasil!", "Kamu Berhasil Daftar!", "success");
-        Navigate("/LoginAdmin");
-        console.log(res.formData);
-        setUser(USER_DEFAULT);
-      })
-      .catch((err) => {});
+    if (isUsernameTaken(user.username)) {
+      Swal.fire({
+        icon: "error",
+        title: "Register Gagal!",
+        text: "Nama pengguna sudah terdaftar.",
+      });
+      return;
+    }
+
+    const newAdmin = addAdmin({
+      username: user.username,
+      password: user.password,
+      emailCafe: user.emailCafe,
+      namaCafe: user.namaCafe,
+      alamatCafe: user.alamatCafe,
+      deskripsiCafe: user.deskripsiCafe,
+      namaPemilikCafe: user.namaPemilikCafe,
+      noHpCafe: user.noHpCafe,
+      imageUrl: "/avatar.png",
+    });
+
+    if (newAdmin) {
+      Swal.fire("Daftar Berhasil!", "Kamu Berhasil Daftar!", "success");
+      Navigate("/LoginAdmin");
+      setUser(USER_DEFAULT);
+    }
   };
 
   return (

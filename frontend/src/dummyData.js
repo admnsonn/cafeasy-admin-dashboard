@@ -17,9 +17,9 @@ const dummy = {
   ],
   admins: {
     result: [
-      { idAdmin: 1, username: 'admin', namaPemilikCafe: 'Pemilik', namaCafe: 'CafeEasy', emailCafe: 'admin@cafe.com', alamatCafe: 'Jl. Contoh', deskripsiCafe: 'Cafe nyaman', noHpCafe: '081234567' , imageUrl: '/avatar.png'}
+      { idAdmin: 1, username: 'admin', password: 'admin123', namaPemilikCafe: 'Pemilik', namaCafe: 'CafeEasy', emailCafe: 'admin@cafe.com', alamatCafe: 'Jl. Contoh', deskripsiCafe: 'Cafe nyaman', noHpCafe: '081234567' , imageUrl: '/avatar.png'}
     ]
   }
 };
 
-module.exports = dummy;
+export default dummy;

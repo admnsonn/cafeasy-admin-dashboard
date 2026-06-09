@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Iconline from "../Photos/Iconline.png";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import Cookies from "universal-cookie";
-import jwt_decode from "jwt-decode";
+import { findAdmin } from "../Utils/localAuth";
 import "../Utils/Sign.css";
 // const jwt = require('jsonwebtoken');
 // import { Link } from 'react-router-dom';
@@ -19,43 +18,46 @@ function Logincomp() {
   const nextNavigate = useNavigate();
 
   useEffect(() => {
-    if (cookies.get("secretLogToken")) {
-      var secretLogToken = cookies.get("secretLogToken");
-      var decoded = jwt_decode(secretLogToken);
-      var decodedIdAdmin = decoded.idAdmin;
-      nextNavigate("/ProfileAdmin/" + decodedIdAdmin);
+    const token = cookies.get("secretLogToken");
+    if (token) {
+      try {
+        const decoded = JSON.parse(token);
+        const decodedIdAdmin = decoded.idAdmin;
+        nextNavigate("/ProfileAdmin/" + decodedIdAdmin);
+      } catch (err) {
+        cookies.remove("secretLogToken");
+      }
     }
-  });
+  }, []);
 
   const submitLogin = async (e) => {
-    if ((username != "") & (password != "")) {
-      e.preventDefault();
-      var login = await axios.post(process.env.REACT_APP_API_URL + "/login", {
-        username: username.toString(),
-        password: password.toString(),
+    e.preventDefault();
+    if (username.trim() === "" || password.trim() === "") {
+      Swal.fire({
+        icon: "error",
+        title: "Login Gagal!",
+        text: "Nama Pengguna atau Sandi tidak boleh kosong!",
       });
-      if (!cookies.get("secretLogToken")) {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Login Berhasil!',
-          showConfirmButton: false,
-          timer: 1500
-        })
-        if (login.data.message == "sukses") {
-          cookies.set("secretLogToken", login.data.secretLogToken);
-          var idAdminToken = cookies.get("secretLogToken");
-          var decoded = jwt_decode(idAdminToken);
-          var decodedIdAdmin = decoded.idAdmin;
-          nextNavigate("/ProfileAdmin/" + decodedIdAdmin);
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Login Gagal!",
-            text: "Nama Pengguna atau Sandi salah!!!",
-          });
-        }
-      }
+      return;
+    }
+
+    const account = findAdmin(username, password);
+    if (account) {
+      cookies.set("secretLogToken", JSON.stringify({ idAdmin: account.idAdmin }));
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Login Berhasil!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      nextNavigate("/ProfileAdmin/" + account.idAdmin);
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Login Gagal!",
+        text: "Nama Pengguna atau Sandi salah!!!",
+      });
     }
   };
 

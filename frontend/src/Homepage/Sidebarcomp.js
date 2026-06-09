@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "../Homepage/Sidebarpage.css";
-import axios from "axios";
 import * as ImIcons from "react-icons/im";
 import * as MdIcons from "react-icons/md";
 import * as AiIcons from "react-icons/ai";
@@ -12,7 +11,6 @@ import logodannama from "../Photos/logodannama.png";
 import "../Photos/logodannama.png";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
-import jwt_decode from "jwt-decode";
 
 function Sidebarcomp() {
   const cookies = new Cookies();
@@ -20,15 +18,27 @@ function Sidebarcomp() {
   const [isExpanded, setExpendState] = useState(false);
 
   useEffect(() => {
-    if (!cookies.get("secretLogToken")) {
+    const token = cookies.get("secretLogToken");
+    if (!token) {
       nextNavigate("/LoginAdmin");
-      return () => { };
+      return;
+    }
+
+    try {
+      JSON.parse(token);
+    } catch (err) {
+      cookies.remove("secretLogToken");
+      nextNavigate("/LoginAdmin");
     }
   }, []);
 
-  var secretLogToken = cookies.get("secretLogToken");
-  var decoded = jwt_decode(secretLogToken);
-  var decodedIdAdmin = decoded.idAdmin;
+  const tokenValue = cookies.get("secretLogToken");
+  let decodedIdAdmin = null;
+  try {
+    decodedIdAdmin = JSON.parse(tokenValue).idAdmin;
+  } catch (err) {
+    decodedIdAdmin = null;
+  }
 
  
 

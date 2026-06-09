@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useParams } from "react-router-dom";
+import { getAdminById } from "../Utils/localAuth";
 import "../Homepage/Topnav.css";
 
 const TopNav = () => {
@@ -9,12 +9,11 @@ const TopNav = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/profile/` + urlParams)
-      .then((res) => setData(res.data.data));
-  }, [data]);
+    const admin = getAdminById(urlParams);
+    setData(admin ? [admin] : []);
+  }, [urlParams]);
 
-  let arr = data.result ?? [];
+  let arr = data ?? [];
 
 
   return (

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import Swal from "sweetalert2";
-import { Link, useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { getAdminById, updateAdmin } from "../Utils/localAuth";
 
 const USER_UPDATE = {
   username: "",
@@ -19,21 +18,33 @@ const USER_UPDATE = {
 function Update() {
   const params = useParams();
   const urlParams = params.idAdmin;
-  const [Update, setUpdate] = useState(USER_UPDATE);
+  const [updateUser, setUpdateUser] = useState(USER_UPDATE);
   const Navigate = useNavigate();
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/profile/` + urlParams)
-      .then((res) => setData(res.data.data));
-  }, [data]);
+    const admin = getAdminById(urlParams);
+    if (admin) {
+      setData([admin]);
+      setUpdateUser({
+        username: admin.username || "",
+        emailCafe: admin.emailCafe || "",
+        password: admin.password || "",
+        namaCafe: admin.namaCafe || "",
+        alamatCafe: admin.alamatCafe || "",
+        deskripsiCafe: admin.deskripsiCafe || "",
+        namaPemilikCafe: admin.namaPemilikCafe || "",
+        noHpCafe: admin.noHpCafe || "",
+        image: admin.imageUrl || "",
+      });
+    }
+  }, [urlParams]);
 
-  let arr = data.result ?? [];
-  console.log(arr[0]);
+  let arr = data ?? [];
 
-  const handleSubmit = async (e) => {
-    if (Update.username.trim() === "") {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (updateUser.username.trim() === "") {
       Swal.fire({
         icon: "error",
         title: "Update Gagal!",
@@ -42,42 +53,35 @@ function Update() {
       return;
     }
 
-    const formData = new FormData();
-    formData.append("username", Update.username);
-    formData.append("emailCafe", Update.emailCafe);
-    formData.append("password", Update.password);
-    formData.append("namaCafe", Update.namaCafe);
-    formData.append("alamatCafe", Update.alamatCafe);
-    formData.append("deskripsiCafe", Update.deskripsiCafe);
-    formData.append("namaPemilikCafe", Update.namaPemilikCafe);
-    formData.append("noHpCafe", Update.noHpCafe);
-    formData.append("image", Update.image);
+    const updated = updateAdmin(urlParams, {
+      username: updateUser.username,
+      emailCafe: updateUser.emailCafe,
+      password: updateUser.password,
+      namaCafe: updateUser.namaCafe,
+      alamatCafe: updateUser.alamatCafe,
+      deskripsiCafe: updateUser.deskripsiCafe,
+      namaPemilikCafe: updateUser.namaPemilikCafe,
+      noHpCafe: updateUser.noHpCafe,
+      imageUrl: updateUser.image || arr[0]?.imageUrl || "/avatar.png",
+    });
 
-    e.preventDefault();
-    await axios
-      .put(
-        `${process.env.REACT_APP_API_URL}/updateProfile/` + urlParams,
-        formData
-      )
-      .then((res) => {
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Update Berhasil!",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        Navigate("/ProfileAdmin/" + urlParams);
-        console.log(res.formData);
-        setUpdate(USER_UPDATE);
-      })
-      .catch((err) => {
-        Swal.fire({
-          icon: "error",
-          title: "Update Gagal!",
-          text: "Nama Pengguna atau Sandi salah!!!",
-        });
+    if (updated) {
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Update Berhasil!",
+        showConfirmButton: false,
+        timer: 1500,
       });
+      Navigate("/ProfileAdmin/" + urlParams);
+      setUpdateUser(USER_UPDATE);
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Update Gagal!",
+        text: "Data tidak dapat diperbarui.",
+      });
+    }
   };
 
   return (
@@ -90,9 +94,9 @@ function Update() {
             <div className="col-sm">
               <label>Email</label>
               <input
-                defaultValue={Update.emailCafe}
+                value={updateUser.emailCafe}
                 onChange={(e) =>
-                  setUpdate((data) => ({
+                  setUpdateUser((data) => ({
                     ...data,
                     emailCafe: e.target.value,
                   }))
@@ -107,9 +111,9 @@ function Update() {
             <div className="col-sm">
               <label>Nama Pengguna</label>
               <input
-                defaultValue={Update.username}
+                value={updateUser.username}
                 onChange={(e) =>
-                  setUpdate((data) => ({ ...data, username: e.target.value }))
+                  setUpdateUser((data) => ({ ...data, username: e.target.value }))
                 }
                 type="text"
                 className="form-control mt-1"
@@ -125,22 +129,22 @@ function Update() {
             <div className="col-sm">
               <label>Sandi</label>
               <input
-                defaultValue={Update.password}
+                value={updateUser.password}
                 onChange={(e) =>
-                  setUpdate((data) => ({ ...data, password: e.target.value }))
+                  setUpdateUser((data) => ({ ...data, password: e.target.value }))
                 }
                 type="password"
                 className="form-control mt-1"
-                placeholder={arr[0]?.emailCafe}
+                placeholder="Masukan Sandi baru"
                 required
               />
             </div>
             <div className="col-sm">
               <label>Nama Cafe</label>
               <input
-                defaultValue={Update.namaCafe}
+                value={updateUser.namaCafe}
                 onChange={(e) =>
-                  setUpdate((data) => ({ ...data, namaCafe: e.target.value }))
+                  setUpdateUser((data) => ({ ...data, namaCafe: e.target.value }))
                 }
                 type="text"
                 className="form-control mt-1"
@@ -153,9 +157,9 @@ function Update() {
           <div class="form-group mt-3">
             <label>Alamat Cafe</label>
             <textarea
-              defaultValue={Update.alamatCafe}
+              value={updateUser.alamatCafe}
               onChange={(e) =>
-                setUpdate((data) => ({ ...data, alamatCafe: e.target.value }))
+                setUpdateUser((data) => ({ ...data, alamatCafe: e.target.value }))
               }
               type="text"
               className="form-control mt-1"
@@ -166,9 +170,9 @@ function Update() {
           <div class="form-group mt-3">
             <label>Deskripsi Cafe</label>
             <textarea
-              defaultValue={Update.deskripsiCafe}
+              value={updateUser.deskripsiCafe}
               onChange={(e) =>
-                setUpdate((data) => ({
+                setUpdateUser((data) => ({
                   ...data,
                   deskripsiCafe: e.target.value,
                 }))
@@ -184,9 +188,9 @@ function Update() {
             <div className="col-sm">
               <label>Nama Pemilik Cafe</label>
               <input
-                defaultValue={Update.namaPemilikCafe}
+                value={updateUser.namaPemilikCafe}
                 onChange={(e) =>
-                  setUpdate((data) => ({
+                  setUpdateUser((data) => ({
                     ...data,
                     namaPemilikCafe: e.target.value,
                   }))
@@ -200,9 +204,9 @@ function Update() {
             <div className="col-sm">
               <label>No Telepon</label>
               <input
-                value={Update.noHpCafe}
+                value={updateUser.noHpCafe}
                 onChange={(e) =>
-                  setUpdate((data) => ({
+                  setUpdateUser((data) => ({
                     ...data,
                     noHpCafe: e.target.value,
                   }))
@@ -220,14 +224,13 @@ function Update() {
             <label>Foto Cafe</label>
             <input
               onChange={(e) =>
-                setUpdate((data) => ({
+                setUpdateUser((data) => ({
                   ...data,
                   image: e.target.files[0],
                 }))
               }
               type="file"
               className="form-control mt-1"
-              required
             />
           </div>
 
