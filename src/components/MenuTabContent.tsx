@@ -217,7 +217,7 @@ export function MenuTabContent({ menuItems, setMenuItems, globalSearchQuery }: M
       
       {/* Title block */}
       <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-black font-display text-white tracking-widest uppercase">
+        <h2 className="text-3xl font-black font-display text-black tracking-widest uppercase">
           DATATABLE MENU.
         </h2>
       </div>

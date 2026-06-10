@@ -3,9 +3,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
-import { Search, Mail, Bell, Shield, ChevronDown, User, LogOut } from 'lucide-react';
-import { AdminProfile } from '../types';
+import React, { useState } from "react";
+import {
+  Search,
+  Mail,
+  Bell,
+  Shield,
+  ChevronDown,
+  User,
+  LogOut,
+} from "lucide-react";
+import { AdminProfile } from "../types";
 
 interface NavbarProps {
   profile: AdminProfile;
@@ -15,11 +23,17 @@ interface NavbarProps {
   onGoToProfile: () => void;
 }
 
-export function Navbar({ profile, searchQuery, onSearchChange, onLogout, onGoToProfile }: NavbarProps) {
+export function Navbar({
+  profile,
+  searchQuery,
+  onSearchChange,
+  onLogout,
+  onGoToProfile,
+}: NavbarProps) {
   const [showDropdown, setShowDropdown] = useState(false);
 
   return (
-    <header className="bg-[#0A0A0A] border-b border-white/10 h-20 px-8 flex items-center justify-between sticky top-0 z-40 select-none font-sans text-white">
+    <header className="border-b border-white/10 h-20 px-8 flex items-center justify-between sticky top-0 z-40 select-none font-sans text-white">
       {/* Search Input Bar */}
       <div className="relative w-96">
         <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 w-4 h-4 pointer-events-none" />
@@ -28,7 +42,7 @@ export function Navbar({ profile, searchQuery, onSearchChange, onLogout, onGoToP
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
           placeholder="CARI DATA SISTEM..."
-          className="w-full bg-[#121212] text-white placeholder-zinc-650 border border-white/10 rounded-full py-2 pl-11 pr-4 text-xs font-bold tracking-wider focus:outline-none focus:ring-1 focus:ring-white/20 transition-all outline-none"
+          className="w-full bg-[#FFFFFF] text-[#333333] placeholder:text-zinc-650 border border-white/10 rounded-full py-2 pl-11 pr-4 text-xs font-bold tracking-wider focus:outline-none focus:ring-1 focus:ring-white/20 transition-all outline-none"
         />
       </div>
 
@@ -51,18 +65,21 @@ export function Navbar({ profile, searchQuery, onSearchChange, onLogout, onGoToP
 
         {/* Profile Card Section */}
         <div className="relative font-sans">
-          <button 
+          <button
             onClick={() => setShowDropdown(!showDropdown)}
             className="flex items-center gap-3.5 hover:bg-white/5 p-1 px-2.5 rounded-xl transition-all cursor-pointer text-left focus:outline-none"
           >
             <img
-              src={profile.avatarUrl || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150&auto=format&fit=crop"}
+              src={
+                profile.avatarUrl ||
+                "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150&auto=format&fit=crop"
+              }
               alt="Avatar Admin"
               referrerPolicy="no-referrer"
               className="w-9 h-9 rounded-full object-cover border border-white/15"
             />
             <div className="hidden md:block">
-              <h4 className="text-xs font-black text-white leading-tight uppercase tracking-wider">
+              <h4 className="text-xs font-bold text-[#333333] leading-tight uppercase tracking-wider">
                 {profile.firstName} {profile.lastName}
               </h4>
               <p className="text-[9px] text-zinc-500 font-mono tracking-widest uppercase leading-tight font-bold">
@@ -75,13 +92,16 @@ export function Navbar({ profile, searchQuery, onSearchChange, onLogout, onGoToP
           {/* Popover actions */}
           {showDropdown && (
             <>
-              <div 
-                className="fixed inset-0 z-30" 
+              <div
+                className="fixed inset-0 z-30"
                 onClick={() => setShowDropdown(false)}
               />
               <div className="absolute right-0 mt-2 w-52 bg-[#0F0F0F] rounded-xl shadow-2xl py-2 z-40 border border-white/10 divide-y divide-white/5 animate-in fade-in slide-in-from-top-2 duration-150">
                 <div className="px-4 py-2.5 text-[10px] font-mono text-zinc-500 tracking-wider">
-                  ID: <span className="font-bold text-white uppercase">{profile.adminId}</span>
+                  ID:{" "}
+                  <span className="font-bold text-white uppercase">
+                    {profile.adminId}
+                  </span>
                 </div>
                 <div className="py-1">
                   <button
