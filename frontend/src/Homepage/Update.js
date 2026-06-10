@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
-import { Link, useParams, useNavigate } from "react-router-dom";
-import { getAdminById, updateAdmin } from "../Utils/localAuth";
+import { Link, useNavigate } from "react-router-dom";
+import Cookies from "universal-cookie";
+import { getAdminByUsername, updateAdminByUsername } from "../Utils/localAuth";
 
 const USER_UPDATE = {
   username: "",
@@ -16,14 +17,30 @@ const USER_UPDATE = {
 };
 
 function Update() {
-  const params = useParams();
-  const urlParams = params.idAdmin;
   const [updateUser, setUpdateUser] = useState(USER_UPDATE);
   const Navigate = useNavigate();
+  const cookies = new Cookies();
   const [data, setData] = useState([]);
 
+  const getCurrentUsername = () => {
+    const token = cookies.get("secretLogToken");
+    if (!token) return null;
+    try {
+      return JSON.parse(token).username || null;
+    } catch (err) {
+      cookies.remove("secretLogToken");
+      return null;
+    }
+  };
+
   useEffect(() => {
-    const admin = getAdminById(urlParams);
+    const currentUsername = getCurrentUsername();
+    if (!currentUsername) {
+      Navigate("/LoginAdmin", { replace: true });
+      return;
+    }
+
+    const admin = getAdminByUsername(currentUsername);
     if (admin) {
       setData([admin]);
       setUpdateUser({
@@ -37,8 +54,11 @@ function Update() {
         noHpCafe: admin.noHpCafe || "",
         image: admin.imageUrl || "",
       });
+    } else {
+      cookies.remove("secretLogToken");
+      Navigate("/LoginAdmin", { replace: true });
     }
-  }, [urlParams]);
+  }, [Navigate]);
 
   let arr = data ?? [];
 
@@ -53,7 +73,14 @@ function Update() {
       return;
     }
 
-    const updated = updateAdmin(urlParams, {
+    const currentUsername = getCurrentUsername();
+    if (!currentUsername) {
+      cookies.remove("secretLogToken");
+      Navigate("/LoginAdmin", { replace: true });
+      return;
+    }
+
+    const updated = updateAdminByUsername(currentUsername, {
       username: updateUser.username,
       emailCafe: updateUser.emailCafe,
       password: updateUser.password,
@@ -66,6 +93,7 @@ function Update() {
     });
 
     if (updated) {
+      cookies.set("secretLogToken", JSON.stringify({ username: updated.username }));
       Swal.fire({
         position: "top-end",
         icon: "success",
@@ -73,7 +101,7 @@ function Update() {
         showConfirmButton: false,
         timer: 1500,
       });
-      Navigate("/ProfileAdmin/" + urlParams);
+      Navigate("/ProfileAdmin");
       setUpdateUser(USER_UPDATE);
     } else {
       Swal.fire({
@@ -249,7 +277,7 @@ function Update() {
               <Link
                 type="button"
                 className="text-decoration-none btn btn-secondary"
-                to={"/ProfileAdmin/" + urlParams}
+                to="/ProfileAdmin"
               >
                 Batal
               </Link>

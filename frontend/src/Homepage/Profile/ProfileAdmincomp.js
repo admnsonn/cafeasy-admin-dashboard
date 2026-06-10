@@ -1,22 +1,42 @@
-import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-import { getAdminById } from "../../Utils/localAuth";
+import { useState, useEffect, useMemo } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { getAdminByUsername } from "../../Utils/localAuth";
+import Cookies from "universal-cookie";
 import "../../Utils/Crud.css";
 import "../Profile/ProfileAdmin.css";
 
 const ProfileAdmincomp = () => {
-  const params = useParams();
-  const urlParams = params.idAdmin;
+  const cookies = useMemo(() => new Cookies(), []);
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    const admin = getAdminById(urlParams);
-    setData(admin ? [admin] : []);
-  }, [urlParams]);
+    const token = cookies.get("secretLogToken");
+    let username = null;
 
-  let arr = data ?? [];
-  console.log(urlParams);
-  console.log(arr[0]);
+    if (token) {
+      try {
+        username = JSON.parse(token).username;
+      } catch (err) {
+        cookies.remove("secretLogToken");
+      }
+    }
+
+    if (!username) {
+      navigate("/LoginAdmin", { replace: true });
+      return;
+    }
+
+    const admin = getAdminByUsername(username);
+    if (admin) {
+      setData([admin]);
+    } else {
+      cookies.remove("secretLogToken");
+      navigate("/LoginAdmin", { replace: true });
+    }
+  }, [navigate]);
+
+  const arr = data ?? [];
 
   return (
     <div className="container">
@@ -24,10 +44,7 @@ const ProfileAdmincomp = () => {
         <br></br>
         <div className="row">
           <div className="col-md-3">
-            <div className="title-profile-pertama">
-              {" "}
-              DATATABLE PROFIL ADMIN{" "}
-            </div>
+            <div className="title-profile-pertama"> DATATABLE PROFIL ADMIN </div>
           </div>
           <div className="col-sm-4">
             <div className="title-profile-kedua"> Admin / </div>
@@ -37,85 +54,69 @@ const ProfileAdmincomp = () => {
           </div>
         </div>
         <div className="datatable-crud-demo">
-          <div class="container profil-bungkus">
+          <div className="container profil-bungkus">
             <form method="post">
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="profil-img">
-                    <img src={arr[0]?.imageUrl} alt="" />
+              <div className="row">
+                <div className="col-md-4">
+                  <div className="profil-img">
+                    <img src={arr[0]?.imageUrl} alt="Profil" />
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <div class="profil-title">
+                <div className="col-md-6">
+                  <div className="profil-title">
                     <h5>{arr[0]?.namaPemilikCafe}</h5>
                     <h6>{arr[0]?.namaCafe}</h6>
-                    <p class="profil-email">{arr[0]?.emailCafe}</p>
+                    <p className="profil-email">{arr[0]?.emailCafe}</p>
                     <br></br> <br></br> <br></br>
-                    <ul class="nav nav-tabs" id="myTab" role="tablist"></ul>
+                    <ul className="nav nav-tabs" id="myTab" role="tablist"></ul>
                   </div>
                 </div>
-                <div class="col-md-2">
+                <div className="col-md-2">
                   <Link
                     className="text-decoration-none btn btn-sm btn-primary"
-                    to={`/Update/${arr[0]?.idAdmin}`}>
+                    to="/Update">
                     Perbaharui
                   </Link>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-8">
-                  <div class="tab-content profil-teks" id="myTabContent">
+              <div className="row">
+                <div className="col-md-8">
+                  <div className="tab-content profil-teks" id="myTabContent">
                     <div
-                      class="tab-pane fade show active"
+                      className="tab-pane fade show active"
                       id="home"
                       role="tabpanel"
                       aria-labelledby="home-tab"
                     >
-                      <div class="row">
-                        <div class="col-md-6">
-                          <label>ID Admin</label>
-                        </div>
-                        <div class="col-md-6">
-                          <p>{arr[0]?.idAdmin}</p>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6">
+                      <div className="row">
+                        <div className="col-md-6">
                           <label>Username</label>
                         </div>
-                        <div class="col-md-6">
+                        <div className="col-md-6">
                           <p>{arr[0]?.username}</p>
                         </div>
                       </div>
-                      {/* <div class="row">
-                        <div class="col-md-6">
-                          <label>Password</label>
-                        </div>
-                        <div class="col-md-6">
-                          <p>{arr[0]?.password}</p>
-                        </div>
-                      </div> */}
-                      <div class="row">
-                        <div class="col-md-6">
+                      <div className="row">
+                        <div className="col-md-6">
                           <label>Alamat Cafe</label>
                         </div>
-                        <div class="col-md-6">
+                        <div className="col-md-6">
                           <p>{arr[0]?.alamatCafe}</p>
                         </div>
                       </div>
-                      <div class="row">
-                        <div class="col-md-6">
+                      <div className="row">
+                        <div className="col-md-6">
                           <label>Deskripsi Cafe</label>
                         </div>
-                        <div class="col-md-6">
+                        <div className="col-md-6">
                           <p>{arr[0]?.deskripsiCafe}</p>
                         </div>
                       </div>
-                      <div class="row">
-                        <div class="col-md-6">
+                      <div className="row">
+                        <div className="col-md-6">
                           <label>Nomor Telepon</label>
                         </div>
-                        <div class="col-md-6">
+                        <div className="col-md-6">
                           <p>{arr[0]?.noHpCafe}</p>
                         </div>
                       </div>

@@ -1,17 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { getAdminById } from "../Utils/localAuth";
+import Cookies from "universal-cookie";
+import { getAdminByUsername } from "../Utils/localAuth";
 import "../Homepage/Topnav.css";
 
 const TopNav = () => {
-  const params = useParams();
-  const urlParams = params.idAdmin;
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    const admin = getAdminById(urlParams);
+    const cookies = new Cookies();
+    const token = cookies.get("secretLogToken");
+    let username = null;
+
+    if (token) {
+      try {
+        username = JSON.parse(token).username;
+      } catch (err) {
+        username = null;
+      }
+    }
+
+    const admin = username ? getAdminByUsername(username) : null;
     setData(admin ? [admin] : []);
-  }, [urlParams]);
+  }, []);
 
   let arr = data ?? [];
 

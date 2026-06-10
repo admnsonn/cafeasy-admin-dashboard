@@ -21,9 +21,11 @@ function Logincomp() {
     const token = cookies.get("secretLogToken");
     if (token) {
       try {
-        const decoded = JSON.parse(token);
-        const decodedIdAdmin = decoded.idAdmin;
-        nextNavigate("/ProfileAdmin/" + decodedIdAdmin);
+        const parsed = JSON.parse(token);
+        if (parsed.username) {
+          nextNavigate("/ProfileAdmin", { replace: true });
+          return;
+        }
       } catch (err) {
         cookies.remove("secretLogToken");
       }
@@ -43,7 +45,10 @@ function Logincomp() {
 
     const account = findAdmin(username, password);
     if (account) {
-      cookies.set("secretLogToken", JSON.stringify({ idAdmin: account.idAdmin }));
+      cookies.set(
+        "secretLogToken",
+        JSON.stringify({ username: account.username })
+      );
       await Swal.fire({
         position: "top-end",
         icon: "success",
@@ -51,7 +56,7 @@ function Logincomp() {
         showConfirmButton: false,
         timer: 1500,
       });
-      nextNavigate("/ProfileAdmin/" + account.idAdmin, { replace: true });
+      nextNavigate("/ProfileAdmin", { replace: true });
     } else {
       Swal.fire({
         icon: "error",

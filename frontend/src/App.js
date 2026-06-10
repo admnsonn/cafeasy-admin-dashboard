@@ -23,16 +23,8 @@ const App = () => {
         <Route exact path="/" element={<Landingpage />}></Route>
         <Route exact path="/LoginAdmin" element={<Loginpage />}></Route>
         <Route exact path="/RegisterAdmin" element={<Signuppage />}></Route>
-        <Route
-          exact
-          path="/Update/:idAdmin"
-          element={<Update />}
-        ></Route>
-        <Route
-          exact
-          path="/ProfileAdmin/:idAdmin"
-          element={<ProfileAdminpage />}
-        ></Route>
+        <Route exact path="/Update" element={<Update />}></Route>
+        <Route exact path="/ProfileAdmin" element={<ProfileAdminpage />}></Route>
         <Route exact path="/DataMenu" element={<DataMenupage />}></Route>
         <Route
           exact

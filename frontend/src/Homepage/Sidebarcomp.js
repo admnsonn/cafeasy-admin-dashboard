@@ -32,19 +32,10 @@ function Sidebarcomp() {
     }
   }, []);
 
-  const tokenValue = cookies.get("secretLogToken");
-  let decodedIdAdmin = null;
-  try {
-    decodedIdAdmin = JSON.parse(tokenValue).idAdmin;
-  } catch (err) {
-    decodedIdAdmin = null;
-  }
-
- 
 
   const Sidebardata = [
     {
-      path: "/ProfileAdmin/" + decodedIdAdmin,
+      path: "/ProfileAdmin",
       icon: <ImIcons.ImProfile className="icon-profil" />,
       cName: "sidebar-text",
       display: "Profil Admin",

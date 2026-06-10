@@ -39,19 +39,14 @@ const isUsernameTaken = (username) => {
   return admins.some((admin) => admin.username === username);
 };
 
-const getAdminById = (idAdmin) => {
+const getAdminByUsername = (username) => {
   const admins = getAdmins();
-  return admins.find((admin) => String(admin.idAdmin) === String(idAdmin)) || null;
+  return admins.find((admin) => admin.username === username) || null;
 };
 
 const addAdmin = (newAdmin) => {
   const data = getData();
-  const nextId = data.admins.result.reduce(
-    (maxId, admin) => Math.max(maxId, admin.idAdmin),
-    0
-  ) + 1;
   const admin = {
-    idAdmin: nextId,
     username: newAdmin.username,
     password: newAdmin.password,
     emailCafe: newAdmin.emailCafe || "",
@@ -68,10 +63,10 @@ const addAdmin = (newAdmin) => {
   return admin;
 };
 
-const updateAdmin = (idAdmin, updates) => {
+const updateAdminByUsername = (username, updates) => {
   const data = getData();
   const index = data.admins.result.findIndex(
-    (admin) => String(admin.idAdmin) === String(idAdmin)
+    (admin) => admin.username === username
   );
   if (index === -1) {
     return null;
@@ -91,7 +86,7 @@ export {
   getAdmins,
   findAdmin,
   isUsernameTaken,
-  getAdminById,
+  getAdminByUsername,
   addAdmin,
-  updateAdmin,
+  updateAdminByUsername,
 };
