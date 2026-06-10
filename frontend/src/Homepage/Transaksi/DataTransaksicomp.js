@@ -36,7 +36,9 @@ const DataTransaksicomp = ({ data = [] }) => {
   };
 
   const statusBody = (rowData) => {
-    return <Tag value={rowData.statusBayar} severity={getSeverity(rowData)}></Tag>;
+    return (
+      <Tag value={rowData.statusBayar} severity={getSeverity(rowData)}></Tag>
+    );
   };
 
   const hideTransaksiDialog = () => {
@@ -58,8 +60,8 @@ const DataTransaksicomp = ({ data = [] }) => {
         prev.map((item) =>
           item.idTransaksi === transaksi.idTransaksi
             ? { ...item, ...transaksi }
-            : item
-        )
+            : item,
+        ),
       );
       setTransaksiDialog(false);
       toast.current.show({
@@ -82,7 +84,9 @@ const DataTransaksicomp = ({ data = [] }) => {
   };
 
   const deleteTransaksi = () => {
-    setdataTransaksi((prev) => prev.filter((item) => item.idTransaksi !== transaksi.idTransaksi));
+    setdataTransaksi((prev) =>
+      prev.filter((item) => item.idTransaksi !== transaksi.idTransaksi),
+    );
     setTransaksi(DEFAULT_TRANSAKSI);
     setDeleteTransaksiDialog(false);
     toast.current.show({
@@ -145,105 +149,151 @@ const DataTransaksicomp = ({ data = [] }) => {
     </>
   );
 
-  const header = (
-    <div className="table-header">
-      <h5 className="mx-0 my-1">Semua Transaksi</h5>
-      <div className="flex gap-2">
-        <Button
-          label="Ekspor ke Spreedsheet"
-          icon="pi pi-file-excel"
-          severity="secondary"
-          raised
-          onClick={exportSpreadsheet}
-        />
-        <span className="p-input-icon-left">
-          <i className="pi pi-search" />
-          <InputText
-            type="search"
-            onInput={(e) => setGlobalFilter(e.target.value)}
-            placeholder="Cari..."
-          />
-        </span>
-      </div>
-    </div>
-  );
-
   return (
     <div className="container">
       <div className="py-4">
-        <br />
-        <div className="row">
-          <div className="col-md-3">
-            <div className="title-transaksi-pertama"> DATATABLE TRANSAKSI </div>
-          </div>
-          <div className="col-sm-4">
-            <div className="title-transaksi-kedua"> Admin / </div>
-          </div>
-          <div className="col-sm-2">
-            <div className="title-transaksi-ketiga"> Data Transaksi </div>
-          </div>
-        </div>
-        <br /> <br />
-        <div className="datatable-crud-demo">
-          <Toast ref={toast} />
-          <div className="card">
-            <DataTable
-              value={dataTransaksi}
-              header={header}
-              resizableColumns
-              showGridlines
-              tableStyle={{ minWidth: "50rem" }}
-              scrollable
-              scrollHeight="500px"
-              globalFilter={globalFilter}
-              paginator
-              rows={10}
-              rowsPerPageOptions={[5, 10, 25]}
-              paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-              currentPageReportTemplate="Menampilkan {first} hingga {last} dari {totalRecords} data"
-            >
-              <Column field="idTransaksi" header="ID Transaksi" sortable style={{ minWidth: "10rem" }} />
-              <Column field="idPelanggan" header="ID Pelanggan" sortable style={{ minWidth: "10rem" }} />
-              <Column field="namaPelanggan" header="Nama Pelanggan" sortable style={{ minWidth: "10rem" }} />
-              <Column field="tanggal" header="Tanggal" sortable style={{ minWidth: "10rem" }} />
-              <Column field="noMeja" header="No Meja" sortable style={{ minWidth: "10rem" }} />
-              <Column field="totalHarga" header="Total Harga" sortable style={{ minWidth: "10rem" }} />
-              <Column header="Status Bayar" body={statusBody} sortable style={{ minWidth: "10rem" }} />
-              <Column header="Aksi" exportable={false} style={{ minWidth: "12rem" }} body={actionButtonTransaksi} />
-            </DataTable>
-          </div>
-          <br />
-          <TransaksiPerhari data={data.data ?? []} />
-
-          <ConfirmPopup
-            visible={TransaksiDialog}
-            onHide={() => {
-              hideTransaksiDialog();
-              setTransaksi(DEFAULT_TRANSAKSI);
-            }}
-            accept={SubmitTransaksi}
-            message="Apakah anda ingin mengganti status bayar?"
-            icon="pi pi-exclamation-triangle"
-          />
-
-          <Dialog
-            visible={deleteTransaksiDialog}
-            style={{ width: "32rem" }}
-            breakpoints={{ "960px": "75vw", "641px": "90vw" }}
-            header="Konfirmasi"
-            modal
-            footer={deleteTransaksiDialogFooter}
-            onHide={hideDeleteTransaksiDialog}
-          >
-            <div className="confirmation-content">
-              <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: "2rem" }} />
-              {transaksi && (
-                <span>
-                  Apakah anda yakin ingin menghapus <b>{transaksi.namaPelanggan}</b>?
-                </span>
-              )}
+        <div className="page-panel page-panel-menu">
+          <div className="page-panel-header">
+            <div>
+              <div className="page-heading">Datatable Transaksi</div>
             </div>
-          </Dialog>
+          </div>
+
+          <div className="datatable-crud-demo">
+            <Toast ref={toast} />
+            <div className="card menu-card">
+              <div className="menu-card-top flex flex-column md:flex-row md:align-items-center justify-content-between gap-3">
+                <div className="menu-card-title">Semua Transaksi</div>
+                <div className="menu-card-actions flex flex-wrap gap-2">
+                  <Button
+                    className="button-spreed"
+                    label="Export"
+                    icon="pi pi-file-excel"
+                    severity="secondary"
+                    raised
+                    onClick={exportSpreadsheet}
+                  />
+                </div>
+                <span className="p-input-icon-left search-card w-full md:w-auto">
+                  <i className="pi pi-search" />
+                  <InputText
+                    type="search"
+                    className="w-full"
+                    value={globalFilter || ""}
+                    onChange={(e) => setGlobalFilter(e.target.value)}
+                    placeholder="Cari data..."
+                  />
+                </span>
+              </div>
+              <DataTable
+                value={dataTransaksi}
+                paginator
+                rows={10}
+                paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                rowsPerPageOptions={[5, 10, 25]}
+                dataKey="idTransaksi"
+                resizableColumns
+                showGridlines
+                stripedRows
+                tableStyle={{ minWidth: "50rem" }}
+                scrollable
+                scrollHeight="700px"
+                globalFilter={globalFilter}
+                currentPageReportTemplate="Menampilkan {first} hingga {last} dari {totalRecords} data"
+              >
+                <Column
+                  field="idTransaksi"
+                  header="ID Transaksi"
+                  sortable
+                  style={{ minWidth: "10rem" }}
+                />
+                <Column
+                  field="idPelanggan"
+                  header="ID Pelanggan"
+                  sortable
+                  style={{ minWidth: "10rem" }}
+                />
+                <Column
+                  field="namaPelanggan"
+                  header="Nama Pelanggan"
+                  sortable
+                  style={{ minWidth: "10rem" }}
+                />
+                <Column
+                  field="tanggal"
+                  header="Tanggal"
+                  sortable
+                  style={{ minWidth: "10rem" }}
+                />
+                <Column
+                  field="noMeja"
+                  header="No Meja"
+                  sortable
+                  style={{ minWidth: "10rem" }}
+                />
+                <Column
+                  field="totalHarga"
+                  header="Total Harga"
+                  sortable
+                  style={{ minWidth: "10rem" }}
+                />
+                <Column
+                  header="Status Bayar"
+                  body={statusBody}
+                  sortable
+                  style={{ minWidth: "10rem" }}
+                />
+                <Column
+                  header="Aksi"
+                  exportable={false}
+                  style={{ minWidth: "12rem" }}
+                  body={actionButtonTransaksi}
+                />
+              </DataTable>
+            </div>
+            <div className="table-section-list">
+              <div className="table-card">
+                <div className="table-card-header">
+                  <h5>Transaksi Hari Ini</h5>
+                </div>
+                <TransaksiPerhari data={data.data ?? []} />
+              </div>
+            </div>
+
+            <ConfirmPopup
+              visible={TransaksiDialog}
+              onHide={() => {
+                hideTransaksiDialog();
+                setTransaksi(DEFAULT_TRANSAKSI);
+              }}
+              accept={SubmitTransaksi}
+              message="Apakah anda ingin mengganti status bayar?"
+              icon="pi pi-exclamation-triangle"
+            />
+
+            <Dialog
+              visible={deleteTransaksiDialog}
+              style={{ width: "32rem" }}
+              breakpoints={{ "960px": "75vw", "641px": "90vw" }}
+              header="Konfirmasi"
+              modal
+              footer={deleteTransaksiDialogFooter}
+              onHide={hideDeleteTransaksiDialog}
+            >
+              <div className="confirmation-content">
+                <i
+                  className="pi pi-exclamation-triangle mr-3"
+                  style={{ fontSize: "2rem" }}
+                />
+                {transaksi && (
+                  <span>
+                    Apakah anda yakin ingin menghapus{" "}
+                    <b>{transaksi.namaPelanggan}</b>?
+                  </span>
+                )}
+              </div>
+            </Dialog>
+          </div>
         </div>
       </div>
     </div>

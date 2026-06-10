@@ -180,47 +180,56 @@ const DataKategoricomp = ({ data = [] }) => {
     </>
   );
 
-  const header = (
-    <div className="table-header">
-      <h5 className="mx-0 my-1">Semua Kategori</h5>
-      <div className="flex gap-2">
-        <Button label="Tambah Kategori" icon="pi pi-plus" raised onClick={() => FormKateg()} />
-        <Button label="Hapus Semua" icon="pi pi-trash" severity="danger" raised onClick={confirmDeleteAllKateg} />
-        <span className="p-input-icon-left">
-          <i className="pi pi-search" />
-          <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Cari..." />
-        </span>
-      </div>
-    </div>
-  );
-
   return (
     <div className="container">
       <div className="py-4">
-        <br />
-        <div className="row">
-          <div className="col-md-3">
-            <div className="title-kategori-pertama"> DATATABLE KATEGORI </div>
+        <div className="page-panel page-panel-menu">
+          <div className="page-panel-header">
+            <div>
+              <div className="page-heading">Datatable Kategori</div>
+            </div>
           </div>
-          <div className="col-sm-4">
-            <div className="title-kategori-kedua"> Admin / </div>
-          </div>
-          <div className="col-sm-2">
-            <div className="title-kategori-ketiga"> Data Kategori </div>
-          </div>
-        </div>
-        <br /> <br />
-        <div className="datatable-crud-demo">
-          <Toast ref={toast} />
-          <div className="card">
-            <DataTable
-              value={kategoris}
-              paginator
-              header={header}
+
+          <div className="datatable-crud-demo">
+            <Toast ref={toast} />
+            <div className="card menu-card">
+              <div className="menu-card-top flex flex-column md:flex-row md:align-items-center justify-content-between gap-3">
+                <div className="menu-card-title">Semua Kategori</div>
+                <div className="menu-card-actions flex flex-wrap gap-2">
+                  <Button
+                    className="button-hapus"
+                    label="Hapus"
+                    icon="pi pi-trash"
+                    severity="danger"
+                    raised
+                    onClick={confirmDeleteAllKateg}
+                  />
+                  <Button
+                    className="button-tambah"
+                    label="Tambah"
+                    icon="pi pi-plus"
+                    raised
+                    onClick={() => FormKateg()}
+                  />
+                </div>
+                <span className="p-input-icon-left search-card w-full md:w-auto">
+                  <i className="pi pi-search" />
+                  <InputText
+                    type="search"
+                    className="w-full"
+                    value={globalFilter || ""}
+                    onChange={(e) => setGlobalFilter(e.target.value)}
+                    placeholder="Cari data..."
+                  />
+                </span>
+              </div>
+              <DataTable
+                value={kategoris}
+                paginator
+                dataKey="idKategori"
               rows={10}
               paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
               rowsPerPageOptions={[5, 10, 25]}
-              dataKey="idKategori"
               resizableColumns
               showGridlines
               stripedRows
@@ -234,6 +243,7 @@ const DataKategoricomp = ({ data = [] }) => {
               <Column field="namaKategori" header="Nama Kategori" sortable style={{ minWidth: "10rem" }} />
               <Column header="Aksi" exportable={false} style={{ minWidth: "12rem" }} body={actionButtonKateg} />
             </DataTable>
+            </div>
           </div>
 
           <Dialog

@@ -10,9 +10,8 @@ const TransaksiPerhari = ({ data = [] }) => {
   const todayData = data.filter((item) => item.tanggal?.startsWith(today));
 
   const header = (
-    <div className="table-header">
-      <h5 className="mx-0 my-1">Transaksi Hari Ini</h5>
-      <span className="p-input-icon-left">
+    <div className="menu-table-header-secondary">
+      <span className="p-input-icon-left search-card-small">
         <i className="pi pi-search" />
         <InputText
           type="search"

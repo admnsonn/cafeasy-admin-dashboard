@@ -33,7 +33,7 @@ const ProfileAdmincomp = () => {
   const admin = arr[0] || {};
 
   return (
-    <div className="profile-page-wrapper">
+    <div className="profile-page-wrapper container">
       <div className="profile-banner-wrap">
         <img
           src={admin.imageUrl || "/placeholder.png"}

@@ -186,24 +186,6 @@ const Bannercomp = ({ data = [] }) => {
     </>
   );
 
-  const header = (
-    <div className="table-header">
-      <h5 className="mx-0 my-1">Data Banner</h5>
-      <div className="flex gap-2">
-        <Button label="Tambah Banner" icon="pi pi-plus" raised onClick={() => FormBanner()} />
-        <Button label="Hapus Semua" icon="pi pi-trash" severity="danger" raised onClick={confirmDeleteAllBanner} />
-        <span className="p-input-icon-left">
-          <i className="pi pi-search" />
-          <InputText
-            type="search"
-            onInput={(e) => setGlobalFilter(e.target.value)}
-            placeholder="Search..."
-          />
-        </span>
-      </div>
-    </div>
-  );
-
   const imageBody = (rowData) => (
     <img
       src={rowData.imageUrl}
@@ -215,30 +197,53 @@ const Bannercomp = ({ data = [] }) => {
   return (
     <div className="container">
       <div className="py-4">
-        <br />
-        <div className="row">
-          <div className="col-md-3">
-            <div className="title-banner-pertama"> DATATABLE BANNER </div>
+        <div className="page-panel page-panel-menu">
+          <div className="page-panel-header">
+            <div>
+              <div className="page-heading">Datatable Banner</div>
+            </div>
           </div>
-          <div className="col-sm-4">
-            <div className="title-banner-kedua"> Admin / </div>
-          </div>
-          <div className="col-sm-2">
-            <div className="title-banner-ketiga"> Data Banner </div>
-          </div>
-        </div>
-        <br /> <br />
-        <div className="datatable-crud-demo">
-          <Toast ref={toast} />
-          <div className="card">
-            <DataTable
-              value={banners}
-              paginator
-              header={header}
+
+          <div className="datatable-crud-demo">
+            <Toast ref={toast} />
+            <div className="card menu-card">
+              <div className="menu-card-top flex flex-column md:flex-row md:align-items-center justify-content-between gap-3">
+                <div className="menu-card-title">Semua Banner</div>
+                <div className="menu-card-actions flex flex-wrap gap-2">
+                  <Button
+                    className="button-hapus"
+                    label="Hapus"
+                    icon="pi pi-trash"
+                    severity="danger"
+                    raised
+                    onClick={confirmDeleteAllBanner}
+                  />
+                  <Button
+                    className="button-tambah"
+                    label="Tambah"
+                    icon="pi pi-plus"
+                    raised
+                    onClick={() => FormBanner()}
+                  />
+                </div>
+                <span className="p-input-icon-left search-card w-full md:w-auto">
+                  <i className="pi pi-search" />
+                  <InputText
+                    type="search"
+                    className="w-full"
+                    value={globalFilter || ""}
+                    onChange={(e) => setGlobalFilter(e.target.value)}
+                    placeholder="Cari data..."
+                  />
+                </span>
+              </div>
+              <DataTable
+                value={banners}
+                paginator
+                dataKey="idBanner"
               rows={10}
               paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
               rowsPerPageOptions={[5, 10, 25]}
-              dataKey="idBanner"
               resizableColumns
               showGridlines
               stripedRows
@@ -253,6 +258,7 @@ const Bannercomp = ({ data = [] }) => {
               <Column field="imageUrl" header="Gambar" body={imageBody} sortable style={{ minWidth: "10rem" }} />
               <Column header="Aksi" exportable={false} style={{ minWidth: "5rem" }} body={actionButtonBanner} />
             </DataTable>
+            </div>
           </div>
 
           <Dialog

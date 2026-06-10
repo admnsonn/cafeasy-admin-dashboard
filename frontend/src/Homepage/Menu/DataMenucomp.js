@@ -214,41 +214,41 @@ const DataMenucomp = ({ data = [], kategori = [] }) => {
             </div>
           </div>
 
-          <div className="menu-action-row">
-            <Button
-              className="button-spreed"
-              label="Export"
-              icon="pi pi-file-excel"
-              severity="secondary"
-              raised
-              onClick={EksporToSpreadsheet}
-            />
-            <Button
-              className="button-hapus"
-              label="Hapus"
-              icon="pi pi-trash"
-              severity="danger"
-              raised
-              onClick={confirmDeleteAll}
-            />
-            <Button
-              className="button-tambah"
-              label="Tambah"
-              icon="pi pi-plus"
-              raised
-              onClick={() => openForm()}
-            />
-          </div>
-
           <div className="datatable-crud-demo">
             <Toast ref={toast} />
             <div className="card menu-card">
-              <div className="menu-card-top">
+              <div className="menu-card-top flex flex-column md:flex-row md:align-items-center justify-content-between gap-3">
                 <div className="menu-card-title">Semua Menu</div>
-                <span className="p-input-icon-left search-card">
+                <div className="menu-card-actions flex flex-wrap gap-2">
+                  <Button
+                    className="button-spreed"
+                    label="Export"
+                    icon="pi pi-file-excel"
+                    severity="secondary"
+                    raised
+                    onClick={EksporToSpreadsheet}
+                  />
+                  <Button
+                    className="button-hapus"
+                    label="Hapus"
+                    icon="pi pi-trash"
+                    severity="danger"
+                    raised
+                    onClick={confirmDeleteAll}
+                  />
+                  <Button
+                    className="button-tambah"
+                    label="Tambah"
+                    icon="pi pi-plus"
+                    raised
+                    onClick={() => openForm()}
+                  />
+                </div>
+                <span className="p-input-icon-left search-card w-full md:w-auto">
                   <i className="pi pi-search" />
                   <InputText
                     type="search"
+                    className="w-full"
                     value={globalFilter || ""}
                     onChange={(e) => setGlobalFilter(e.target.value)}
                     placeholder="Cari data..."

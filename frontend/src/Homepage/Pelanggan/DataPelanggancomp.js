@@ -53,68 +53,62 @@ const DataPelanggancomp = ({ data = [] }) => {
     </>
   );
 
-  const header = (
-    <div className="table-header">
-      <h5 className="mx-0 my-1">Semua Pelanggan</h5>
-      <div className="flex gap-2">
-        <Button
-          label="Hapus Semua"
-          icon="pi pi-trash"
-          severity="danger"
-          raised
-          onClick={confirmDeleteAllPelanggan}
-        />
-        <span className="p-input-icon-left">
-          <i className="pi pi-search" />
-          <InputText
-            type="search"
-            onInput={(e) => setGlobalFilter(e.target.value)}
-            placeholder="Cari..."
-          />
-        </span>
-      </div>
-    </div>
-  );
-
   return (
     <div className="container">
       <div className="py-4">
-        <br />
-        <div className="row">
-          <div className="col-md-3">
-            <div className="title-pelanggan-pertama"> DATATABLE PELANGGAN </div>
+        <div className="page-panel page-panel-menu">
+          <div className="page-panel-header">
+            <div>
+              <div className="page-heading">Datatable Pelanggan</div>
+            </div>
           </div>
-          <div className="col-sm-4">
-            <div className="title-pelanggan-kedua"> Admin / </div>
-          </div>
-          <div className="col-sm-2">
-            <div className="title-pelanggan-ketiga"> Data Pelanggan </div>
-          </div>
-        </div>
-        <br /> <br />
-        <div className="datatable-crud-demo">
-          <Toast ref={toast} />
-          <div className="card">
-            <DataTable
-              value={pelangganList}
-              header={header}
+
+          <div className="datatable-crud-demo">
+            <Toast ref={toast} />
+            <div className="card menu-card">
+              <div className="menu-card-top flex flex-column md:flex-row md:align-items-center justify-content-between gap-3">
+                <div className="menu-card-title">Semua Pelanggan</div>
+                <div className="menu-card-actions flex flex-wrap gap-2">
+                  <Button
+                    className="button-hapus"
+                    label="Hapus"
+                    icon="pi pi-trash"
+                    severity="danger"
+                    raised
+                    onClick={confirmDeleteAllPelanggan}
+                  />
+                </div>
+                <span className="p-input-icon-left search-card w-full md:w-auto">
+                  <i className="pi pi-search" />
+                  <InputText
+                    type="search"
+                    className="w-full"
+                    value={globalFilter || ""}
+                    onChange={(e) => setGlobalFilter(e.target.value)}
+                    placeholder="Cari data..."
+                  />
+                </span>
+              </div>
+              <DataTable
+                value={pelangganList}
+                dataKey="id"
+                paginator
+                rows={10}
+                rowsPerPageOptions={[5, 10, 25]}
+                paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                currentPageReportTemplate="Menampilkan {first} hingga {last} dari {totalRecords} data"
+                globalFilter={globalFilter}
               resizableColumns
               showGridlines
               stripedRows
               tableStyle={{ minWidth: "50rem" }}
               scrollable
               scrollHeight="700px"
-              globalFilter={globalFilter}
-              dataKey="id"
-              paginator
-              rows={10}
-              rowsPerPageOptions={[5, 10, 25]}
-              paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-              currentPageReportTemplate="Menampilkan {first} hingga {last} dari {totalRecords} data"
             >
               <Column field="id" header="ID" sortable style={{ width: "15%" }} />
               <Column field="name" header="Nama" sortable style={{ width: "15%" }} />
             </DataTable>
+            </div>
           </div>
 
           <Dialog

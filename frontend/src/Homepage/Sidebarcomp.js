@@ -77,7 +77,6 @@ function Sidebarcomp() {
         <div className="sidebar-top sidebar-bg">
           <div className="sidebar-brand">
             <img src={logodannama} alt="Cafeasy Logo" />
-            <div className="sidebar-brand-text">CAF EASY</div>
           </div>
         </div>
 
