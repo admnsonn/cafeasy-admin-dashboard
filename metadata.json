@@ -1,0 +1,6 @@
+{
+  "name": "CAFEASY",
+  "description": "Sistem Manajemen Admin Cafeasy dengan fitur Login, Registrasi, Dashboard Data Menu, dan Profil Admin yang responsif.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
