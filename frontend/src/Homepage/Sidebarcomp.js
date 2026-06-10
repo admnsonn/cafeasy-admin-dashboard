@@ -74,12 +74,12 @@ function Sidebarcomp() {
   return (
     <>
       <nav className="sidebar">
-        <br></br>
-        <ul className="sidebar-top sidebar-bg">
-          <li className="sidebar-toggle">
-            <img src={logodannama} alt="Logo" />
-          </li>
-        </ul>
+        <div className="sidebar-top sidebar-bg">
+          <div className="sidebar-brand">
+            <img src={logodannama} alt="Cafeasy Logo" />
+            <div className="sidebar-brand-text">CAF EASY</div>
+          </div>
+        </div>
 
         <div className="sidebar-content">
           <ul className="sidebar-list">
@@ -94,17 +94,17 @@ function Sidebarcomp() {
                   }
                 >
                   {item.icon}
-                  {item.display}
+                  <span className="link-text">{item.display}</span>
                 </NavLink>
               </li>
             ))}
           </ul>
 
           <div className="sidebar-bottom">
-            <span onClick={logout}>
-              <BiIcons.BiLogOut className="icon-logout" />
-              Logout
-            </span>
+            <button type="button" onClick={logout} className="sidebar-logout">
+              <BiIcons.BiLogOut />
+              <span>Logout</span>
+            </button>
           </div>
         </div>
       </nav>

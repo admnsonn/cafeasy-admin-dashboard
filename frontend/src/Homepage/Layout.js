@@ -2,12 +2,13 @@ import React from "react";
 import Sidebarcomp from "./Sidebarcomp";
 import Topnav from "./Topnav";
 
-const Layout = () => {
+const Layout = ({ children }) => {
   return (
     <div className="layout">
       <Sidebarcomp />
       <div className="main__layout">
         <Topnav />
+        {children}
       </div>
     </div>
   );

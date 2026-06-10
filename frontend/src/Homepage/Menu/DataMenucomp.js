@@ -198,75 +198,6 @@ const DataMenucomp = ({ data = [], kategori = [] }) => {
     </>
   );
 
-  const imageBody = (rowData) => (
-    <img
-      src={rowData.imageUrl}
-      alt={rowData.imageUrl}
-      className="w-6rem shadow-2 border-round"
-    />
-  );
-
-  const header = (
-    <div className="table-header">
-      <h5 className="mx-0 my-1">Semua Menu</h5>
-      <div className="flex gap-2">
-        <Button
-          className="button-tambah"
-          label="Tambah Menu"
-          icon="pi pi-plus"
-          raised
-          onClick={() => openForm()}
-        />
-        <Button
-          className="button-spreed"
-          label="Ekspor ke Spreedsheet"
-          icon="pi pi-file-excel"
-          severity="secondary"
-          raised
-          onClick={EksporToSpreadsheet}
-        />
-        <Button
-          className="button-hapus"
-          label="Hapus Semua"
-          icon="pi pi-trash"
-          severity="danger"
-          raised
-          onClick={confirmDeleteAll}
-        />
-        <span className="p-input-icon-left search-i ">
-          <i className="pi pi-search" />
-          <InputText
-            className="button-cari"
-            type="search"
-            onInput={(e) => setGlobalFilter(e.target.value)}
-            placeholder="Cari..."
-          />
-        </span>
-      </div>
-    </div>
-  );
-
-  const actionTemplate = (menuItem) => (
-    <>
-      <Button
-        label="Edit"
-        className="mx-2"
-        icon="pi pi-pencil"
-        severity="primary"
-        rounded
-        onClick={() => openForm(menuItem)}
-      />
-      <Button
-        label="Hapus"
-        className="mx-2"
-        icon="pi pi-trash"
-        severity="danger"
-        rounded
-        onClick={() => confirmDeleteSelected(menuItem)}
-      />
-    </>
-  );
-
   const bodyTemplate = (rowData) => (
     <div className="white-space-nowrap overflow-hidden text-overflow-ellipsis">
       {rowData.deskripsiMenu}
@@ -276,59 +207,98 @@ const DataMenucomp = ({ data = [], kategori = [] }) => {
   return (
     <div className="container">
       <div className="py-4">
-        <br />
-        <div className="row">
-          <div className="col-md-3">
-            <div className="title-menu-pertama"> DATATABLE MENU </div>
+        <div className="page-panel page-panel-menu">
+          <div className="page-panel-header">
+            <div>
+              <div className="page-heading">Datatable Menu</div>
+            </div>
           </div>
-          <div className="col-sm-4">
-            <div className="title-menu-kedua"> Admin / </div>
+
+          <div className="menu-action-row">
+            <Button
+              className="button-spreed"
+              label="Export"
+              icon="pi pi-file-excel"
+              severity="secondary"
+              raised
+              onClick={EksporToSpreadsheet}
+            />
+            <Button
+              className="button-hapus"
+              label="Hapus"
+              icon="pi pi-trash"
+              severity="danger"
+              raised
+              onClick={confirmDeleteAll}
+            />
+            <Button
+              className="button-tambah"
+              label="Tambah"
+              icon="pi pi-plus"
+              raised
+              onClick={() => openForm()}
+            />
           </div>
-          <div className="col-sm-2">
-            <div className="title-menu-ketiga"> Data Menu </div>
+
+          <div className="datatable-crud-demo">
+            <Toast ref={toast} />
+            <div className="card menu-card">
+              <div className="menu-card-top">
+                <div className="menu-card-title">Semua Menu</div>
+                <span className="p-input-icon-left search-card">
+                  <i className="pi pi-search" />
+                  <InputText
+                    type="search"
+                    value={globalFilter || ""}
+                    onChange={(e) => setGlobalFilter(e.target.value)}
+                    placeholder="Cari data..."
+                  />
+                </span>
+              </div>
+              <DataTable
+                value={menus}
+                paginator
+                rows={10}
+                paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                rowsPerPageOptions={[5, 10, 25]}
+                dataKey="idMenu"
+                resizableColumns
+                showGridlines
+                stripedRows
+                tableStyle={{ minWidth: "50rem" }}
+                scrollable
+                scrollHeight="700px"
+                globalFilter={globalFilter}
+                currentPageReportTemplate="Menampilkan {first} hingga {last} dari {totalRecords} data"
+              >
+                <Column field="idMenu" header="ID Menu" sortable style={{ minWidth: "8rem" }} />
+                <Column field="namaMenu" header="Nama Menu" sortable style={{ minWidth: "12rem" }} />
+                <Column field="hargaMenu" header="Harga Menu" sortable style={{ minWidth: "10rem" }} />
+                <Column field="stokMenu" header="Stok Menu" sortable style={{ minWidth: "8rem" }} />
+                <Column
+                  field="deskripsiMenu"
+                  header="Deskripsi Menu"
+                  sortable
+                  style={{ minWidth: "14rem" }}
+                  body={bodyTemplate}
+                />
+              </DataTable>
+            </div>
+            <div className="table-section-list">
+              <div className="table-card">
+                <div className="table-card-header">
+                  <h5>Menu Tersedia</h5>
+                </div>
+                <AvailableMenu data={menus} />
+              </div>
+              <div className="table-card">
+                <div className="table-card-header">
+                  <h5>Menu Tidak Tersedia</h5>
+                </div>
+                <NotAvailableMenu data={menus} />
+              </div>
+            </div>
           </div>
-        </div>
-        <br /> <br />
-        <div className="datatable-crud-demo">
-          <Toast ref={toast} />
-          <div className="card">
-            <DataTable
-              value={menus}
-              paginator
-              header={header}
-              rows={10}
-              paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-              rowsPerPageOptions={[5, 10, 25]}
-              dataKey="idMenu"
-              resizableColumns
-              showGridlines
-              stripedRows
-              tableStyle={{ minWidth: "50rem" }}
-              scrollable
-              scrollHeight="700px"
-              globalFilter={globalFilter}
-              currentPageReportTemplate="Menampilkan {first} hingga {last} dari {totalRecords} data"
-            >
-              <Column field="idMenu" header="ID Menu" sortable style={{ minWidth: "10rem" }} />
-              <Column field="namaMenu" header="Nama Menu" sortable style={{ minWidth: "10rem" }} />
-              <Column field="hargaMenu" header="Harga Menu" sortable style={{ minWidth: "10rem" }} />
-              <Column field="stokMenu" header="Stok Menu" sortable style={{ minWidth: "10rem" }} />
-              <Column
-                field="deskripsiMenu"
-                header="Deskripsi Menu"
-                sortable
-                style={{ maxWidth: 220 }}
-                body={bodyTemplate}
-              />
-              <Column field="kategoriMenu" header="Kategori Menu" sortable style={{ minWidth: "10rem" }} />
-              <Column field="imageUrl" header="Gambar" body={imageBody} sortable style={{ minWidth: "10rem" }} />
-              <Column header="Aksi" exportable={false} style={{ minWidth: "12rem" }} body={actionTemplate} />
-            </DataTable>
-          </div>
-          <br />
-          <AvailableMenu data={menus} />
-          <br />
-          <NotAvailableMenu data={menus} />
 
           <Dialog
             visible={productDialog}

@@ -14,10 +14,9 @@ const DataMenupage = () => {
   }, []);
 
   return (
-    <div>
-      <Layout />
+    <Layout>
       <DataMenucomp data={data} kategori={kategori} />
-    </div>
+    </Layout>
   );
 };
 

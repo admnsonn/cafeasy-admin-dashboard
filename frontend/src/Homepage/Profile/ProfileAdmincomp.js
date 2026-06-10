@@ -30,96 +30,101 @@ const ProfileAdmincomp = () => {
   }, [navigate]);
 
   const arr = data ?? [];
+  const admin = arr[0] || {};
 
   return (
-    <div className="container">
-      <div className="py-4">
-        <br></br>
-        <div className="row">
-          <div className="col-md-3">
-            <div className="title-profile-pertama"> DATATABLE PROFIL ADMIN </div>
-          </div>
-          <div className="col-sm-4">
-            <div className="title-profile-kedua"> Admin / </div>
-          </div>
-          <div className="col-sm-2">
-            <div className="title-profile-ketiga"> Profil Admin </div>
-          </div>
-        </div>
-        <div className="datatable-crud-demo">
-          <div className="container profil-bungkus">
-            <form method="post">
-              <div className="row">
-                <div className="col-md-4">
-                  <div className="profil-img">
-                    <img src={arr[0]?.imageUrl} alt="Profil" />
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="profil-title">
-                    <h5>{arr[0]?.namaPemilikCafe}</h5>
-                    <h6>{arr[0]?.namaCafe}</h6>
-                    <p className="profil-email">{arr[0]?.emailCafe}</p>
-                    <br></br> <br></br> <br></br>
-                    <ul className="nav nav-tabs" id="myTab" role="tablist"></ul>
-                  </div>
-                </div>
-                <div className="col-md-2">
-                  <Link
-                    className="text-decoration-none btn btn-sm btn-primary"
-                    to="/Update">
-                    Perbaharui
-                  </Link>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-8">
-                  <div className="tab-content profil-teks" id="myTabContent">
-                    <div
-                      className="tab-pane fade show active"
-                      id="home"
-                      role="tabpanel"
-                      aria-labelledby="home-tab"
-                    >
-                      <div className="row">
-                        <div className="col-md-6">
-                          <label>Username</label>
-                        </div>
-                        <div className="col-md-6">
-                          <p>{arr[0]?.username}</p>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-md-6">
-                          <label>Alamat Cafe</label>
-                        </div>
-                        <div className="col-md-6">
-                          <p>{arr[0]?.alamatCafe}</p>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-md-6">
-                          <label>Deskripsi Cafe</label>
-                        </div>
-                        <div className="col-md-6">
-                          <p>{arr[0]?.deskripsiCafe}</p>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-md-6">
-                          <label>Nomor Telepon</label>
-                        </div>
-                        <div className="col-md-6">
-                          <p>{arr[0]?.noHpCafe}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </form>
+    <div className="profile-page-wrapper">
+      <div className="profile-banner-wrap">
+        <img
+          src={admin.imageUrl || "/placeholder.png"}
+          alt="Banner"
+        />
+        <button type="button" className="profile-banner-upload">
+          <i className="pi pi-camera" />
+        </button>
+      </div>
+
+      <div className="profile-overview-card">
+        <div className="profile-avatar-box">
+          <div className="profile-avatar">
+            <img
+              src={admin.imageUrl || "/avatar.png"}
+              alt="Profile"
+            />
           </div>
         </div>
+
+        <div className="profile-info">
+          <h3>{admin.namaPemilikCafe || "Andri Purnama"}</h3>
+          <p>{admin.emailCafe || "andrip@mail.com"}</p>
+          <p>{admin.alamatCafe || "Jl. Distrik Aksara No. 404, Blok C, Kawasan Lama, Kota Metropola."}</p>
+        </div>
+
+        <Link className="profile-edit-btn" to="/Update">
+          Edit
+        </Link>
+      </div>
+
+      <div className="profile-sections">
+        <section className="profile-section">
+          <h4>
+            Informasi Pribadi
+            <Link className="section-edit-link" to="/Update">
+              Edit
+            </Link>
+          </h4>
+
+          <div className="profile-fields">
+            <div className="profile-field">
+              <label>Nama Cafe</label>
+              <p>{admin.namaCafe || "Etnicafeinay"}</p>
+            </div>
+            <div className="profile-field">
+              <label>Nama Pengguna</label>
+              <p>{admin.username || "andri_p"}</p>
+            </div>
+            <div className="profile-field">
+              <label>Nama Depan</label>
+              <p>{admin.namaDepan || "Andri"}</p>
+            </div>
+            <div className="profile-field">
+              <label>Nama Terakhir</label>
+              <p>{admin.namaBelakang || "Purnama"}</p>
+            </div>
+            <div className="profile-field">
+              <label>ID Admin</label>
+              <p>{admin.idAdmin || "adm-r4odv"}</p>
+            </div>
+            <div className="profile-field">
+              <label>Email</label>
+              <p>{admin.emailCafe || "andrip@mail.com"}</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="profile-section">
+          <h4>
+            Informasi Professional
+            <Link className="section-edit-link" to="/Update">
+              Edit
+            </Link>
+          </h4>
+
+          <div className="profile-fields">
+            <div className="profile-field full-width">
+              <label>Alamat Cafe</label>
+              <p>{admin.alamatCafe || "Jl. Distrik Aksara No. 404, Blok C, Kawasan Lama, Kota Metropola."}</p>
+            </div>
+            <div className="profile-field full-width">
+              <label>Deskripsi Cafe</label>
+              <p>{admin.deskripsiCafe || "Tempat di mana dentum bass modern bertemu dengan akar tradisi. etnicafeinay adalah ruang transisi bagi mereka yang mencari pelarian di tengah kota."}</p>
+            </div>
+            <div className="profile-field full-width">
+              <label>Nomor Telepon</label>
+              <p>{admin.noHpCafe || "0826263547"}</p>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   );

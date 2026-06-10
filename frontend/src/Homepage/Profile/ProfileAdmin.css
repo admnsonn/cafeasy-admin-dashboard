@@ -1,193 +1,292 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
 
-.profil-bungkus {
-  display: flex;
-  padding: 3%;
-  width: 70%;
-  margin-top: 1%;
-  margin-left: 16%;
-  margin-bottom: 3%;
-  align-items: center;
-  border-radius: 0.5rem;
-  background: #f8f9fa;
-  border: 1px solid #dee2e6;
-  border-width: 2px 2px 2px 2px;
+* {
+  font-family: 'Poppins', sans-serif;
 }
 
-.profil-img {
-  text-align: center;
+.profile-page-wrapper {
+  width: 100%;
+  padding: 2rem 0;
 }
 
-.profil-img img {
-  width: 80%;
-  margin-left: -50%;
-  height: 100%;
-  border-radius: 5%;
-}
-
-.profil-img .file {
-  display: flex;
+.profile-banner-wrap {
   position: relative;
+  width: 100%;
+  height: 220px;
+  border-radius: 1.25rem;
   overflow: hidden;
-  margin-top: -22%;
-  width: 80%;
-  margin-left: -15%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  margin-bottom: 3rem;
+}
+
+.profile-banner-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-banner-upload {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
   border: none;
-  border-radius: 5%;
-  font-size: 15px;
-  background: #212529b8;
-}
-
-.profil-title h5 {
+  border-radius: 999px;
+  width: 40px;
+  height: 40px;
   display: flex;
-  font-family: 'Poppins', sans-serif;
-  color: #000000;
-  margin-top: 5%;
-  margin-left: -10%;
-}
-
-.profil-title h6 {
-  display: flex;
-  font-family: 'Poppins', sans-serif;
-  color: #000000;
-  margin-top: 5%;
-  margin-left: -10%;
-}
-
-.profil-title p {
-  color: #000000;
-  font-family: 'Poppins', sans-serif;
-  margin-top: 5%;
-  margin-left: -10%;
-}
-
-.profil-edit-btn {
-  border: none;
-  border-radius: 1.5rem;
-  width: 150%;
-  margin-left: -40%;
-  padding: 2%;
-  font-weight: 600;
-  color: #6c757d;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  transition: background 0.3s;
 }
 
-.profil-email {
-  font-size: 12px;
-  color: #818182;
-  margin-top: 5%;
+.profile-banner-upload:hover {
+  background: rgba(0, 0, 0, 0.8);
 }
 
-.profil-title .nav-tabs {
-  margin-bottom: 5%;
+.profile-banner-upload i {
+  font-size: 1.2rem;
 }
 
-.nav-tabs {
-  border: 1px solid rgb(209, 209, 209);
-  width: 30rem;
-  margin-left:-81%;
+.profile-overview-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1.5rem;
+  align-items: start;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 1.25rem;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+  margin-bottom: 2rem;
+  margin-top: -3rem;
 }
 
-.profil-teks label {
+.profile-avatar-box {
+  position: relative;
+}
+
+.profile-avatar {
+  width: 110px;
+  height: 110px;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 4px solid white;
+  box-shadow: 0 12px 25px rgba(15, 23, 42, 0.12);
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.profile-info h3 {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.profile-info p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.profile-edit-btn {
+  background: #1d4ed8;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
   font-weight: 600;
-  font-family: 'Poppins', sans-serif;
-  color: #000000;
-  margin-left: -15%;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
-.profil-teks p {
+.profile-edit-btn:hover {
+  background: #1e40af;
+}
+
+.profile-sections {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.profile-section {
+  background: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 1.25rem;
+  border: 1px solid #e5e7eb;
+}
+
+.profile-section h4 {
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profile-section a {
+  color: #1d4ed8;
+  text-decoration: none;
+  font-size: 0.9rem;
   font-weight: 600;
-  font-family: 'Poppins', sans-serif;
-  font-size: 85%;
-  width: 130%;
-  color: #2a3042;
-  margin-left: -40%;
 }
 
-@media only screen and (max-width: 600px) {
-  .profil-bungkus {
-    display: flex;
-    padding: 3%;
-    width: 65%;
-    right: 20%;
-    margin-top: 1%;
-    margin-bottom: 3%;
-    align-items: center;
-    border-radius: 0.5rem;
-    background: #f8f9fa;
-    border: 1px solid #dee2e6;
-    border-width: 1px 0 1px 0;
+.profile-section a:hover {
+  text-decoration: underline;
+}
+
+.profile-fields {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.profile-field {
+  background: white;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e7eb;
+}
+
+.profile-field.full-width {
+  grid-column: 1 / -1;
+}
+
+.profile-field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #111827;
+}
+
+.profile-field p {
+  margin: 0;
+  color: #4b5563;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* Responsive */
+@media only screen and (max-width: 1024px) {
+  .profile-overview-card {
+    grid-template-columns: auto 1fr;
   }
 
-  .profil-img img {
-    width: 100%;
-    margin-left: -23%;
-    height: 100%;
-    border-radius: 5%;
+  .profile-edit-btn {
+    grid-column: 1 / -1;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .profile-page-wrapper {
+    padding: 1rem;
   }
 
-  .profil-title h5 {
-    display: flex;
-    font-size: 80%;
-    font-family: 'Poppins', sans-serif;
-    color: #000000;
-    margin-top: 5%;
-    margin-left: -10%;
-  }
-  
-  .profil-title h6 {
-    display: flex;
-    font-size: 80%;
-    font-family: 'Poppins', sans-serif;
-    color: #000000;
-    margin-top: 4%;
-    margin-left: -10%;
-  }
-  
-  .profil-title p {
-    color: #000000;
-    font-size: 70%;
-    font-family: 'Poppins', sans-serif;
-    margin-top: 4%;
-    margin-left: -10%;
+  .profile-banner-wrap {
+    height: 180px;
+    margin-bottom: 2rem;
   }
 
-  .nav-tabs {
-    border: 1px solid rgb(209, 209, 209);
-    width: 105%;
-    margin-top: -35%;
-    margin-left: -10%;
+  .profile-overview-card {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1.25rem;
   }
 
-  .profil-edit-btn {
-    border: none;
-    border-radius: 1.5rem;
-    width: 105%;
-    margin-left: -10%;
-    font-size: 80%;
-    padding: 2%;
-    font-weight: 600;
-    color: #6c757d;
-    cursor: pointer;
+  .profile-avatar {
+    width: 90px;
+    height: 90px;
   }
 
-  .profil-teks label {
-    font-weight: 600;
-    font-family: 'Poppins', sans-serif;
-    font-size: 70%;
-    margin-top: 10%;
-    color: #000000;
-    margin-left: -10%;
+  .profile-info h3 {
+    font-size: 1.15rem;
   }
-  
-  .profil-teks p {
-    position: relative;
-    font-weight: 400;
-    font-family: 'Poppins', sans-serif;
-    font-size: 60%;
-    width:fit-content;
-    color: #2a3042;
-    margin-left: -10%;
-    word-break: break-word;
+
+  .profile-edit-btn {
+    padding: 0.65rem 1.25rem;
+  }
+
+  .profile-sections {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .profile-section {
+    padding: 1.25rem;
+  }
+
+  .profile-fields {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .profile-page-wrapper {
+    padding: 0.75rem;
+  }
+
+  .profile-banner-wrap {
+    height: 150px;
+    margin-bottom: 1.5rem;
+  }
+
+  .profile-overview-card {
+    margin-top: -2rem;
+    padding: 1rem;
+  }
+
+  .profile-avatar {
+    width: 80px;
+    height: 80px;
+  }
+
+  .profile-info h3 {
+    font-size: 1rem;
+  }
+
+  .profile-info p {
+    font-size: 0.85rem;
+  }
+
+  .profile-edit-btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .profile-section {
+    padding: 1rem;
+  }
+
+  .profile-section h4 {
+    font-size: 0.95rem;
+  }
+
+  .profile-field {
+    padding: 0.75rem;
+  }
+
+  .profile-field label {
+    font-size: 0.85rem;
+  }
+
+  .profile-field p {
+    font-size: 0.9rem;
   }
 }

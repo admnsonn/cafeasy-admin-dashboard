@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Iconline from "../Photos/Iconline.png";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import {
   findAdmin,
   getLoggedInUser,
   setLoggedInUser,
-  removeLoggedInUser,
 } from "../Utils/localAuth";
 import "../Utils/Sign.css";
 // const jwt = require('jsonwebtoken');
@@ -66,12 +65,12 @@ function Logincomp() {
           <div className="click-button">
             <div className="row">
               <div className="col-md-3 color-text">
-                <a href="">
+                <span>
                   Login <img src={Iconline} alt="Icon" />
-                </a>
+                </span>
               </div>
               <div className="col-md-6">
-                <a href="RegisterAdmin">Daftar</a>
+                <Link to="/RegisterAdmin">Daftar</Link>
               </div>
             </div>
           </div>

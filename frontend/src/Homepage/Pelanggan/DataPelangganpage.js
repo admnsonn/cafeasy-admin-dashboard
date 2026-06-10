@@ -12,10 +12,9 @@ const DataPelangganpage = () => {
   }, []);
 
   return (
-    <div>
-      <Layout />
+    <Layout>
       <DataPelanggancomp data={data} />
-    </div>
+    </Layout>
   );
 };
 

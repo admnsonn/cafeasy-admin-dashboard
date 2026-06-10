@@ -12,10 +12,9 @@ const DataKategoripage = () => {
   }, []);
 
   return (
-    <div>
-      <Layout />
+    <Layout>
       <DataKategoricomp data={data} />
-    </div>
+    </Layout>
   );
 };
 

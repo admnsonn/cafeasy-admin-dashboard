@@ -12,10 +12,9 @@ const Bannerpage = () => {
   }, []);
 
   return (
-    <div>
-      <Layout />
+    <Layout>
       <Bannercomp data={data} />
-    </div>
+    </Layout>
   );
 };
 

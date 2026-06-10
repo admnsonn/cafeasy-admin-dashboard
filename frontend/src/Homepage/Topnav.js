@@ -11,16 +11,32 @@ const TopNav = () => {
     setData(admin ? [admin] : []);
   }, []);
 
-  let arr = data ?? [];
-
+  const admin = data[0] || {};
 
   return (
     <div className="topnav">
       <div className="topnav-wrapper">
-        <div className="search__box"></div>
+        <div className="topnav-search">
+          <i className="pi pi-search" />
+          <input type="text" placeholder="Cari data..." />
+        </div>
+
         <div className="topnav-right">
-          <div className="profil">
-            <i>{arr[0]?.namaPemilikCafe}</i>
+          <button type="button" className="topnav-icon-button">
+            <i className="pi pi-envelope" />
+          </button>
+          <button type="button" className="topnav-icon-button">
+            <i className="pi pi-bell" />
+          </button>
+          <div className="topnav-profile">
+            <img
+              src={admin.imageUrl || "/avatar.png"}
+              alt={admin.namaPemilikCafe || "Avatar"}
+            />
+            <div className="topnav-profile-info">
+              <span>{admin.namaPemilikCafe || "Andri Purnama"}</span>
+              <small>{admin.emailCafe || "andrip@mail.com"}</small>
+            </div>
           </div>
         </div>
       </div>

@@ -3,10 +3,9 @@ import ProfileAdmincomp from "./ProfileAdmincomp"
 
 const ProfileAdminpage = () => {
     return (
-    <div>
-       <Layout/>
-       <ProfileAdmincomp/>
-    </div>
+    <Layout>
+      <ProfileAdmincomp />
+    </Layout>
     )
 }
 

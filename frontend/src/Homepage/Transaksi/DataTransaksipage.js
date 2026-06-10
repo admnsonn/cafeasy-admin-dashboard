@@ -12,10 +12,9 @@ const DataTransaksipage = () => {
   }, []);
 
   return (
-    <div>
-      <Layout />
+    <Layout>
       <DataTransaksicomp data={data} />
-    </div>
+    </Layout>
   );
 };
 
