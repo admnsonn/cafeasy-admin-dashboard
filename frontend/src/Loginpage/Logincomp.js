@@ -7,7 +7,6 @@ import {
   getLoggedInUser,
   setLoggedInUser,
 } from "../Utils/localAuth";
-import "../Utils/Sign.css";
 // const jwt = require('jsonwebtoken');
 // import { Link } from 'react-router-dom';
 // import { Navigate } from "react-router-dom";
@@ -58,42 +57,42 @@ function Logincomp() {
   };
 
   return (
-    <div className="Logform-container">
-      <form className="Logform" onSubmit={submitLogin}>
-        <div className="Logform-content">
-          <h3 className="Logform-title">Masuk</h3>
-          <div className="click-button">
-            <div className="row">
-              <div className="col-md-3 color-text">
-                <span>
-                  Login <img src={Iconline} alt="Icon" />
+    <div className="flex justify-center items-center w-screen h-screen">
+      <form className="bg-gray-800 w-[550px] shadow-md p-10 rounded-2xl" onSubmit={submitLogin}>
+        <div className="pl-[10%] pr-[12%]">
+          <h3 className="text-center font-poppins mb-2 text-xl text-white font-black">Masuk</h3>
+          <div className="mb-4">
+            <div className="flex justify-between">
+              <div className="flex items-center gap-2">
+                <span className="text-gray-400">
+                  Login <img src={Iconline} alt="Icon" className="w-6 h-6" />
                 </span>
               </div>
-              <div className="col-md-6">
-                <Link to="/RegisterAdmin">Daftar</Link>
+              <div>
+                <Link to="/RegisterAdmin" className="text-gray-400 no-underline text-sm hover:text-white transition-colors">Daftar</Link>
               </div>
             </div>
           </div>
 
-          <div className="form-group mt-3">
-            <label>Nama Pengguna</label>
+          <div className="mb-4">
+            <label className="text-xs font-semibold text-white block mb-1">Nama Pengguna</label>
             <input
               type="text"
               required
-              className="form-control mt-1"
+              className="w-full px-4 py-2 mt-1 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-gray-500"
               placeholder="Masukan Nama Pengguna"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
 
-          <div className="form-group mt-3">
-            <div className="inputbutton">
-              <label>Sandi</label>
+          <div className="mb-4">
+            <div>
+              <label className="text-xs font-semibold text-white block mb-1">Sandi</label>
               <input
                 type="password"
                 required
-                className="form-control mt-1"
+                className="w-full px-4 py-2 mt-1 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-gray-500"
                 placeholder="Masukan Sandi"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -101,10 +100,10 @@ function Logincomp() {
             </div>
 
           </div>
-          <div className="d-grid gap-2 mt-3">
+          <div className="mt-4">
             <button
               type="submit"
-              className="btn btn-secondary"
+              className="w-full px-4 py-2 bg-gray-600 text-white rounded-lg font-semibold hover:bg-gray-700 transition-colors"
             >
               Masuk
             </button>

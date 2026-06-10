@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "../../Utils/Crud.css";
 import { DataTable } from "primereact/datatable";
 import { InputText } from "primereact/inputtext";
 import { Column } from "primereact/column";

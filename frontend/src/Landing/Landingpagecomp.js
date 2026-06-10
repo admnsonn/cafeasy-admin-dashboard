@@ -1,5 +1,4 @@
 import Logoputih from '../Photos/Logoputih.png';
-import "../Landing/Landingpage.css"
 import { useNavigate } from 'react-router-dom';
 import * as React from "react";
 
@@ -24,14 +23,14 @@ const Landingcomp = () => {
 
     return (
         <div>
-            <div className="landing">
-                <div className="gambars">
+            <div className="h-screen bg-gray-900">
+                <div className="absolute w-[74.5px] h-[93px] left-1/2 top-2/5 -translate-x-1/2 -translate-y-1/2">
                     <img src={Logoputih}></img>
                 </div>
-                <div className="text1" >CAFEASY</div>
-                <div className="text2">from hallodeck</div>
-                <div className="text5">Redirect to Login Admin in {counter} ....</div>
-                <div className="text4">© 2022-2023 CAFEASY All Rights Reserved.</div>
+                <div className="absolute font-black text-2xl text-white left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">CAFEASY</div>
+                <div className="absolute w-[71px] h-7 text-center text-xs uppercase text-white left-1/2 top-3/5 -translate-x-1/2 -translate-y-1/2">from hallodeck</div>
+                <div className="absolute w-80 h-7 text-center text-xs uppercase text-white left-1/2 top-[70%] -translate-x-1/2 -translate-y-1/2">Redirect to Login Admin in {counter} ....</div>
+                <div className="absolute w-56 h-4 text-center text-xs text-white opacity-50 left-1/2 top-[90%] -translate-x-1/2 -translate-y-1/2 tracking-tight">© 2022-2023 CAFEASY All Rights Reserved.</div>
 
             </div>
 

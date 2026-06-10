@@ -1,5 +1,4 @@
 ﻿import React, { useState } from "react";
-import "../../Utils/Crud.css";
 import { DataTable } from "primereact/datatable";
 import { InputText } from "primereact/inputtext";
 import { Column } from "primereact/column";
@@ -15,15 +14,16 @@ const NotAvailableMenu = ({ data = [] }) => {
   );
 
   const header = (
-    <div className="menu-table-header-secondary">
-      <span className="p-input-icon-left search-card-small">
-        <i className="pi pi-search" />
+    <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-end">
+      <div className="w-full md:w-72 relative">
+        <i className="pi pi-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
         <InputText
           type="search"
+          className="w-full rounded-full border border-slate-200 bg-white py-2 pl-11 pr-4 text-sm outline-none focus:border-slate-300 focus:ring-2 focus:ring-slate-200"
           onInput={(e) => setGlobalFilter(e.target.value)}
           placeholder="Cari..."
         />
-      </span>
+      </div>
     </div>
   );
 
@@ -40,6 +40,7 @@ const NotAvailableMenu = ({ data = [] }) => {
         resizableColumns
         showGridlines
         stripedRows
+        className="p-datatable-sm"
         tableStyle={{ minWidth: "50rem" }}
         scrollable
         scrollHeight="400px"

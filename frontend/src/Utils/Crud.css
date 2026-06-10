@@ -1,503 +1,108 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&display=swap");
+/* Legacy CSS file - All styles have been migrated to Tailwind utilities in JSX components */
 
-.title-banner-pertama,
-.title-kategori-pertama,
-.title-pelanggan-pertama,
-.title-transaksi-pertama,
-.title-menu-pertama,
-.title-profile-pertama {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 390%;
 
-  font-family: "Poppins", sans-serif;
-  font-weight: 700;
-  font-size: 22px;
-  line-height: 24px;
-
-  color: #000000;
-}
-
-.title-profile-kedua {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 357%;
-
-  font-family: "Poppins", sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 24px;
-
-  color: #000000;
-}
-
-.title-profile-ketiga {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 393%;
-
-  font-family: "Poppins", sans-serif;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 24px;
-
-  color: #000000;
-}
-
-.title-menu-kedua {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 359%;
-
-  font-family: "Poppins", sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 24px;
-
-  color: #000000;
-}
-
-.title-menu-ketiga {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 393%;
-
-  font-family: "Poppins", sans-serif;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 24px;
-
-  color: #000000;
-}
-
-.title-transaksi-kedua {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 347%;
-
-  font-family: "Poppins", sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 24px;
-
-  color: #000000;
-}
-
-.title-transaksi-ketiga {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 385%;
-
-  font-family: "Poppins", sans-serif;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 24px;
-
-  color: #000000;
-}
-
-.title-pelanggan-kedua {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 340%;
-
-  font-family: "Poppins", sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 24px;
-
-  color: #000000;
-}
-
-.title-pelanggan-ketiga {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 375%;
-
-  font-family: "Poppins", sans-serif;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 24px;
-
-  color: #000000;
-}
-
-.title-kategori-kedua {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 346%;
-
-  font-family: "Poppins", sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 24px;
-
-  color: #000000;
-}
-
-.title-kategori-ketiga {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 378%;
-
-  font-family: "Poppins", sans-serif;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 24px;
-
-  color: #000000;
-}
-
-.title-banner-kedua {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 348%;
-
-  font-family: "Poppins", sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 24px;
-
-  color: #000000;
-}
-
-.title-banner-ketiga {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 382%;
-
-  font-family: "Poppins", sans-serif;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 24px;
-
-  color: #000000;
-}
-
-.container {
-  width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem 1.5rem;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 1.5rem 0 1rem 0;
-  font-family: inherit;
-  font-weight: 600;
-  line-height: 1.2;
-  color: inherit;
-}
-
-h1 {
-  font-size: 10%;
-}
-h2 {
-  font-size: 2rem;
-}
-h3 {
-  font-size: 1.75rem;
-}
-h4 {
-  font-size: 1.5rem;
-}
-h5 {
-  font-size: 1rem;
-}
-h6 {
-  font-size: 1rem;
-}
-
-.p-datatable .p-datatable-header {
-  background: #f8f9fa;
-  color: #000000;
-  border: 1px solid #dee2e6;
-  border-width: 1px 0 1px 0;
-  padding: 1rem 1rem;
-  font-weight: 700;
-}
-
-.card {
-  margin-bottom: 2rem;
-  width: 100%;
-  -webkit-line-clamp: 2;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 1rem;
-  box-shadow: 0px 12px 30px rgba(15, 23, 42, 0.08);
-}
-
-.page-panel {
-  padding: 1.5rem;
-  background: #ffffff;
-  border-radius: 1rem;
-  border: 1px solid #e5e7eb;
-}
-
-.page-panel-menu {
-  background: transparent;
-  padding: 0;
-  border: none;
-}
-
-.page-panel-header {
-  display: flex;
-
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.page-heading {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: #111827;
-  letter-spacing: 0.02em;
-}
-
-.page-breadcrumb {
-  margin-top: 0.35rem;
-  color: #6b7280;
-  font-weight: 500;
-}
-
-.page-header-search {
-  min-width: 260px;
-}
-
-.menu-action-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  justify-content: flex-end;
-  margin: 1rem 0 1.5rem;
-}
-
-.menu-card {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 1.25rem;
-  box-shadow: 0 16px 30px rgba(15, 23, 42, 0.05);
-  padding: 1.25rem;
-}
-
-.menu-card-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.25rem;
-}
-
-.menu-card-title {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #111827;
-}
-
-.search-card {
-  width: 260px;
-}
-
-.search-card input {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border-radius: 999px;
-  border: 1px solid #d1d5db;
-  background: #f8fafc;
-}
-
-.search-card .pi {
-  position: absolute;
-  left: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #6b7280;
-}
-
-.search-card input {
-  padding-left: 2.7rem;
-}
-
-.search-card-small {
-  width: 180px !important;
-}
-
-.search-card-small input {
-  width: 100%;
-  padding: 0.65rem 0.9rem;
-  border-radius: 999px;
-  border: 1px solid #d1d5db;
-  background: #f8fafc;
-  font-size: 0.9rem;
-}
-
-.search-card-small .pi {
-  position: absolute;
-  left: 0.85rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #9ca3af;
-  font-size: 0.9rem;
-}
-
-.search-card-small input {
-  padding-left: 2.3rem;
-}
-
-.table-section-list {
-  display: grid;
-  gap: 1.5rem;
-  margin-top: 1.5rem;
-}
-
-.table-card {
-  background: #ffffff;
-  border-radius: 1.25rem;
-  border: 1px solid #e5e7eb;
-  padding: 1.25rem;
-}
-
-.table-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.table-card-header h5 {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 700;
-  color: #111827;
-}
-
-.table-card-header .p-input-icon-left {
-  width: 220px;
-}
-
-.table-card-header input {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border-radius: 999px;
-  border: 1px solid #d1d5db;
-  background: #f8fafc;
-}
-
-.table-card-header h5 {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 700;
-}
-
-.search-top .button-cari {
-  width: 100%;
-}
-
-@media only screen and (max-width: 1024px) {
-  .container {
-    padding: 1.5rem 1.25rem;
-  }
-
-  .page-header-search,
-  .menu-action-row {
-    width: 100%;
-    justify-content: flex-start;
-  }
-}
-
-@media only screen and (max-width: 768px) {
-  .container {
-    padding: 1.5rem 1rem;
-  }
-
-  .profile-page {
-    padding: 1rem 1rem 2rem;
-    margin: 1rem auto;
-  }
-
-  .page-panel {
-    padding: 1rem;
-  }
-
-  .page-panel-menu {
-    padding: 0;
-  }
-
-  .page-panel-header {
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 1rem;
-  }
-
-  .menu-card-top {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .menu-action-row {
-    width: 100%;
-    justify-content: flex-start;
-  }
-
-  .page-header-search {
-    width: 100%;
-  }
-
-  .button-cari {
-    width: 100%;
-  }
-
-  .menu-table-actions {
-    width: 100%;
-    justify-content: flex-start;
-    gap: 0.5rem;
-  }
-
-  .profile-card-head,
-  .profile-card-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .profile-avatar {
-    width: 80px;
-    height: 80px;
-  }
-
-  .profile-header-info h4 {
-    font-size: 1.15rem;
-  }
-
-  .search-card {
-    width: 100%;
-  }
-
-  .search-card-small {
-    width: 100%;
+  .table-card {
+    @apply bg-white rounded-2xl border border-gray-200 p-5;
   }
 
   .table-card-header {
+    @apply flex justify-between items-center gap-4 mb-4;
+  }
+
+  .table-card-header h5 {
+    @apply m-0 text-base font-bold text-gray-900;
+  }
+
+  .table-card-header .p-input-icon-left {
+    @apply w-56;
+  }
+
+  .table-card-header input {
+    @apply w-full px-4 py-3 rounded-full border border-gray-300 bg-slate-50;
+  }
+
+  .search-top .button-cari {
+    @apply w-full;
+  }
+
+  @media only screen and (max-width: 1024px) {
+    .container {
+      @apply px-5 py-6;
+    }
+
+    .page-header-search,
+    .menu-action-row {
+      @apply w-full justify-start;
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    .container {
+      @apply px-4 py-6;
+    }
+
+    .profile-page {
+      @apply p-4 pb-8 mx-auto my-4;
+    }
+
+    .page-panel {
+      @apply p-4;
+    }
+
+    .page-panel-menu {
+      @apply p-0;
+    }
+
+    .page-panel-header {
+      @apply flex-col items-start mb-4;
+    }
+
+    .menu-card-top {
+      @apply flex-col items-start;
+    }
+
+    .menu-action-row {
+      @apply w-full justify-start;
+    }
+
+    .page-header-search {
+      @apply w-full;
+    }
+
+    .button-cari {
+      @apply w-full;
+    }
+
+    .menu-table-actions {
+      @apply w-full justify-start gap-2;
+    }
+
+    .profile-card-head,
+    .profile-card-grid {
+      @apply grid-cols-1;
+    }
+
+    .profile-avatar {
+      @apply w-20 h-20;
+    }
+
+    .profile-header-info h4 {
+      @apply text-lg;
+    }
+
+    .search-card {
+      @apply w-full;
+    }
+
+    .search-card-small {
+      @apply w-full;
+    }
+
+    .table-card-header {
+      @apply flex-col items-start;
+    }
+  }
+}
     flex-direction: column;
     align-items: flex-start;
   }

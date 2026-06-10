@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import "../../Utils/Crud.css";
 import { DataTable } from "primereact/datatable";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
@@ -195,47 +194,49 @@ const Bannercomp = ({ data = [] }) => {
   );
 
   return (
-    <div className="container">
+    <div className="container mx-auto px-4">
       <div className="py-4">
-        <div className="page-panel page-panel-menu">
-          <div className="page-panel-header">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+          <div className="p-6 border-b border-gray-100">
             <div>
-              <div className="page-heading">Datatable Banner</div>
+              <h1 className="text-2xl font-bold text-gray-800">Datatable Banner</h1>
             </div>
           </div>
 
-          <div className="datatable-crud-demo">
+          <div className="p-6">
             <Toast ref={toast} />
-            <div className="card menu-card">
-              <div className="menu-card-top flex flex-column md:flex-row md:align-items-center justify-content-between gap-3">
-                <div className="menu-card-title">Semua Banner</div>
-                <div className="menu-card-actions flex flex-wrap gap-2">
+            <div className="mb-6">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+                <div className="flex items-center gap-4">
+                  <span className="p-input-icon-left w-full md:w-80">
+                    <i className="pi pi-search text-gray-400" />
+                    <InputText
+                      type="search"
+                      className="w-full py-2 px-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      value={globalFilter || ""}
+                      onChange={(e) => setGlobalFilter(e.target.value)}
+                      placeholder="Cari data..."
+                    />
+                  </span>
+                  <h2 className="text-xl font-semibold text-gray-700">Semua Banner</h2>
+                </div>
+                <div className="flex flex-wrap items-center gap-3">
                   <Button
-                    className="button-hapus"
                     label="Hapus"
                     icon="pi pi-trash"
                     severity="danger"
+                    className="bg-red-500 hover:bg-red-600 text-white rounded-lg px-4 py-2"
                     raised
                     onClick={confirmDeleteAllBanner}
                   />
                   <Button
-                    className="button-tambah"
                     label="Tambah"
                     icon="pi pi-plus"
+                    className="bg-green-600 hover:bg-green-700 text-white rounded-lg px-4 py-2"
                     raised
                     onClick={() => FormBanner()}
                   />
                 </div>
-                <span className="p-input-icon-left search-card w-full md:w-auto">
-                  <i className="pi pi-search" />
-                  <InputText
-                    type="search"
-                    className="w-full"
-                    value={globalFilter || ""}
-                    onChange={(e) => setGlobalFilter(e.target.value)}
-                    placeholder="Cari data..."
-                  />
-                </span>
               </div>
               <DataTable
                 value={banners}
@@ -251,6 +252,7 @@ const Bannercomp = ({ data = [] }) => {
               scrollable
               scrollHeight="700px"
               globalFilter={globalFilter}
+              className="p-datatable-sm"
               currentPageReportTemplate="Menampilkan {first} hingga {last} dari {totalRecords} data"
             >
               <Column field="idBanner" header="ID Banner" sortable style={{ minWidth: "10rem" }} />

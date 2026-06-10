@@ -1,5 +1,4 @@
 import Landingpagecomp from "../Landing/Landingpagecomp"
-import "../Landing/Landingpage.css"
 
 const Landingpage = () => {
     return (

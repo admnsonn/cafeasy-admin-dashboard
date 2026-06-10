@@ -111,14 +111,14 @@ function Update() {
   };
 
   return (
-    <div className="Logform-container">
-      <form className="Logform">
-        <div className="Logform-content">
+    <div className="flex justify-center items-center w-screen min-h-screen">
+      <form className="bg-gray-800 w-[550px] shadow-md p-10 rounded-2xl">
+        <div className="pl-[10%] pr-[12%]">
           <br></br>
 
-          <div className="row">
-            <div className="col-sm">
-              <label>Email</label>
+          <div className="grid grid-cols-2 gap-4 mb-4">
+            <div>
+              <label className="text-xs font-semibold text-white block mb-1">Email</label>
               <input
                 value={updateUser.emailCafe}
                 onChange={(e) =>
@@ -129,72 +129,70 @@ function Update() {
                 }
                 type="email"
                 id="email"
-                className="form-control mt-1"
+                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-gray-500"
                 placeholder={arr[0]?.emailCafe}
                 required
               />
             </div>
-            <div className="col-sm">
-              <label>Nama Pengguna</label>
+            <div>
+              <label className="text-xs font-semibold text-white block mb-1">Nama Pengguna</label>
               <input
                 value={updateUser.username}
                 onChange={(e) =>
                   setUpdateUser((data) => ({ ...data, username: e.target.value }))
                 }
                 type="text"
-                className="form-control mt-1"
+                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-gray-500"
                 placeholder={arr[0]?.username}
                 required
               />
             </div>
           </div>
 
-          <br></br>
-
-          <div className="row">
-            <div className="col-sm">
-              <label>Sandi</label>
+          <div className="grid grid-cols-2 gap-4 mb-4">
+            <div>
+              <label className="text-xs font-semibold text-white block mb-1">Sandi</label>
               <input
                 value={updateUser.password}
                 onChange={(e) =>
                   setUpdateUser((data) => ({ ...data, password: e.target.value }))
                 }
                 type="password"
-                className="form-control mt-1"
+                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-gray-500"
                 placeholder="Masukan Sandi baru"
                 required
               />
             </div>
-            <div className="col-sm">
-              <label>Nama Cafe</label>
+            <div>
+              <label className="text-xs font-semibold text-white block mb-1">Nama Cafe</label>
               <input
                 value={updateUser.namaCafe}
                 onChange={(e) =>
                   setUpdateUser((data) => ({ ...data, namaCafe: e.target.value }))
                 }
                 type="text"
-                className="form-control mt-1"
+                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-gray-500"
                 placeholder={arr[0]?.namaCafe}
                 required
               />
             </div>
           </div>
 
-          <div class="form-group mt-3">
-            <label>Alamat Cafe</label>
+          <div className="mb-4">
+            <label className="text-xs font-semibold text-white block mb-1">Alamat Cafe</label>
             <textarea
               value={updateUser.alamatCafe}
               onChange={(e) =>
                 setUpdateUser((data) => ({ ...data, alamatCafe: e.target.value }))
               }
               type="text"
-              className="form-control mt-1"
+              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-gray-500"
               placeholder={arr[0]?.alamatCafe}
               required
             />
           </div>
-          <div class="form-group mt-3">
-            <label>Deskripsi Cafe</label>
+          <div className="mb-4">
+            <label className="text-xs font-semibold text-white block mb-1">Deskripsi Cafe</label>
             <textarea
               value={updateUser.deskripsiCafe}
               onChange={(e) =>
@@ -204,15 +202,15 @@ function Update() {
                 }))
               }
               type="text"
-              className="form-control mt-1"
+              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-gray-500"
               placeholder={arr[0]?.deskripsiCafe}
               required
             />
           </div>
 
-          <div className="row">
-            <div className="col-sm">
-              <label>Nama Pemilik Cafe</label>
+          <div className="grid grid-cols-2 gap-4 mb-4">
+            <div>
+              <label className="text-xs font-semibold text-white block mb-1">Nama Pemilik Cafe</label>
               <input
                 value={updateUser.namaPemilikCafe}
                 onChange={(e) =>
@@ -222,13 +220,13 @@ function Update() {
                   }))
                 }
                 type="text"
-                className="form-control mt-1"
+                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-gray-500"
                 placeholder={arr[0]?.namaPemilikCafe}
                 required
               />
             </div>
-            <div className="col-sm">
-              <label>No Telepon</label>
+            <div>
+              <label className="text-xs font-semibold text-white block mb-1">No Telepon</label>
               <input
                 value={updateUser.noHpCafe}
                 onChange={(e) =>
@@ -239,15 +237,15 @@ function Update() {
                 }
                 type="tel"
                 pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-                className="form-control mt-1"
+                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-gray-500"
                 placeholder={arr[0]?.noHpCafe}
                 required
               />
             </div>
           </div>
 
-          <div class="form-group mt-3">
-            <label>Foto Cafe</label>
+          <div className="mb-4">
+            <label className="text-xs font-semibold text-white block mb-1">Foto Cafe</label>
             <input
               onChange={(e) =>
                 setUpdateUser((data) => ({
@@ -256,25 +254,25 @@ function Update() {
                 }))
               }
               type="file"
-              className="form-control mt-1"
+              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-gray-500"
             />
           </div>
 
-          <div className="row">
-            <div class="col-sm d-grid mt-3">
+          <div className="grid grid-cols-2 gap-4 mt-4">
+            <div>
             <Link
                 type="button"
-                className="text-decoration-none btn btn-primary"
+                className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors no-underline text-center block"
                 onClick={handleSubmit}
               >
                 Simpan
               </Link>
             </div>
 
-            <div class="col-sm d-grid mt-3">
+            <div>
               <Link
                 type="button"
-                className="text-decoration-none btn btn-secondary"
+                className="w-full px-4 py-2 bg-gray-600 text-white rounded-lg font-semibold hover:bg-gray-700 transition-colors no-underline text-center block"
                 to="/ProfileAdmin"
               >
                 Batal

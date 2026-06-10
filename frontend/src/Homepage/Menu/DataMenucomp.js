@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import "../../Utils/Crud.css";
 import AvailableMenu from "./AvailableMenu";
 import NotAvailableMenu from "./NotAvailableMenu";
 import { DataTable } from "primereact/datatable";
@@ -205,113 +204,134 @@ const DataMenucomp = ({ data = [], kategori = [] }) => {
   );
 
   return (
-    <div className="container">
-      <div className="py-4">
-        <div className="page-panel page-panel-menu">
-          <div className="page-panel-header">
+    <div className="w-full max-w-7xl mx-auto px-4 py-8">
+      <div className="space-y-8">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div>
+            <h1 className="text-3xl font-extrabold text-slate-900">Datatable Menu</h1>
+            <p className="mt-2 text-sm text-slate-500">Kelola semua menu, stok, dan deskripsi dengan mudah.</p>
+          </div>
+          <div className="w-full md:w-96">
+            <div className="relative">
+              <i className="pi pi-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+              <InputText
+                type="search"
+                className="w-full rounded-full border border-slate-200 bg-slate-50 py-3 pl-12 pr-4 text-sm shadow-sm outline-none focus:border-slate-300 focus:ring-2 focus:ring-slate-200"
+                value={globalFilter || ""}
+                onChange={(e) => setGlobalFilter(e.target.value)}
+                placeholder="Cari data..."
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between mb-6">
             <div>
-              <div className="page-heading">Datatable Menu</div>
+              <p className="text-base font-semibold text-slate-900">Semua Menu</p>
+            </div>
+            <div className="flex flex-wrap items-center gap-3">
+              <Button
+                label="Export"
+                icon="pi pi-file-excel"
+                severity="secondary"
+                raised
+                className="bg-slate-900 text-white hover:bg-slate-800"
+                onClick={EksporToSpreadsheet}
+              />
+              <Button
+                label="Hapus"
+                icon="pi pi-trash"
+                severity="danger"
+                raised
+                className="bg-red-500 text-white hover:bg-red-600"
+                onClick={confirmDeleteAll}
+              />
+              <Button
+                label="Tambah"
+                icon="pi pi-plus"
+                raised
+                className="bg-blue-600 text-white hover:bg-blue-700"
+                onClick={() => openForm()}
+              />
             </div>
           </div>
 
-          <div className="datatable-crud-demo">
-            <Toast ref={toast} />
-            <div className="card menu-card">
-              <div className="menu-card-top flex flex-column md:flex-row md:align-items-center justify-content-between gap-3">
-                <div className="menu-card-title">Semua Menu</div>
-                <div className="menu-card-actions flex flex-wrap gap-2">
-                  <Button
-                    className="button-spreed"
-                    label="Export"
-                    icon="pi pi-file-excel"
-                    severity="secondary"
-                    raised
-                    onClick={EksporToSpreadsheet}
-                  />
-                  <Button
-                    className="button-hapus"
-                    label="Hapus"
-                    icon="pi pi-trash"
-                    severity="danger"
-                    raised
-                    onClick={confirmDeleteAll}
-                  />
-                  <Button
-                    className="button-tambah"
-                    label="Tambah"
-                    icon="pi pi-plus"
-                    raised
-                    onClick={() => openForm()}
-                  />
-                </div>
-                <span className="p-input-icon-left search-card w-full md:w-auto">
-                  <i className="pi pi-search" />
-                  <InputText
-                    type="search"
-                    className="w-full"
-                    value={globalFilter || ""}
-                    onChange={(e) => setGlobalFilter(e.target.value)}
-                    placeholder="Cari data..."
-                  />
-                </span>
-              </div>
-              <DataTable
-                value={menus}
-                paginator
-                rows={10}
-                paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                rowsPerPageOptions={[5, 10, 25]}
-                dataKey="idMenu"
-                resizableColumns
-                showGridlines
-                stripedRows
-                tableStyle={{ minWidth: "50rem" }}
-                scrollable
-                scrollHeight="700px"
-                globalFilter={globalFilter}
-                currentPageReportTemplate="Menampilkan {first} hingga {last} dari {totalRecords} data"
-              >
-                <Column field="idMenu" header="ID Menu" sortable style={{ minWidth: "8rem" }} />
-                <Column field="namaMenu" header="Nama Menu" sortable style={{ minWidth: "12rem" }} />
-                <Column field="hargaMenu" header="Harga Menu" sortable style={{ minWidth: "10rem" }} />
-                <Column field="stokMenu" header="Stok Menu" sortable style={{ minWidth: "8rem" }} />
-                <Column
-                  field="deskripsiMenu"
-                  header="Deskripsi Menu"
-                  sortable
-                  style={{ minWidth: "14rem" }}
-                  body={bodyTemplate}
+          <div className="overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 p-4">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
+              <div className="text-sm font-semibold text-slate-700">Semua Menu</div>
+              <div className="w-full md:w-72 relative">
+                <i className="pi pi-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                <InputText
+                  type="search"
+                  className="w-full rounded-full border border-slate-200 bg-white py-2 pl-11 pr-4 text-sm outline-none focus:border-slate-300 focus:ring-2 focus:ring-slate-200"
+                  value={globalFilter || ""}
+                  onChange={(e) => setGlobalFilter(e.target.value)}
+                  placeholder="Cari data..."
                 />
-              </DataTable>
-            </div>
-            <div className="table-section-list">
-              <div className="table-card">
-                <div className="table-card-header">
-                  <h5>Menu Tersedia</h5>
-                </div>
-                <AvailableMenu data={menus} />
-              </div>
-              <div className="table-card">
-                <div className="table-card-header">
-                  <h5>Menu Tidak Tersedia</h5>
-                </div>
-                <NotAvailableMenu data={menus} />
               </div>
             </div>
+            <DataTable
+              value={menus}
+              paginator
+              rows={10}
+              paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+              rowsPerPageOptions={[5, 10, 25]}
+              dataKey="idMenu"
+              resizableColumns
+              showGridlines
+              stripedRows
+              className="p-datatable-sm"
+              tableStyle={{ minWidth: "50rem" }}
+              scrollable
+              scrollHeight="520px"
+              globalFilter={globalFilter}
+              currentPageReportTemplate="Menampilkan {first} hingga {last} dari {totalRecords} data"
+            >
+              <Column field="idMenu" header="ID Menu" sortable style={{ minWidth: "8rem" }} />
+              <Column field="namaMenu" header="Nama Menu" sortable style={{ minWidth: "12rem" }} />
+              <Column field="hargaMenu" header="Harga Menu" sortable style={{ minWidth: "10rem" }} />
+              <Column field="stokMenu" header="Stok Menu" sortable style={{ minWidth: "8rem" }} />
+              <Column
+                field="deskripsiMenu"
+                header="Deskripsi Menu"
+                sortable
+                style={{ minWidth: "14rem" }}
+                body={bodyTemplate}
+              />
+            </DataTable>
+          </div>
+        </div>
+
+        <div className="grid gap-6">
+          <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="mb-4 flex items-center justify-between">
+              <h5 className="text-base font-semibold text-slate-900">Menu Tersedia</h5>
+            </div>
+            <AvailableMenu data={menus} />
           </div>
 
-          <Dialog
-            visible={productDialog}
-            style={{ width: "450px" }}
-            header={menu.idMenu ? "Detail Menu" : "Tambah Menu"}
-            modal
-            className="p-fluid"
-            footer={productDialogFooter}
-            onHide={() => {
-              hideDialog();
-              setMenu(DEFAULT_MENU);
-            }}
-          >
+          <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="mb-4 flex items-center justify-between">
+              <h5 className="text-base font-semibold text-slate-900">Menu Tidak Tersedia</h5>
+            </div>
+            <NotAvailableMenu data={menus} />
+          </div>
+        </div>
+      </div>
+
+      <Dialog
+        visible={productDialog}
+        style={{ width: "450px" }}
+        header={menu.idMenu ? "Detail Menu" : "Tambah Menu"}
+        modal
+        className="p-fluid"
+        footer={productDialogFooter}
+        onHide={() => {
+          hideDialog();
+          setMenu(DEFAULT_MENU);
+        }}
+      >
             {menu.imageUrl && (
               <img
                 src={menu.imageUrl}
@@ -420,8 +440,6 @@ const DataMenucomp = ({ data = [], kategori = [] }) => {
             </div>
           </Dialog>
         </div>
-      </div>
-    </div>
   );
 };
 

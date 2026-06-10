@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "../Homepage/Sidebarpage.css";
 import * as ImIcons from "react-icons/im";
 import * as MdIcons from "react-icons/md";
 import * as AiIcons from "react-icons/ai";
@@ -70,30 +69,32 @@ function Sidebarcomp() {
   ];
 
   return (
-    <div className={`sidebar-wrapper ${isExpanded ? "expanded" : ""}`}>
-      <nav className="sidebar flex flex-column h-full">
-        <div className="sidebar-top sidebar-bg flex align-items-center justify-content-between p-3">
-          <div className="sidebar-brand">
-            <img src={logodannama} alt="Cafeasy Logo" />
+    <div className={`${isExpanded ? "" : ""}`}>
+      <nav className="w-[285px] min-h-screen fixed top-0 left-0 z-[999] bg-gray-900 px-5 py-8 flex flex-col gap-6 transition-all duration-300 ease-in-out lg:flex">
+        <div className="flex items-center justify-between p-3">
+          <div className="flex items-center justify-center gap-3.5">
+            <img src={logodannama} alt="Cafeasy Logo" className="w-[150px] h-[60px] object-contain" />
           </div>
           <button
-            className="p-link layout-topbar-button lg:hidden"
+            className="hidden lg:block p-2 text-white"
             onClick={() => setExpandedState(!isExpanded)}
           >
             <i className="pi pi-bars" />
           </button>
         </div>
 
-        <div className="sidebar-content">
-          <ul className="sidebar-list">
+        <div className="flex flex-col justify-between flex-1">
+          <ul className="flex flex-col gap-3">
             {Sidebardata.map((item, index) => (
-              <li className={item.cName} key={index}>
+              <li className="list-none" key={index}>
                 <NavLink
                   to={item.path}
                   className={({ isActive }) =>
-                    isActive ? "sidebar-active sidebar-link" : "sidebar-link"
-                  } // Apply active class if needed
-                  onClick={item.action || undefined} // Handle logout action
+                    isActive 
+                      ? "flex items-center gap-4 px-4 py-3 text-slate-400 font-poppins text-sm no-underline rounded-lg bg-gray-800 text-white transition-all duration-200" 
+                      : "flex items-center gap-4 px-4 py-3 text-slate-400 font-poppins text-sm no-underline rounded-lg hover:bg-gray-800 hover:text-white transition-all duration-200"
+                  }
+                  onClick={item.action || undefined}
                 >
                   {item.icon}
                   <span className="link-text">{item.display}</span>
@@ -102,8 +103,8 @@ function Sidebarcomp() {
             ))}
           </ul>
 
-          <div className="sidebar-bottom">
-            <button type="button" onClick={logout} className="sidebar-logout">
+          <div className="mt-auto">
+            <button type="button" onClick={logout} className="w-full flex items-center gap-3.5 px-4 py-3 border-none bg-transparent text-slate-400 font-poppins text-sm cursor-pointer rounded-lg hover:bg-gray-800 hover:text-white transition-all duration-200">
               <BiIcons.BiLogOut />
               <span>Logout</span>
             </button>

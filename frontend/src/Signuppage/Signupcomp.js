@@ -60,26 +60,25 @@ const Signupcomp = () => {
   };
 
   return (
-    <div className="Logform-container">
-      <form className="Logform">
-        <div className="Logform-content">
-          <h3 className="Logform-title">Daftar</h3>
+    <div className="flex justify-center items-center w-screen min-h-screen">
+      <form className="bg-gray-800 w-[550px] shadow-md p-10 rounded-2xl">
+        <div className="pl-[10%] pr-[12%]">
+          <h3 className="text-center font-poppins mb-2 text-xl text-white font-black">Daftar</h3>
 
-          <div className="row">
-            <div className="col-md-3">
-              <a href="LoginAdmin">Login</a>
+          <div className="flex justify-between mb-4">
+            <div className="">
+              <a href="LoginAdmin" className="text-gray-400 no-underline text-sm hover:text-white transition-colors">Login</a>
             </div>
-            <div className="col-md-6 color-text">
-              <a href="">
-                Daftar <img src={Iconline1} alt="Icon" />
+            <div className="">
+              <a href="" className="text-gray-400 no-underline text-sm hover:text-white transition-colors">
+                Daftar <img src={Iconline1} alt="Icon" className="w-6 h-6 inline" />
               </a>
             </div>
           </div>
-          <br></br>
 
-          <div className="row ">
-            <div className="col-sm">
-              <label>Email</label>
+          <div className="grid grid-cols-2 gap-4 mb-4">
+            <div>
+              <label className="text-xs font-semibold text-white block mb-1">Email</label>
               <input
                 defaultValue={user.emailCafe}
                 onChange={(e) =>
@@ -87,82 +86,80 @@ const Signupcomp = () => {
                 }
                 type="email"
                 id="email"
-                className="form-control mt-1"
+                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-gray-500"
                 placeholder="Masukan Email"
               />
             </div>
-            <div className="col-sm">
-              <label>Nama Pengguna</label>
+            <div>
+              <label className="text-xs font-semibold text-white block mb-1">Nama Pengguna</label>
               <input
                 defaultValue={user.username}
                 onChange={(e) =>
                   setUser((data) => ({ ...data, username: e.target.value }))
                 }
                 type="text"
-                className="form-control mt-1"
+                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-gray-500"
                 placeholder="Masukan Nama Pengguna"
               />
             </div>
           </div>
 
-          <br></br>
-
-          <div className="row">
-            <div className="col-sm">
-              <label>Sandi</label>
+          <div className="grid grid-cols-2 gap-4 mb-4">
+            <div>
+              <label className="text-xs font-semibold text-white block mb-1">Sandi</label>
               <input
                 defaultValue={user.password}
                 onChange={(e) =>
                   setUser((data) => ({ ...data, password: e.target.value }))
                 }
                 type="password"
-                className="form-control mt-1"
+                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-gray-500"
                 placeholder="Masukan Sandi"
               />
             </div>
 
-            <div className="col-sm">
-              <label>Nama Cafe</label>
+            <div>
+              <label className="text-xs font-semibold text-white block mb-1">Nama Cafe</label>
               <input
                 defaultValue={user.namaCafe}
                 onChange={(e) =>
                   setUser((data) => ({ ...data, namaCafe: e.target.value }))
                 }
                 type="text"
-                className="form-control mt-1"
+                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-gray-500"
                 placeholder="Masukan Nama Cafe"
               />
             </div>
           </div>
 
-          <div class="form-group mt-3">
-            <label>Alamat Cafe</label>
+          <div className="mb-4">
+            <label className="text-xs font-semibold text-white block mb-1">Alamat Cafe</label>
             <textarea
               defaultValue={user.alamatCafe}
               onChange={(e) =>
                 setUser((data) => ({ ...data, alamatCafe: e.target.value }))
               }
               type="text"
-              className="form-control mt-1"
+              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-gray-500"
               placeholder="Masukan Alamat"
             />
           </div>
-          <div class="form-group mt-3">
-            <label>Deskripsi Cafe</label>
+          <div className="mb-4">
+            <label className="text-xs font-semibold text-white block mb-1">Deskripsi Cafe</label>
             <textarea
               defaultValue={user.deskripsiCafe}
               onChange={(e) =>
                 setUser((data) => ({ ...data, deskripsiCafe: e.target.value }))
               }
               type="text"
-              className="form-control mt-1"
+              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-gray-500"
               placeholder="Masukan Deskripsi"
             />
           </div>
 
-          <div className="row">
-            <div className="col-sm">
-              <label>Nama Pemilik Cafe</label>
+          <div className="grid grid-cols-2 gap-4 mb-4">
+            <div>
+              <label className="text-xs font-semibold text-white block mb-1">Nama Pemilik Cafe</label>
               <input
                 defaultValue={user.namaPemilikCafe}
                 onChange={(e) =>
@@ -172,12 +169,12 @@ const Signupcomp = () => {
                   }))
                 }
                 type="text"
-                className="form-control mt-1"
+                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-gray-500"
                 placeholder="Masukan Nama Pemilik"
               />
             </div>
-            <div className="col-sm">
-              <label>No Telepon</label>
+            <div>
+              <label className="text-xs font-semibold text-white block mb-1">No Telepon</label>
               <input
                 value={user.noHpCafe}
                 onChange={(e) =>
@@ -188,16 +185,15 @@ const Signupcomp = () => {
                 }
                 type="tel"
                 pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-                className="form-control mt-1"
+                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-gray-500"
                 placeholder="Masukan Nomor Telepon"
               />
             </div>
           </div>
 
-          <div class="form-group mt-3">
-            <label>Foto Cafe</label>
+          <div className="mb-4">
+            <label className="text-xs font-semibold text-white block mb-1">Foto Cafe</label>
             <input
-              // value={fotoCafe}
               onChange={(e) =>
                 setUser((data) => ({
                   ...data,
@@ -205,13 +201,13 @@ const Signupcomp = () => {
                 }))
               }
               type="file"
-              className="form-control mt-1"
+              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-gray-500"
             />
           </div>
-          <div class="d-grid gap-2 mt-3">
+          <div className="mt-4">
             <button
               type="submit"
-              class="btn btn-secondary"
+              className="w-full px-4 py-2 bg-gray-600 text-white rounded-lg font-semibold hover:bg-gray-700 transition-colors"
               onClick={handleSubmit}
             >
               Daftar

@@ -4,9 +4,9 @@ import Topnav from "./Topnav";
 
 const Layout = ({ children }) => {
   return (
-    <div className="layout">
+    <div className="flex min-h-screen bg-gray-100">
       <Sidebarcomp />
-      <div className="main__layout">
+      <div className="ml-[285px] w-[calc(100%-285px)] min-h-screen pt-20 bg-gray-100 lg:ml-[85px] lg:w-[calc(100%-85px)] md:ml-0 md:w-full">
         <Topnav />
         {children}
       </div>

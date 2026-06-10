@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import "../../Utils/Crud.css";
 import TransaksiPerhari from "./TransaksiPerhari";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -150,21 +149,21 @@ const DataTransaksicomp = ({ data = [] }) => {
   );
 
   return (
-    <div className="container">
+    <div className="w-full max-w-5xl mx-auto px-6 py-8">
       <div className="py-4">
-        <div className="page-panel page-panel-menu">
-          <div className="page-panel-header">
+        <div className="p-6 bg-white rounded-lg border border-gray-200">
+          <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
             <div>
-              <div className="page-heading">Datatable Transaksi</div>
+              <div className="text-2xl font-black text-gray-900 tracking-wider">Datatable Transaksi</div>
             </div>
           </div>
 
-          <div className="datatable-crud-demo">
+          <div>
             <Toast ref={toast} />
-            <div className="card menu-card">
-              <div className="menu-card-top flex flex-column md:flex-row md:align-items-center justify-content-between gap-3">
-                <div className="menu-card-title">Semua Transaksi</div>
-                <div className="menu-card-actions flex flex-wrap gap-2">
+            <div className="mb-8 w-full bg-white border border-gray-200 rounded-lg shadow-lg p-5">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-5">
+                <div className="text-base font-bold text-gray-900">Semua Transaksi</div>
+                <div className="flex flex-wrap gap-2">
                   <Button
                     className="button-spreed"
                     label="Export"
@@ -174,11 +173,11 @@ const DataTransaksicomp = ({ data = [] }) => {
                     onClick={exportSpreadsheet}
                   />
                 </div>
-                <span className="p-input-icon-left search-card w-full md:w-auto">
-                  <i className="pi pi-search" />
+                <span className="relative w-full md:w-auto">
+                  <i className="pi pi-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-600" />
                   <InputText
                     type="search"
-                    className="w-full"
+                    className="w-full px-4 py-3 pl-11 rounded-full border border-gray-300 bg-slate-50"
                     value={globalFilter || ""}
                     onChange={(e) => setGlobalFilter(e.target.value)}
                     placeholder="Cari data..."
