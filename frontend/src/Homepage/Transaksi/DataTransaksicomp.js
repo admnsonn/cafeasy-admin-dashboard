@@ -59,7 +59,7 @@ const DataTransaksicomp = ({ data = [] }) => {
       setdataTransaksi((prev) =>
         prev.map((item) =>
           item.idTransaksi === transaksi.idTransaksi
-            ? { ...item, ...transaksi }
+            ? { ...item, ...transaksi, statusBayar: "Sukses Bayar Cash" }
             : item,
         ),
       );

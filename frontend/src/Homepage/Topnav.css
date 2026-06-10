@@ -8,6 +8,7 @@
   border-bottom: 1px solid #e5e7eb;
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
   height: 84px;
+  transition: left 0.3s ease-in-out, width 0.3s ease-in-out; /* Add transition */
 }
 
 .topnav-wrapper {

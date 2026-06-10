@@ -8,7 +8,6 @@ import * as BiIcons from "react-icons/bi";
 import * as FaIcons from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import logodannama from "../Photos/logodannama.png";
-import "../Photos/logodannama.png";
 import { useNavigate } from "react-router-dom";
 import {
   getLoggedInUser,
@@ -17,7 +16,7 @@ import {
 
 function Sidebarcomp() {
   const nextNavigate = useNavigate();
-  const [isExpanded, setExpendState] = useState(false);
+  const [isExpanded, setExpandedState] = useState(false);
 
   useEffect(() => {
     const username = getLoggedInUser();
@@ -26,6 +25,10 @@ function Sidebarcomp() {
     }
   }, [nextNavigate]);
 
+  const logout = () => {
+    removeLoggedInUser();
+    nextNavigate('/LoginAdmin');
+  };
 
   const Sidebardata = [
     {
@@ -65,19 +68,20 @@ function Sidebarcomp() {
       display: "Data Banner",
     },
   ];
-  const logout = () => {
-    removeLoggedInUser();
-    nextNavigate('/LoginAdmin');
-
-  };
 
   return (
-    <>
-      <nav className="sidebar">
-        <div className="sidebar-top sidebar-bg">
+    <div className={`sidebar-wrapper ${isExpanded ? "expanded" : ""}`}>
+      <nav className="sidebar flex flex-column h-full">
+        <div className="sidebar-top sidebar-bg flex align-items-center justify-content-between p-3">
           <div className="sidebar-brand">
             <img src={logodannama} alt="Cafeasy Logo" />
           </div>
+          <button
+            className="p-link layout-topbar-button lg:hidden"
+            onClick={() => setExpandedState(!isExpanded)}
+          >
+            <i className="pi pi-bars" />
+          </button>
         </div>
 
         <div className="sidebar-content">
@@ -86,11 +90,10 @@ function Sidebarcomp() {
               <li className={item.cName} key={index}>
                 <NavLink
                   to={item.path}
-                  className={(navClass) =>
-                    navClass.isActive
-                      ? "sidebar-active sidebar-link"
-                      : "sidebar-link"
-                  }
+                  className={({ isActive }) =>
+                    isActive ? "sidebar-active sidebar-link" : "sidebar-link"
+                  } // Apply active class if needed
+                  onClick={item.action || undefined} // Handle logout action
                 >
                   {item.icon}
                   <span className="link-text">{item.display}</span>
@@ -107,8 +110,7 @@ function Sidebarcomp() {
           </div>
         </div>
       </nav>
-    </>
+    </div>
   );
 }
-
 export default Sidebarcomp;

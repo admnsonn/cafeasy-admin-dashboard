@@ -4,6 +4,20 @@
   background: #f3f4f6;
 }
 
+/* Add these styles for the toggle button */
+.sidebar-toggle-button {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1000; /* Ensure it's above other content */
+  background-color: #111827;
+  color: white;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  display: none; /* Hidden by default, shown on small screens */
+}
+
 .sidebar {
   width: 285px;
   min-height: 100vh;
@@ -16,6 +30,7 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  transition: all 0.3s ease-in-out; /* Add transition for smooth animation */
 }
 
 .sidebar-top {
@@ -152,8 +167,26 @@
 }
 
 @media only screen and (max-width: 768px) {
+  .sidebar-toggle-button {
+    display: block; /* Show toggle button on small screens */
+  }
+
   .sidebar {
-    display: none;
+    width: 285px; /* Full width for mobile sidebar when open */
+    left: -285px; /* Initially hide the sidebar off-screen */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Add shadow for better visual */
+    /* Remove display: none; */
+  }
+
+  .sidebar.expanded {
+    left: 0; /* Slide in when expanded */
+  }
+
+  /* Ensure text is visible when expanded on mobile */
+  .sidebar.expanded .sidebar-brand-text,
+  .sidebar.expanded .sidebar-link .link-text,
+  .sidebar.expanded .sidebar-logout span {
+    display: block;
   }
 
   .main__layout {
