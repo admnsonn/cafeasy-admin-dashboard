@@ -1,28 +1,22 @@
-import Layout from "../Layout";
+﻿import Layout from "../Layout";
 import DataMenucomp from "./DataMenucomp";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { getData } from "../../Utils/localAuth";
 
 const DataMenupage = () => {
-  const [data, setData] = useState();
-  const [kategori, setKategori] = useState();
+  const [data, setData] = useState([]);
+  const [kategori, setKategori] = useState([]);
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_URL}/menu`).then((result) => {
-      setData(result.data.data);
-    });
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/kategoriMenu`)
-      .then((result) => {
-        setKategori(result.data.data);
-      });
+    const localData = getData();
+    setData(localData.menus ?? []);
+    setKategori(localData.kategoris ?? []);
   }, []);
 
   return (
     <div>
       <Layout />
-
-      {data && <DataMenucomp data={data} kategori={kategori} />}
+      <DataMenucomp data={data} kategori={kategori} />
     </div>
   );
 };

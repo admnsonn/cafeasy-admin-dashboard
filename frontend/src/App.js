@@ -3,7 +3,7 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Loginpage from "./Loginpage/Loginpage";
 import Signuppage from "./Signuppage/Signuppage";
 import ProfileAdminpage from "./Homepage/Profile/ProfileAdminpage";
@@ -19,7 +19,6 @@ import Bannerpage from "./Homepage/Banner/Bannerpage";
 
 const App = () => {
   return (
-    <Router>
       <Routes>
         <Route exact path="/" element={<Landingpage />}></Route>
         <Route exact path="/LoginAdmin" element={<Loginpage />}></Route>
@@ -52,7 +51,6 @@ const App = () => {
         ></Route>
         <Route exact path="/DataBanner" element={<Bannerpage />}></Route>
       </Routes>
-    </Router>
   );
 };
 export default App;

@@ -1,38 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import "../../Utils/Crud.css";
-import axios from "axios";
 import { DataTable } from "primereact/datatable";
 import { InputText } from "primereact/inputtext";
 import { Column } from "primereact/column";
 
-const TransaksiPerhari = () => {
-  const [data, setData] = useState([]);
+const TransaksiPerhari = ({ data = [] }) => {
   const [globalFilter, setGlobalFilter] = useState(null);
-
-  useEffect(() => {
-    axios
-      .get(` ${process.env.REACT_APP_API_URL}/transaksiPerhari/`)
-      .then((result) => {
-        setData(result.data);
-      })
-      .catch((error) => console.log(error));
-  }, [data]);
-
-  const bodyTemplate = (rowData) => {
-    return (
-      <div className="white-space-nowrap overflow-hidden text-overflow-ellipsis">
-        {rowData.deskripsiMenu}
-      </div>
-    );
-  };
-
-  const imageBody = (data) => (
-    <img
-      src={data.imageUrl}
-      alt={data.imageUrl}
-      className="w-6rem shadow-2 border-round"
-    />
-  );
+  const today = new Date().toISOString().slice(0, 10);
+  const todayData = data.filter((item) => item.tanggal?.startsWith(today));
 
   const header = (
     <div className="table-header">
@@ -48,19 +23,17 @@ const TransaksiPerhari = () => {
     </div>
   );
 
-  let arr = data.data ?? [];
-
   return (
     <div className="datatable-crud-demo">
       <div className="card">
         <DataTable
-          value={arr}
+          value={todayData}
           paginator
           header={header}
           rows={10}
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           rowsPerPageOptions={[5, 10, 25]}
-          dataKey="idMenu"
+          dataKey="idTransaksi"
           resizableColumns
           showGridlines
           stripedRows
@@ -70,50 +43,11 @@ const TransaksiPerhari = () => {
           globalFilter={globalFilter}
           currentPageReportTemplate="Menampilkan {first} hingga {last} dari {totalRecords} data"
         >
-          <Column
-            field="idMenu"
-            header="ID Menu"
-            sortable
-            style={{ minWidth: "10rem" }}
-          ></Column>
-          <Column
-            field="namaMenu"
-            header="Nama Menu"
-            sortable
-            style={{ minWidth: "10rem" }}
-          ></Column>
-          <Column
-            field="hargaMenu"
-            header="Harga Menu"
-            sortable
-            style={{ minWidth: "10rem" }}
-          ></Column>
-          <Column
-            field="stokMenu"
-            header="Stok Menu"
-            sortable
-            style={{ minWidth: "10rem" }}
-          ></Column>
-          <Column
-            field="deskripsiMenu"
-            header="Deskripsi Menu"
-            sortable
-            style={{ maxWidth: 220 }}
-            body={bodyTemplate}
-          ></Column>
-          <Column
-            field="kategoriMenu"
-            header="Kategori Menu"
-            sortable
-            style={{ minWidth: "10rem" }}
-          ></Column>
-          <Column
-            field="imageUrl"
-            header="Gambar"
-            body={imageBody}
-            sortable
-            style={{ minWidth: "10rem" }}
-          ></Column>
+          <Column field="idTransaksi" header="ID Transaksi" sortable style={{ minWidth: "10rem" }} />
+          <Column field="namaPelanggan" header="Nama Pelanggan" sortable style={{ minWidth: "10rem" }} />
+          <Column field="tanggal" header="Tanggal" sortable style={{ minWidth: "10rem" }} />
+          <Column field="totalHarga" header="Total Harga" sortable style={{ minWidth: "10rem" }} />
+          <Column field="statusBayar" header="Status Bayar" sortable style={{ minWidth: "10rem" }} />
         </DataTable>
       </div>
     </div>

@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import "../../Utils/Crud.css";
-import axios from "axios";
 import { DataTable } from "primereact/datatable";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { InputText } from "primereact/inputtext";
-import { Toast } from "primereact/toast";
 import { Dialog } from "primereact/dialog";
+import { Toast } from "primereact/toast";
 
 const DEFAULT_KATEGORI = {
   namaKategori: "",
@@ -23,7 +22,7 @@ const DataKategoricomp = ({ data = [] }) => {
 
   useEffect(() => {
     setKategoris(data);
-  }, []);
+  }, [data]);
 
   const hideDeleteKategDialog = () => {
     setDeleteKategDialog(false);
@@ -38,7 +37,7 @@ const DataKategoricomp = ({ data = [] }) => {
   };
 
   const confirmDeleteKategSelected = (selectedMenu) => {
-    setKategori((data) => ({ ...data, ...selectedMenu }));
+    setKategori(selectedMenu);
     setDeleteKategDialog(true);
   };
 
@@ -46,78 +45,45 @@ const DataKategoricomp = ({ data = [] }) => {
     setKategoriDialog(false);
   };
 
-  const SubmitKateg = async () => {
-    const formData = new FormData();
-
-    formData.append("namaKategori", kategori.namaKategori);
-
+  const SubmitKateg = () => {
     if (kategori.idKategori) {
-      axios
-        .put(
-          `${process.env.REACT_APP_API_URL}/updateKategoriMenu/${kategori.idKategori}`,
-          formData
+      setKategoris((prev) =>
+        prev.map((item) =>
+          item.idKategori === kategori.idKategori
+            ? { ...item, ...kategori }
+            : item
         )
-        .then((response) => {
-          let index;
-          const filteredData = kategoris.some((x, i) => {
-            index = i;
-            return x.idKategori === kategori.idKategori;
-          });
-          const newKategoris = [...kategoris];
-          newKategoris.splice(index, 1, response.data.data);
-          setKategoris(newKategoris);
-          setKategoriDialog(false);
-          toast.current.show({
-            severity: "success",
-            summary: "Success",
-            detail: "Data Berhasil Disimpan",
-            life: 3000,
-          });
-          setKategoriDialog(DEFAULT_KATEGORI);
-        })
-        .catch((response) => {
-          toast.current.show({
-            severity: "error",
-            summary: "Failed",
-            detail: "Data Gagal Disimpan",
-            life: 3000,
-          });
-        });
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
+      );
+      toast.current.show({
+        severity: "success",
+        summary: "Success",
+        detail: "Data Berhasil Disimpan",
+        life: 3000,
+      });
     } else {
-      await axios
-        .post(`${process.env.REACT_APP_API_URL}/insertKategoriMenu/`, formData)
-        .then((response) => {
-          console.log(response);
-          setKategoris((prevData) => [...prevData, response.data.data]);
-          setKategoriDialog(false);
-          toast.current.show({
-            severity: "success",
-            summary: "Success",
-            detail: "Data Berhasil Disimpan",
-            life: 3000,
-          });
-        })
-        .catch((response) => {
-          toast.current.show({
-            severity: "error",
-            summary: "Failed",
-            detail: "Data Gagal Disimpan",
-            life: 3000,
-          });
-        });
+      const nextId = kategoris.reduce(
+        (max, item) => Math.max(max, item.idKategori || 0),
+        0
+      ) + 1;
+      setKategoris((prev) => [...prev, { ...kategori, idKategori: nextId }]);
+      toast.current.show({
+        severity: "success",
+        summary: "Success",
+        detail: "Data Berhasil Disimpan",
+        life: 3000,
+      });
     }
+    setKategoriDialog(false);
+    setKategori(DEFAULT_KATEGORI);
   };
 
   const FormKateg = (selectedMenu = {}) => {
-    setKategori((data) => ({ ...data, ...selectedMenu }));
+    setKategori((current) => ({ ...current, ...selectedMenu }));
     setKategoriDialog(true);
   };
 
   const KategoriDialogFooter = (
-    <React.Fragment>
+    <>
       <Button
         label="Batal"
         icon="pi pi-times"
@@ -133,33 +99,31 @@ const DataKategoricomp = ({ data = [] }) => {
         className="p-button-text"
         onClick={SubmitKateg}
       />
-    </React.Fragment>
+    </>
   );
 
-  const deleteAllKateg = async () => {
-    await axios
-      .delete(`${process.env.REACT_APP_API_URL}/deleteAllKategoriMenu`)
-      .then((response) => {
-        toast.current.show({
-          severity: "success",
-          summary: "Success",
-          detail: "Data Berhasil Dihapus",
-          life: 3000,
-        });
-        setKategori(DEFAULT_KATEGORI);
-        setDeleteKategDialog(false);
-      })
-      .catch((response) => {
-        toast.current.show({
-          severity: "error",
-          summary: "Failed",
-          detail: "Data Gagal Dihapus",
-          life: 3000,
-        });
-      });
-    setTimeout(() => {
-      window.location.reload();
-    }, 1000);
+  const deleteAllKateg = () => {
+    setKategoris([]);
+    setKategori(DEFAULT_KATEGORI);
+    setDeleteAllKategDialog(false);
+    toast.current.show({
+      severity: "success",
+      summary: "Success",
+      detail: "Data Berhasil Dihapus",
+      life: 3000,
+    });
+  };
+
+  const deleteKateg = () => {
+    setKategoris((prev) => prev.filter((item) => item.idKategori !== kategori.idKategori));
+    setKategori(DEFAULT_KATEGORI);
+    setDeleteKategDialog(false);
+    toast.current.show({
+      severity: "success",
+      summary: "Success",
+      detail: "Data Berhasil Dihapus",
+      life: 3000,
+    });
   };
 
   const deleteAllKategDialogFooter = (
@@ -178,36 +142,6 @@ const DataKategoricomp = ({ data = [] }) => {
       />
     </>
   );
-  useEffect(() => {});
-
-  const deleteKateg = async () => {
-    await axios
-      .delete(
-        `${process.env.REACT_APP_API_URL}/deleteKategoriMenuById/${kategori.idKategori}`
-      )
-      .then((response) => {
-        toast.current.show({
-          severity: "success",
-          summary: "Success",
-          detail: "Data Berhasil Dihapus",
-          life: 3000,
-        });
-
-        setKategori(DEFAULT_KATEGORI);
-        setDeleteKategDialog(false);
-      })
-      .catch((response) => {
-        toast.current.show({
-          severity: "error",
-          summary: "Failed",
-          detail: "Data Gagal Dihapus",
-          life: 3000,
-        });
-      });
-    setTimeout(() => {
-      window.location.reload();
-    }, 1000);
-  };
 
   const deleteKategDialogFooter = (
     <>
@@ -226,14 +160,14 @@ const DataKategoricomp = ({ data = [] }) => {
     </>
   );
 
-  const actionButtonKateg = (kategori) => (
+  const actionButtonKateg = (kategoriItem) => (
     <>
       <Button
         label="Edit"
         className="mx-2"
         icon="pi pi-pencil"
         rounded
-        onClick={() => FormKateg(kategori)}
+        onClick={() => FormKateg(kategoriItem)}
       />
       <Button
         label="Hapus"
@@ -241,7 +175,7 @@ const DataKategoricomp = ({ data = [] }) => {
         icon="pi pi-trash"
         severity="danger"
         rounded
-        onClick={() => confirmDeleteKategSelected(kategori)}
+        onClick={() => confirmDeleteKategSelected(kategoriItem)}
       />
     </>
   );
@@ -250,37 +184,20 @@ const DataKategoricomp = ({ data = [] }) => {
     <div className="table-header">
       <h5 className="mx-0 my-1">Semua Kategori</h5>
       <div className="flex gap-2">
-        <Button
-          label="Tambah Kategori"
-          icon="pi pi-plus"
-          raised
-          onClick={() => FormKateg()}
-        />
-        <Button
-          label="Hapus Semua"
-          icon="pi pi-trash"
-          severity="danger"
-          raised
-          onClick={confirmDeleteAllKateg}
-        />
+        <Button label="Tambah Kategori" icon="pi pi-plus" raised onClick={() => FormKateg()} />
+        <Button label="Hapus Semua" icon="pi pi-trash" severity="danger" raised onClick={confirmDeleteAllKateg} />
         <span className="p-input-icon-left">
           <i className="pi pi-search" />
-          <InputText
-            type="search"
-            onInput={(e) => setGlobalFilter(e.target.value)}
-            placeholder="Search..."
-          />
+          <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Cari..." />
         </span>
       </div>
     </div>
   );
 
-  let arr = data.data ?? [];
-
   return (
     <div className="container">
       <div className="py-4">
-        <br></br>
+        <br />
         <div className="row">
           <div className="col-md-3">
             <div className="title-kategori-pertama"> DATATABLE KATEGORI </div>
@@ -292,68 +209,51 @@ const DataKategoricomp = ({ data = [] }) => {
             <div className="title-kategori-ketiga"> Data Kategori </div>
           </div>
         </div>
-        <br></br> <br></br>
+        <br /> <br />
         <div className="datatable-crud-demo">
           <Toast ref={toast} />
           <div className="card">
             <DataTable
               value={kategoris}
+              paginator
               header={header}
+              rows={10}
+              paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+              rowsPerPageOptions={[5, 10, 25]}
+              dataKey="idKategori"
               resizableColumns
               showGridlines
               stripedRows
               tableStyle={{ minWidth: "50rem" }}
               scrollable
-              scrollHeight="500px"
+              scrollHeight="700px"
               globalFilter={globalFilter}
-              dataKey="idKategori"
-              paginator
-              rows={10}
-              rowsPerPageOptions={[5, 10, 25]}
-              paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
               currentPageReportTemplate="Menampilkan {first} hingga {last} dari {totalRecords} data"
             >
-              <Column
-                field="idKategori"
-                header="ID Kategori"
-                sortable
-                style={{ width: "30%" }}
-              />
-              <Column
-                field="namaKategori"
-                header="Nama Kategori"
-                sortable
-                style={{ width: "30%" }}
-              />
-              <Column
-                header="Aksi"
-                exportable={false}
-                style={{ width: "15%" }}
-                body={actionButtonKateg}
-              ></Column>
+              <Column field="idKategori" header="ID Kategori" sortable style={{ minWidth: "10rem" }} />
+              <Column field="namaKategori" header="Nama Kategori" sortable style={{ minWidth: "10rem" }} />
+              <Column header="Aksi" exportable={false} style={{ minWidth: "12rem" }} body={actionButtonKateg} />
             </DataTable>
           </div>
 
           <Dialog
             visible={kategoriDialog}
             style={{ width: "450px" }}
-            header={kategori.namaKategori ? "Edit Kategori" : "Tambah Kategori"}
+            header={kategori.idKategori ? "Edit Kategori" : "Tambah Kategori"}
             modal
             className="p-fluid"
             footer={KategoriDialogFooter}
-            onHide={hideKategDialog}
+            onHide={() => {
+              hideKategDialog();
+              setKategori(DEFAULT_KATEGORI);
+            }}
           >
             <div className="field">
-              <label htmlFor="name">Name Kategori</label>
+              <label htmlFor="name">Nama Kategori</label>
               <InputText
                 id="name"
-                defaultValue={kategori.namaKategori}
-                onChange={(e) => {
-                  setKategori((data) => ({
-                    ...data,
-                    namaKategori: e.target.value,
-                  }));
-                }}
+                value={kategori.namaKategori}
+                onChange={(e) => setKategori((current) => ({ ...current, namaKategori: e.target.value }))}
                 required
                 autoFocus
               />
@@ -370,10 +270,7 @@ const DataKategoricomp = ({ data = [] }) => {
             onHide={hideDeleteAllKategDialog}
           >
             <div className="confirmation-content">
-              <i
-                className="pi pi-exclamation-triangle mr-3"
-                style={{ fontSize: "2rem" }}
-              />
+              <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: "2rem" }} />
               <span>
                 Apakah anda yakin ingin menghapus <b>semua kategori</b>?
               </span>
@@ -390,16 +287,10 @@ const DataKategoricomp = ({ data = [] }) => {
             onHide={hideDeleteKategDialog}
           >
             <div className="confirmation-content">
-              <i
-                className="pi pi-exclamation-triangle mr-3"
-                style={{ fontSize: "2rem" }}
-              />
-              {kategori && (
-                <span>
-                  Apakah anda yakin ingin menghapus{" "}
-                  <b>{kategori.namaKategori}</b>?
-                </span>
-              )}
+              <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: "2rem" }} />
+              <span>
+                Apakah anda yakin ingin menghapus <b>{kategori.namaKategori}</b>?
+              </span>
             </div>
           </Dialog>
         </div>

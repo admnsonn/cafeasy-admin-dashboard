@@ -1,21 +1,20 @@
-import Layout from "../Layout";
+﻿import Layout from "../Layout";
 import DataPelanggancomp from "./DataPelanggancomp";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { getData } from "../../Utils/localAuth";
 
 const DataPelangganpage = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({ data: [] });
 
   useEffect(() => {
-    axios.get(` ${process.env.REACT_APP_API_URL}/customer/`).then((result) => {
-      setData(result.data);
-    });
+    const localData = getData();
+    setData({ data: localData.customers?.data ?? [] });
   }, []);
 
   return (
     <div>
       <Layout />
-      {data && <DataPelanggancomp data={data} />}
+      <DataPelanggancomp data={data} />
     </div>
   );
 };

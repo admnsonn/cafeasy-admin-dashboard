@@ -1,19 +1,16 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import "../../Utils/Crud.css";
 import AvailableMenu from "./AvailableMenu";
 import NotAvailableMenu from "./NotAvailableMenu";
-import axios from "axios";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
 import { Dialog } from "primereact/dialog";
-import { Toolbar } from "primereact/toolbar";
 import { InputTextarea } from "primereact/inputtextarea";
 import { FileUpload } from "primereact/fileupload";
 import { Dropdown } from "primereact/dropdown";
-import { Card } from "primereact/card";
 
 const DEFAULT_MENU = {
   imageFile: "",
@@ -30,150 +27,85 @@ const DataMenucomp = ({ data = [], kategori = [] }) => {
   const [deleteMenuDialog, setDeleteMenuDialog] = useState(false);
   const [deleteAllDialog, setDeleteAllDialog] = useState(false);
   const [productDialog, setProductDialog] = useState(false);
-  const [detailDialog, setDetailDialog] = useState(false);
   const [menu, setMenu] = useState(DEFAULT_MENU);
   const [menus, setMenus] = useState([]);
 
   useEffect(() => {
-    setMenus(data);
-  }, []);
+    setMenus(data ?? []);
+  }, [data]);
 
-  // cancel modal
   const hideDialog = () => {
     setProductDialog(false);
   };
 
-  const hideDetailDialog = () => {
-    setDetailDialog(false);
-  };
-
-  // open form
   const openForm = (selectedMenu = {}) => {
-    setMenu((data) => ({ ...data, ...selectedMenu }));
+    setMenu((current) => ({ ...current, ...selectedMenu }));
     setProductDialog(true);
   };
 
-  // open form
-  const openDetail = (selectedMenu = {}) => {
-    setMenu((data) => ({ ...data, ...selectedMenu }));
-    setDetailDialog(true);
-  };
-
-  // confirm delete
   const confirmDeleteSelected = (selectedMenu) => {
-    setMenu((data) => ({ ...data, ...selectedMenu }));
+    setMenu((current) => ({ ...current, ...selectedMenu }));
     setDeleteMenuDialog(true);
   };
 
-  // submit
-
-  const onSubmit = async () => {
-    const formData = new FormData();
-
-    formData.append("image", menu.imageFile);
-    formData.append("hargaMenu", menu.hargaMenu);
-    formData.append("stokMenu", menu.stokMenu);
-    formData.append("deskripsiMenu", menu.deskripsiMenu);
-    formData.append("kategoriMenu", menu.kategoriMenu);
-    formData.append("namaMenu", menu.namaMenu);
-
+  const onSubmit = () => {
     if (menu.idMenu) {
-      axios
-        .put(
-          `${process.env.REACT_APP_API_URL}/updateDataMenu/${menu.idMenu}`,
-          formData
+      setMenus((prev) =>
+        prev.map((item) =>
+          item.idMenu === menu.idMenu
+            ? {
+                ...item,
+                ...menu,
+                imageUrl:
+                  menu.imageUrl ||
+                  (menu.imageFile?.name
+                    ? URL.createObjectURL(menu.imageFile)
+                    : item.imageUrl),
+                updatedAt: new Date().toISOString(),
+              }
+            : item
         )
-        .then((response) => {
-          let index;
-          const filteredData = menus.some((x, i) => {
-            index = i;
-            return x.idMenu === menu.idMenu;
-          });
-          const newMenus = [...menus];
-          newMenus.splice(index, 1, response.data.data);
-          setMenus(newMenus);
-          setProductDialog(false);
-          toast.current.show({
-            severity: "success",
-            summary: "Success",
-            detail: "Data Berhasil Disimpan",
-            life: 3000,
-          });
-          setMenu(DEFAULT_MENU);
-        })
-        .catch((response) => {
-          toast.current.show({
-            severity: "error",
-            summary: "Failed",
-            detail: "Data Gagal Disimpan",
-            life: 3000,
-          });
-        });
-    } else {
-      await axios
-        .post(`${process.env.REACT_APP_API_URL}/insertMenu/`, formData)
-        .then((response) => {
-
-          setMenus((prevData) => [...prevData, response.data.data]);
-          setProductDialog(false);
-          toast.current.show({
-            severity: "success",
-            summary: "Success",
-            detail: "Data Berhasil Disimpan",
-            life: 3000,
-          });
-        })
-        .catch((response) => {
-          toast.current.show({
-            severity: "error",
-            summary: "Failed",
-            detail: "Data Gagal Disimpan",
-            life: 3000,
-          });
-        });
-    }
-  };
-
-  const EksporToSpreadsheet = async () => {
-    let dataMenuArray = [];
-    let data;
-
-    const sheetName = "Data Menu";
-
-    menus.map((value) => {
-      dataMenuArray.push([
-        value.idMenu,
-        value.namaMenu,
-        value.deskripsiMenu,
-        value.hargaMenu,
-        value.stokMenu,
-        value.updatedAt.substring(0, 10) + " : " + value.updatedAt.substring(11, 16),
-      ]);
-    });
-
-    data = { sheetName: sheetName, data: dataMenuArray };
-
-    await axios
-      .post(`${process.env.REACT_APP_API_URL}/createNewSpreadsheet`, data)
-      .then(() => {
-        window.open(
-          "https://docs.google.com/spreadsheets/d/1suDps63BnNPDeIDAHZ07leYFnbihjoatWByahkd41lk/edit?usp=sharing",
-          "_blank"
-        );
-
+      );
+      toast.current.show({
+        severity: "success",
+        summary: "Success",
+        detail: "Data Berhasil Disimpan",
+        life: 3000,
       });
+    } else {
+      const nextId = menus.reduce((max, item) => Math.max(max, item.idMenu || 0), 0) + 1;
+      const newMenu = {
+        ...menu,
+        idMenu: nextId,
+        imageUrl:
+          menu.imageUrl ||
+          (menu.imageFile?.name ? URL.createObjectURL(menu.imageFile) : "/placeholder.png"),
+        updatedAt: new Date().toISOString(),
+      };
+      setMenus((prev) => [...prev, newMenu]);
+      toast.current.show({
+        severity: "success",
+        summary: "Success",
+        detail: "Data Berhasil Disimpan",
+        life: 3000,
+      });
+    }
+
+    setProductDialog(false);
+    setMenu(DEFAULT_MENU);
   };
 
-  const bodyTemplate = (rowData) => {
-    return (
-      <div className="white-space-nowrap overflow-hidden text-overflow-ellipsis">
-        {rowData.deskripsiMenu}
-      </div>
-    );
+  const EksporToSpreadsheet = () => {
+    toast.current.show({
+      severity: "info",
+      summary: "Ekspor",
+      detail: "Fungsi ekspor offline tidak tersedia",
+      life: 3000,
+    });
   };
 
   const invoiceUploadHandler = (e) => {
-    setMenu((data) => ({ ...data, imageFile: e.files[0] }));
+    setMenu((current) => ({ ...current, imageFile: e.files[0] }));
   };
 
   const confirmDeleteAll = () => {
@@ -188,56 +120,28 @@ const DataMenucomp = ({ data = [], kategori = [] }) => {
     setDeleteAllDialog(false);
   };
 
-  const deleteMenu = async () => {
-    await axios
-      .delete(`${process.env.REACT_APP_API_URL}/deleteMenuById/${menu.idMenu}`)
-      .then((response) => {
-        toast.current.show({
-          severity: "success",
-          summary: "Success",
-          detail: "Data Berhasil Dihapus",
-          life: 3000,
-        });
-        setMenu(DEFAULT_MENU);
-        setDeleteMenuDialog(false);
-      })
-      .catch((response) => {
-        toast.current.show({
-          severity: "error",
-          summary: "Failed",
-          detail: "Data Gagal Dihapus",
-          life: 3000,
-        });
-      });
-    setTimeout(() => {
-      window.location.reload();
-    }, 1000);
+  const deleteMenu = () => {
+    setMenus((prev) => prev.filter((item) => item.idMenu !== menu.idMenu));
+    setMenu(DEFAULT_MENU);
+    setDeleteMenuDialog(false);
+    toast.current.show({
+      severity: "success",
+      summary: "Success",
+      detail: "Data Berhasil Dihapus",
+      life: 3000,
+    });
   };
 
-  const deleteAll = async () => {
-    await axios
-      .delete(`${process.env.REACT_APP_API_URL}/deleteAllMenu`)
-      .then((response) => {
-        toast.current.show({
-          severity: "success",
-          summary: "Success",
-          detail: "Data Berhasil Dihapus",
-          life: 3000,
-        });
-        setMenu(DEFAULT_MENU);
-        setDeleteMenuDialog(true);
-      })
-      .catch((response) => {
-        toast.current.show({
-          severity: "error",
-          summary: "Failed",
-          detail: "Data Gagal Dihapus",
-          life: 3000,
-        });
-      });
-    setTimeout(() => {
-      window.location.reload();
-    }, 1000);
+  const deleteAll = () => {
+    setMenus([]);
+    setMenu(DEFAULT_MENU);
+    setDeleteAllDialog(false);
+    toast.current.show({
+      severity: "success",
+      summary: "Success",
+      detail: "Semua data berhasil dihapus",
+      life: 3000,
+    });
   };
 
   const deleteMenuDialogFooter = (
@@ -275,7 +179,7 @@ const DataMenucomp = ({ data = [], kategori = [] }) => {
   );
 
   const productDialogFooter = (
-    <React.Fragment>
+    <>
       <Button
         label="Batal"
         icon="pi pi-times"
@@ -291,27 +195,13 @@ const DataMenucomp = ({ data = [], kategori = [] }) => {
         className="p-button-text"
         onClick={onSubmit}
       />
-    </React.Fragment>
+    </>
   );
 
-  const detailDialogFooter = (
-    <React.Fragment>
-      <Button
-        label="Batal"
-        icon="pi pi-times"
-        className="p-button-text"
-        onClick={() => {
-          hideDetailDialog();
-          setMenu(DEFAULT_MENU);
-        }}
-      />
-    </React.Fragment>
-  );
-
-  const imageBody = (data) => (
+  const imageBody = (rowData) => (
     <img
-      src={data.imageUrl}
-      alt={data.imageUrl}
+      src={rowData.imageUrl}
+      alt={rowData.imageUrl}
       className="w-6rem shadow-2 border-round"
     />
   );
@@ -333,7 +223,7 @@ const DataMenucomp = ({ data = [], kategori = [] }) => {
           icon="pi pi-file-excel"
           severity="secondary"
           raised
-          onClick={() => EksporToSpreadsheet()}
+          onClick={EksporToSpreadsheet}
         />
         <Button
           className="button-hapus"
@@ -356,15 +246,15 @@ const DataMenucomp = ({ data = [], kategori = [] }) => {
     </div>
   );
 
-  const actionTemplate = (menu) => (
+  const actionTemplate = (menuItem) => (
     <>
       <Button
         label="Edit"
         className="mx-2"
         icon="pi pi-pencil"
-        saverity="primary"
+        severity="primary"
         rounded
-        onClick={() => openForm(menu)}
+        onClick={() => openForm(menuItem)}
       />
       <Button
         label="Hapus"
@@ -372,17 +262,21 @@ const DataMenucomp = ({ data = [], kategori = [] }) => {
         icon="pi pi-trash"
         severity="danger"
         rounded
-        onClick={() => confirmDeleteSelected(menu)}
+        onClick={() => confirmDeleteSelected(menuItem)}
       />
     </>
   );
 
-  let arr = data.data ?? [];
+  const bodyTemplate = (rowData) => (
+    <div className="white-space-nowrap overflow-hidden text-overflow-ellipsis">
+      {rowData.deskripsiMenu}
+    </div>
+  );
 
   return (
     <div className="container">
       <div className="py-4">
-        <br></br>
+        <br />
         <div className="row">
           <div className="col-md-3">
             <div className="title-menu-pertama"> DATATABLE MENU </div>
@@ -394,7 +288,7 @@ const DataMenucomp = ({ data = [], kategori = [] }) => {
             <div className="title-menu-ketiga"> Data Menu </div>
           </div>
         </div>
-        <br></br> <br></br>
+        <br /> <br />
         <div className="datatable-crud-demo">
           <Toast ref={toast} />
           <div className="card">
@@ -415,62 +309,26 @@ const DataMenucomp = ({ data = [], kategori = [] }) => {
               globalFilter={globalFilter}
               currentPageReportTemplate="Menampilkan {first} hingga {last} dari {totalRecords} data"
             >
-              <Column
-                field="idMenu"
-                header="ID Menu"
-                sortable
-                style={{ minWidth: "10rem" }}
-              ></Column>
-              <Column
-                field="namaMenu"
-                header="Nama Menu"
-                sortable
-                style={{ minWidth: "10rem" }}
-              ></Column>
-              <Column
-                field="hargaMenu"
-                header="Harga Menu"
-                sortable
-                style={{ minWidth: "10rem" }}
-              ></Column>
-              <Column
-                field="stokMenu"
-                header="Stok Menu"
-                sortable
-                style={{ minWidth: "10rem" }}
-              ></Column>
+              <Column field="idMenu" header="ID Menu" sortable style={{ minWidth: "10rem" }} />
+              <Column field="namaMenu" header="Nama Menu" sortable style={{ minWidth: "10rem" }} />
+              <Column field="hargaMenu" header="Harga Menu" sortable style={{ minWidth: "10rem" }} />
+              <Column field="stokMenu" header="Stok Menu" sortable style={{ minWidth: "10rem" }} />
               <Column
                 field="deskripsiMenu"
                 header="Deskripsi Menu"
                 sortable
                 style={{ maxWidth: 220 }}
                 body={bodyTemplate}
-              ></Column>
-              <Column
-                field="kategoriMenu"
-                header="Kategori Menu"
-                sortable
-                style={{ minWidth: "10rem" }}
-              ></Column>
-              <Column
-                field="imageUrl"
-                header="Gambar"
-                body={imageBody}
-                sortable
-                style={{ minWidth: "10rem" }}
-              ></Column>
-              <Column
-                header="Aksi"
-                exportable={false}
-                style={{ minWidth: "12rem" }}
-                body={actionTemplate}
-              ></Column>
+              />
+              <Column field="kategoriMenu" header="Kategori Menu" sortable style={{ minWidth: "10rem" }} />
+              <Column field="imageUrl" header="Gambar" body={imageBody} sortable style={{ minWidth: "10rem" }} />
+              <Column header="Aksi" exportable={false} style={{ minWidth: "12rem" }} body={actionTemplate} />
             </DataTable>
           </div>
-          <br></br>
-          <AvailableMenu />
-          <br></br>
-          <NotAvailableMenu />
+          <br />
+          <AvailableMenu data={menus} />
+          <br />
+          <NotAvailableMenu data={menus} />
 
           <Dialog
             visible={productDialog}
@@ -492,32 +350,23 @@ const DataMenucomp = ({ data = [], kategori = [] }) => {
                 style={{ borderRadius: "8px" }}
               />
             )}
-
             <div className="field">
               <label htmlFor="name">Name Menu</label>
               <InputText
                 id="name"
-                defaultValue={menu.namaMenu}
-                onChange={(e) => {
-                  setMenu((data) => ({ ...data, namaMenu: e.target.value }));
-                }}
+                value={menu.namaMenu}
+                onChange={(e) => setMenu((current) => ({ ...current, namaMenu: e.target.value }))}
                 required
                 autoFocus
               />
             </div>
-
             <div className="formgrid grid">
               <div className="field col">
                 <label htmlFor="price">Harga</label>
                 <InputText
                   id="price"
-                  defaultValue={menu.hargaMenu}
-                  onChange={(e) => {
-                    setMenu((data) => ({
-                      ...data,
-                      hargaMenu: e.target.value,
-                    }));
-                  }}
+                  value={menu.hargaMenu}
+                  onChange={(e) => setMenu((current) => ({ ...current, hargaMenu: e.target.value }))}
                 />
               </div>
               <div className="field col">
@@ -526,52 +375,33 @@ const DataMenucomp = ({ data = [], kategori = [] }) => {
                 </label>
                 <InputText
                   id="quantity"
-                  defaultValue={menu.stokMenu}
-                  onChange={(e) => {
-                    setMenu((data) => ({
-                      ...data,
-                      stokMenu: e.target.value,
-                    }));
-                  }}
-                  integeronly
+                  value={menu.stokMenu}
+                  onChange={(e) => setMenu((current) => ({ ...current, stokMenu: e.target.value }))}
                 />
               </div>
             </div>
-
             <div className="field">
               <label htmlFor="description">Deskripsi</label>
               <InputTextarea
                 id="description"
-                defaultValue={menu.deskripsiMenu}
-                onChange={(e) => {
-                  setMenu((data) => ({
-                    ...data,
-                    deskripsiMenu: e.target.value,
-                  }));
-                }}
+                value={menu.deskripsiMenu}
+                onChange={(e) => setMenu((current) => ({ ...current, deskripsiMenu: e.target.value }))}
                 required
                 rows={3}
                 cols={20}
               />
             </div>
-
             <div className="field">
               <label htmlFor="category">Kategori</label>
               <Dropdown
                 id="category"
                 value={menu.kategoriMenu}
-                onChange={(e) => {
-                  setMenu((data) => ({
-                    ...data,
-                    kategoriMenu: e.value,
-                  }));
-                }}
+                onChange={(e) => setMenu((current) => ({ ...current, kategoriMenu: e.value }))}
                 options={kategori.map((x) => x.namaKategori)}
                 required
                 autoFocus
               />
             </div>
-
             <div className="field">
               <label htmlFor="foto">Image</label>
               <FileUpload
@@ -581,11 +411,10 @@ const DataMenucomp = ({ data = [], kategori = [] }) => {
                 uploadHandler={invoiceUploadHandler}
                 mode="basic"
                 auto={true}
-                chooseLabel={menu.imageFile.name ?? "Tambah Foto"}
+                chooseLabel={menu.imageFile?.name ?? "Tambah Foto"}
               />
             </div>
           </Dialog>
-
           <Dialog
             visible={deleteMenuDialog}
             style={{ width: "32rem" }}
@@ -596,10 +425,7 @@ const DataMenucomp = ({ data = [], kategori = [] }) => {
             onHide={hideDeleteMenuDialog}
           >
             <div className="confirmation-content">
-              <i
-                className="pi pi-exclamation-triangle mr-3"
-                style={{ fontSize: "2rem" }}
-              />
+              <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: "2rem" }} />
               {menu && (
                 <span>
                   Apakah anda yakin ingin menghapus <b>{menu.namaMenu}</b>?
@@ -607,7 +433,6 @@ const DataMenucomp = ({ data = [], kategori = [] }) => {
               )}
             </div>
           </Dialog>
-
           <Dialog
             visible={deleteAllDialog}
             style={{ width: "32rem" }}
@@ -618,10 +443,7 @@ const DataMenucomp = ({ data = [], kategori = [] }) => {
             onHide={hideDeleteAllDialog}
           >
             <div className="confirmation-content">
-              <i
-                className="pi pi-exclamation-triangle mr-3"
-                style={{ fontSize: "2rem" }}
-              />
+              <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: "2rem" }} />
               <span>
                 Apakah anda yakin ingin menghapus <b>semua menu</b>?
               </span>

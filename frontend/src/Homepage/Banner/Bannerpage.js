@@ -1,22 +1,20 @@
-import Layout from "../Layout";
+﻿import Layout from "../Layout";
 import Bannercomp from "./Bannercomp";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { getData } from "../../Utils/localAuth";
 
 const Bannerpage = () => {
-  const [data, setData] = useState();
+  const [data, setData] = useState({ data: [] });
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/banner/`).then((result) => {
-        setData(result.data.data);
-      })
+    const localData = getData();
+    setData({ data: localData.banners ?? [] });
   }, []);
 
   return (
     <div>
       <Layout />
-      {data && <Bannercomp data={data} />}
+      <Bannercomp data={data} />
     </div>
   );
 };

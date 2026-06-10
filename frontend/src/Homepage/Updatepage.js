@@ -1,6 +1,7 @@
-import Update from "./Update";
+﻿import Update from "./Update";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { useParams } from "react-router-dom";
+import { getData } from "../Utils/localAuth";
 
 const DataMenupage = () => {
   const params = useParams();
@@ -8,10 +9,12 @@ const DataMenupage = () => {
   const [data, setData] = useState();
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_URL}/menu` + urlParams).then((result) => {
-      setData(result.data.data);
-    });
-  }, []);
+    const localData = getData();
+    const menuItem = localData.menus?.find(
+      (item) => String(item.idMenu) === String(urlParams)
+    );
+    setData(menuItem);
+  }, [urlParams]);
 
   return <div>{data && <Update data={data} />}</div>;
 };

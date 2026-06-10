@@ -1,21 +1,20 @@
-import Layout from "../Layout";
+﻿import Layout from "../Layout";
 import DataTransaksicomp from "./DataTransaksicomp";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { getData } from "../../Utils/localAuth";
 
 const DataTransaksipage = () => {
-  const [data, setData] = useState();
+  const [data, setData] = useState({ data: [] });
 
   useEffect(() => {
-    axios.get(` ${process.env.REACT_APP_API_URL}/transaksi/`).then((result) => {
-      setData(result.data.data);
-    });
+    const localData = getData();
+    setData({ data: localData.transaksi ?? [] });
   }, []);
 
   return (
     <div>
       <Layout />
-      {data && <DataTransaksicomp data={data} />}
+      <DataTransaksicomp data={data} />
     </div>
   );
 };

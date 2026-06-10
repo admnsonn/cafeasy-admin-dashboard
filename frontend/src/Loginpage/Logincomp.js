@@ -44,14 +44,14 @@ function Logincomp() {
     const account = findAdmin(username, password);
     if (account) {
       cookies.set("secretLogToken", JSON.stringify({ idAdmin: account.idAdmin }));
-      Swal.fire({
+      await Swal.fire({
         position: "top-end",
         icon: "success",
         title: "Login Berhasil!",
         showConfirmButton: false,
         timer: 1500,
       });
-      nextNavigate("/ProfileAdmin/" + account.idAdmin);
+      nextNavigate("/ProfileAdmin/" + account.idAdmin, { replace: true });
     } else {
       Swal.fire({
         icon: "error",
@@ -107,11 +107,8 @@ function Logincomp() {
           </div>
           <div className="d-grid gap-2 mt-3">
             <button
-              color="red"
-              appearance="primary"
               type="submit"
               className="btn btn-secondary"
-              onClick={submitLogin}
             >
               Masuk
             </button>

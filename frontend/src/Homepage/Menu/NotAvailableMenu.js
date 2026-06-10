@@ -1,35 +1,23 @@
-import React, { useState, useEffect, useRef } from "react";
+﻿import React, { useState } from "react";
 import "../../Utils/Crud.css";
-import axios from "axios";
 import { DataTable } from "primereact/datatable";
 import { InputText } from "primereact/inputtext";
 import { Column } from "primereact/column";
 
-const NotAvailableMenu = () => {
-  const [data, setData] = useState([]);
+const NotAvailableMenu = ({ data = [] }) => {
   const [globalFilter, setGlobalFilter] = useState(null);
+  const unavailableItems = data.filter((item) => Number(item.stokMenu) <= 0);
 
-  useEffect(() => {
-    axios
-      .get(` ${process.env.REACT_APP_API_URL}/notAvailableMenu/`)
-      .then((result) => {
-        setData(result.data);
-      })
-      .catch((error) => console.log(error));
-  }, [data]);
+  const bodyTemplate = (rowData) => (
+    <div className="white-space-nowrap overflow-hidden text-overflow-ellipsis">
+      {rowData.deskripsiMenu}
+    </div>
+  );
 
-  const bodyTemplate = (rowData) => {
-    return (
-      <div className="white-space-nowrap overflow-hidden text-overflow-ellipsis">
-        {rowData.deskripsiMenu}
-      </div>
-    );
-  };
-
-  const imageBody = (data) => (
+  const imageBody = (rowData) => (
     <img
-      src={data.imageUrl}
-      alt={data.imageUrl}
+      src={rowData.imageUrl}
+      alt={rowData.imageUrl}
       className="w-6rem shadow-2 border-round"
     />
   );
@@ -48,13 +36,11 @@ const NotAvailableMenu = () => {
     </div>
   );
 
-  let arr = data.data ?? [];
-
   return (
     <div className="datatable-crud-demo">
       <div className="card">
         <DataTable
-          value={arr}
+          value={unavailableItems}
           paginator
           header={header}
           rows={10}
@@ -70,50 +56,19 @@ const NotAvailableMenu = () => {
           globalFilter={globalFilter}
           currentPageReportTemplate="Menampilkan {first} hingga {last} dari {totalRecords} data"
         >
-          <Column
-            field="idMenu"
-            header="ID Menu"
-            sortable
-            style={{ minWidth: "10rem" }}
-          ></Column>
-          <Column
-            field="namaMenu"
-            header="Nama Menu"
-            sortable
-            style={{ minWidth: "10rem" }}
-          ></Column>
-          <Column
-            field="hargaMenu"
-            header="Harga Menu"
-            sortable
-            style={{ minWidth: "10rem" }}
-          ></Column>
-          <Column
-            field="stokMenu"
-            header="Stok Menu"
-            sortable
-            style={{ minWidth: "10rem" }}
-          ></Column>
+          <Column field="idMenu" header="ID Menu" sortable style={{ minWidth: "10rem" }} />
+          <Column field="namaMenu" header="Nama Menu" sortable style={{ minWidth: "10rem" }} />
+          <Column field="hargaMenu" header="Harga Menu" sortable style={{ minWidth: "10rem" }} />
+          <Column field="stokMenu" header="Stok Menu" sortable style={{ minWidth: "10rem" }} />
           <Column
             field="deskripsiMenu"
             header="Deskripsi Menu"
             sortable
             style={{ maxWidth: 220 }}
             body={bodyTemplate}
-          ></Column>
-          <Column
-            field="kategoriMenu"
-            header="Kategori Menu"
-            sortable
-            style={{ minWidth: "10rem" }}
-          ></Column>
-          <Column
-            field="imageUrl"
-            header="Gambar"
-            body={imageBody}
-            sortable
-            style={{ minWidth: "10rem" }}
-          ></Column>
+          />
+          <Column field="kategoriMenu" header="Kategori Menu" sortable style={{ minWidth: "10rem" }} />
+          <Column field="imageUrl" header="Gambar" body={imageBody} sortable style={{ minWidth: "10rem" }} />
         </DataTable>
       </div>
     </div>

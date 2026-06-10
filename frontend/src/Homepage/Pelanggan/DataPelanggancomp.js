@@ -1,31 +1,21 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import "../../Utils/Crud.css";
-import axios from "axios";
 import { DataTable } from "primereact/datatable";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { InputText } from "primereact/inputtext";
-import { Dialog } from "primereact/dialog";
-import { Tag } from "primereact/tag";
 import { Toast } from "primereact/toast";
-import { Toolbar } from "primereact/toolbar";
-
-const DEFAULT_PELANGGAN = {
-  id: "",
-  name: "",
-};
+import { Dialog } from "primereact/dialog";
 
 const DataPelanggancomp = ({ data = [] }) => {
   const toast = useRef(null);
   const [globalFilter, setGlobalFilter] = useState(null);
-  const [deletePelangganDialog, setDeletePelangganDialog] = useState(false);
-  const [deleteAllPelangganDialog, setDeleteAllPelangganDialog] =
-    useState(false);
-  const [pelanggan, setPelanggan] = useState(DEFAULT_PELANGGAN);
+  const [deleteAllPelangganDialog, setDeleteAllPelangganDialog] = useState(false);
+  const [pelangganList, setPelangganList] = useState(data.data ?? []);
 
-  const hideDeletePelangganDialog = () => {
-    setDeletePelangganDialog(false);
-  };
+  useEffect(() => {
+    setPelangganList(data.data ?? []);
+  }, [data]);
 
   const hideDeleteAllPelangganDialog = () => {
     setDeleteAllPelangganDialog(false);
@@ -35,30 +25,15 @@ const DataPelanggancomp = ({ data = [] }) => {
     setDeleteAllPelangganDialog(true);
   };
 
-  const deleteAllPelanggan = async () => {
-    await axios
-      .delete(`${process.env.REACT_APP_API_URL}/deleteAllCustomer`)
-      .then((response) => {
-        toast.current.show({
-          severity: "success",
-          summary: "Success",
-          detail: "Data Berhasil Dihapus",
-          life: 3000,
-        });
-        setPelanggan(DEFAULT_PELANGGAN);
-        setDeletePelangganDialog(false);
-      })
-      .catch((response) => {
-        toast.current.show({
-          severity: "error",
-          summary: "Failed",
-          detail: "Data Gagal Dihapus",
-          life: 3000,
-        });
-      });
-    setTimeout(() => {
-      window.location.reload();
-    }, 1000);
+  const deleteAllPelanggan = () => {
+    setPelangganList([]);
+    setDeleteAllPelangganDialog(false);
+    toast.current.show({
+      severity: "success",
+      summary: "Success",
+      detail: "Semua pelanggan berhasil dihapus",
+      life: 3000,
+    });
   };
 
   const deleteAllPelangganDialogFooter = (
@@ -101,14 +76,10 @@ const DataPelanggancomp = ({ data = [] }) => {
     </div>
   );
 
-  console.log(data);
-
-  let arr = data.data ?? [];
-
   return (
     <div className="container">
       <div className="py-4">
-        <br></br>
+        <br />
         <div className="row">
           <div className="col-md-3">
             <div className="title-pelanggan-pertama"> DATATABLE PELANGGAN </div>
@@ -120,12 +91,12 @@ const DataPelanggancomp = ({ data = [] }) => {
             <div className="title-pelanggan-ketiga"> Data Pelanggan </div>
           </div>
         </div>
-        <br></br> <br></br>
+        <br /> <br />
         <div className="datatable-crud-demo">
           <Toast ref={toast} />
           <div className="card">
             <DataTable
-              value={arr}
+              value={pelangganList}
               header={header}
               resizableColumns
               showGridlines
@@ -141,18 +112,8 @@ const DataPelanggancomp = ({ data = [] }) => {
               paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
               currentPageReportTemplate="Menampilkan {first} hingga {last} dari {totalRecords} data"
             >
-              <Column
-                field="id"
-                header="ID"
-                sortable
-                style={{ width: "15%" }}
-              />
-              <Column
-                field="name"
-                header="Nama"
-                sortable
-                style={{ width: "15%" }}
-              />
+              <Column field="id" header="ID" sortable style={{ width: "15%" }} />
+              <Column field="name" header="Nama" sortable style={{ width: "15%" }} />
             </DataTable>
           </div>
 
@@ -166,10 +127,7 @@ const DataPelanggancomp = ({ data = [] }) => {
             onHide={hideDeleteAllPelangganDialog}
           >
             <div className="confirmation-content">
-              <i
-                className="pi pi-exclamation-triangle mr-3"
-                style={{ fontSize: "2rem" }}
-              />
+              <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: "2rem" }} />
               <span>
                 Apakah anda yakin ingin menghapus <b>semua pelanggan</b>?
               </span>
