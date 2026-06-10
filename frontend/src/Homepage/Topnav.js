@@ -1,24 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Cookies from "universal-cookie";
-import { getAdminByUsername } from "../Utils/localAuth";
+import { getAdminByUsername, getLoggedInUser } from "../Utils/localAuth";
 import "../Homepage/Topnav.css";
 
 const TopNav = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    const cookies = new Cookies();
-    const token = cookies.get("secretLogToken");
-    let username = null;
-
-    if (token) {
-      try {
-        username = JSON.parse(token).username;
-      } catch (err) {
-        username = null;
-      }
-    }
-
+    const username = getLoggedInUser();
     const admin = username ? getAdminByUsername(username) : null;
     setData(admin ? [admin] : []);
   }, []);

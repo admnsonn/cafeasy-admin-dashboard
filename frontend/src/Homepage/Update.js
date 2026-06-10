@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
-import Cookies from "universal-cookie";
-import { getAdminByUsername, updateAdminByUsername } from "../Utils/localAuth";
+import {
+  getAdminByUsername,
+  updateAdminByUsername,
+  getLoggedInUser,
+  setLoggedInUser,
+  removeLoggedInUser,
+} from "../Utils/localAuth";
 
 const USER_UPDATE = {
   username: "",
@@ -19,23 +24,16 @@ const USER_UPDATE = {
 function Update() {
   const [updateUser, setUpdateUser] = useState(USER_UPDATE);
   const Navigate = useNavigate();
-  const cookies = new Cookies();
   const [data, setData] = useState([]);
 
   const getCurrentUsername = () => {
-    const token = cookies.get("secretLogToken");
-    if (!token) return null;
-    try {
-      return JSON.parse(token).username || null;
-    } catch (err) {
-      cookies.remove("secretLogToken");
-      return null;
-    }
+    return getLoggedInUser();
   };
 
   useEffect(() => {
     const currentUsername = getCurrentUsername();
     if (!currentUsername) {
+      removeLoggedInUser();
       Navigate("/LoginAdmin", { replace: true });
       return;
     }
@@ -55,7 +53,7 @@ function Update() {
         image: admin.imageUrl || "",
       });
     } else {
-      cookies.remove("secretLogToken");
+      removeLoggedInUser();
       Navigate("/LoginAdmin", { replace: true });
     }
   }, [Navigate]);
@@ -75,7 +73,7 @@ function Update() {
 
     const currentUsername = getCurrentUsername();
     if (!currentUsername) {
-      cookies.remove("secretLogToken");
+      removeLoggedInUser();
       Navigate("/LoginAdmin", { replace: true });
       return;
     }
@@ -93,7 +91,7 @@ function Update() {
     });
 
     if (updated) {
-      cookies.set("secretLogToken", JSON.stringify({ username: updated.username }));
+      setLoggedInUser(updated.username);
       Swal.fire({
         position: "top-end",
         icon: "success",

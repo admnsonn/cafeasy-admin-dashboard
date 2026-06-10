@@ -80,6 +80,20 @@ const updateAdminByUsername = (username, updates) => {
   return data.admins.result[index];
 };
 
+const LOGGED_USER_KEY = "cafeasy_logged_username";
+
+const setLoggedInUser = (username) => {
+  window.localStorage.setItem(LOGGED_USER_KEY, username);
+};
+
+const getLoggedInUser = () => {
+  return window.localStorage.getItem(LOGGED_USER_KEY) || null;
+};
+
+const removeLoggedInUser = () => {
+  window.localStorage.removeItem(LOGGED_USER_KEY);
+};
+
 export {
   getData,
   saveData,
@@ -89,4 +103,7 @@ export {
   getAdminByUsername,
   addAdmin,
   updateAdminByUsername,
+  setLoggedInUser,
+  getLoggedInUser,
+  removeLoggedInUser,
 };

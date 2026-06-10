@@ -1,26 +1,19 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getAdminByUsername } from "../../Utils/localAuth";
-import Cookies from "universal-cookie";
+import {
+  getAdminByUsername,
+  getLoggedInUser,
+  removeLoggedInUser,
+} from "../../Utils/localAuth";
 import "../../Utils/Crud.css";
 import "../Profile/ProfileAdmin.css";
 
 const ProfileAdmincomp = () => {
-  const cookies = useMemo(() => new Cookies(), []);
   const navigate = useNavigate();
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    const token = cookies.get("secretLogToken");
-    let username = null;
-
-    if (token) {
-      try {
-        username = JSON.parse(token).username;
-      } catch (err) {
-        cookies.remove("secretLogToken");
-      }
-    }
+    const username = getLoggedInUser();
 
     if (!username) {
       navigate("/LoginAdmin", { replace: true });
@@ -31,7 +24,7 @@ const ProfileAdmincomp = () => {
     if (admin) {
       setData([admin]);
     } else {
-      cookies.remove("secretLogToken");
+      removeLoggedInUser();
       navigate("/LoginAdmin", { replace: true });
     }
   }, [navigate]);

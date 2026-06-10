@@ -10,27 +10,21 @@ import { NavLink } from "react-router-dom";
 import logodannama from "../Photos/logodannama.png";
 import "../Photos/logodannama.png";
 import { useNavigate } from "react-router-dom";
-import Cookies from "universal-cookie";
+import {
+  getLoggedInUser,
+  removeLoggedInUser,
+} from "../Utils/localAuth";
 
 function Sidebarcomp() {
-  const cookies = new Cookies();
   const nextNavigate = useNavigate();
   const [isExpanded, setExpendState] = useState(false);
 
   useEffect(() => {
-    const token = cookies.get("secretLogToken");
-    if (!token) {
-      nextNavigate("/LoginAdmin");
-      return;
-    }
-
-    try {
-      JSON.parse(token);
-    } catch (err) {
-      cookies.remove("secretLogToken");
+    const username = getLoggedInUser();
+    if (!username) {
       nextNavigate("/LoginAdmin");
     }
-  }, []);
+  }, [nextNavigate]);
 
 
   const Sidebardata = [
@@ -72,7 +66,7 @@ function Sidebarcomp() {
     },
   ];
   const logout = () => {
-    cookies.remove("secretLogToken");
+    removeLoggedInUser();
     nextNavigate('/LoginAdmin');
 
   };

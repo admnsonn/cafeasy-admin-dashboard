@@ -25,7 +25,7 @@ const Bannercomp = ({ data = [] }) => {
   const [banners, setBanners] = useState([]);
 
   useEffect(() => {
-    setBanners(data);
+    setBanners(Array.isArray(data) ? data : data?.data ?? []);
   }, [data]);
 
   const hideDeleteBannerDialog = () => {

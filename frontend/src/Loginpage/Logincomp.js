@@ -2,8 +2,12 @@ import React, { useState, useEffect } from "react";
 import Iconline from "../Photos/Iconline.png";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import Cookies from "universal-cookie";
-import { findAdmin } from "../Utils/localAuth";
+import {
+  findAdmin,
+  getLoggedInUser,
+  setLoggedInUser,
+  removeLoggedInUser,
+} from "../Utils/localAuth";
 import "../Utils/Sign.css";
 // const jwt = require('jsonwebtoken');
 // import { Link } from 'react-router-dom';
@@ -12,25 +16,16 @@ import "../Utils/Sign.css";
 // import PropTypes from 'prop-types'
 
 function Logincomp() {
-  const cookies = new Cookies();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const nextNavigate = useNavigate();
 
   useEffect(() => {
-    const token = cookies.get("secretLogToken");
-    if (token) {
-      try {
-        const parsed = JSON.parse(token);
-        if (parsed.username) {
-          nextNavigate("/ProfileAdmin", { replace: true });
-          return;
-        }
-      } catch (err) {
-        cookies.remove("secretLogToken");
-      }
+    const currentUser = getLoggedInUser();
+    if (currentUser) {
+      nextNavigate("/ProfileAdmin", { replace: true });
     }
-  }, []);
+  }, [nextNavigate]);
 
   const submitLogin = async (e) => {
     e.preventDefault();
@@ -45,10 +40,7 @@ function Logincomp() {
 
     const account = findAdmin(username, password);
     if (account) {
-      cookies.set(
-        "secretLogToken",
-        JSON.stringify({ username: account.username })
-      );
+      setLoggedInUser(account.username);
       await Swal.fire({
         position: "top-end",
         icon: "success",
