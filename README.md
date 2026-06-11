@@ -1,20 +1,30 @@
 <div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
+  <h1>CAFEASY Admin Dashboard</h1>
 </div>
 
-# Run and deploy your AI Studio app
+Sistem Manajemen Admin Cafeasy dengan fitur Login, Registrasi, Dashboard Data Menu, dan Profil Admin yang responsif.
 
-This contains everything you need to run your app locally.
+## Prasyarat
 
-View your app in AI Studio: https://ai.studio/apps/39366132-c473-4c27-97eb-b4465dfba058
+- Node.js 18+ (disarankan)
+- npm
 
-## Run Locally
+## Menjalankan Lokal
 
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
+1. Install dependensi:
    `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
+2. Salin `.env.example` menjadi `.env` atau `.env.local` jika ingin konfigurasi lokal:
+   `cp .env.example .env`
+3. Isi variabel lingkungan yang diperlukan di file `.env`:
+   - `GEMINI_API_KEY` jika aplikasi menggunakan API Gemini
+   - `APP_URL` jika diperlukan untuk callback atau URL aplikasi
+4. Jalankan aplikasi:
    `npm run dev`
+
+Aplikasi akan tersedia di `http://localhost:3000`.
+
+## Perintah Lain
+
+- `npm run build` — membangun aplikasi untuk produksi
+- `npm run preview` — melihat hasil build secara lokal
+- `npm run lint` — memeriksa tipe TypeScript tanpa menghasilkan output
