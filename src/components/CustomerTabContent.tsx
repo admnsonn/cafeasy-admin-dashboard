@@ -1,8 +1,3 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
 import React, { useState } from "react";
 import {
   Search,
@@ -119,7 +114,7 @@ export function CustomerTabContent({
         </div>
         <button
           onClick={() => setIsAddOpen(true)}
-          className="flex items-center [#333333] gap-1.5 text-xs font-black uppercase tracking-widest text-[#0A0A0A] bg-white hover:bg-zinc-200 py-2.5 px-6 rounded-full transition-transform hover:scale-[1.02] cursor-pointer border-1 border-[#E6E6E6]"
+          className="bg-[#1A1A27] text-white py-2.5 px-6 rounded-full text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2 transition-transform hover:scale-[1.02] cursor-pointer self-start sm:self-auto"
         >
           <UserPlus size={15} />
           Daftarkan Member
@@ -129,8 +124,8 @@ export function CustomerTabContent({
       <div className="bg-white rounded-[40px] shadow-2xl border border-white/10 overflow-hidden">
         {/* Table Search Toolbar */}
         <div className="p-6 md:p-8 border-b border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <h3 className="font-extrabold text-[#333333] text-lg uppercase tracking-wider">
-            MEMBER LOYALITAS
+          <h3 className="font-extrabold text-[#333333] uppercase text-lg tracking-wider">
+            Member Loyalitas
           </h3>
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 w-4 h-4" />
@@ -261,7 +256,7 @@ export function CustomerTabContent({
                         <td className="py-4 px-6 text-center flex items-center justify-center gap-3">
                           <button
                             onClick={() => handleStartEdit(c)}
-                            className="text-zinc-450 hover:text-white p-1.5 rounded transition-colors cursor-pointer"
+                            className="text-zinc-450 hover:text-red-450 p-1.5 rounded transition-colors cursor-pointer"
                             title="Edit Data"
                           >
                             <Edit2 size={14} />
@@ -287,21 +282,21 @@ export function CustomerTabContent({
       {/* ================= MODAL: ADD CUSTOMER ================= */}
       {isAddOpen && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-55 animate-in fade-in duration-200">
-          <div className="bg-white text-black rounded-[40px] border-b-4 border-r-4 border-black w-full max-w-sm p-8 shadow-2xl relative">
+          <div className="bg-[#1F2937] text-white rounded-[40px] w-full max-w-sm p-8 shadow-2xl relative">
             <button
               onClick={() => setIsAddOpen(false)}
-              className="absolute right-6 top-6 text-zinc-450 hover:text-black transition-colors cursor-pointer"
+              className="absolute right-6 top-6 text-white transition-colors cursor-pointer"
             >
               <X size={20} />
             </button>
 
-            <h3 className="text-3xl font-display font-black tracking-tight uppercase mb-6 leading-none pt-2">
-              DAFTAR MEMBER.
+            <h3 className="text-3xl font-display font-extrabold tracking-tight mb-6 leading-none pt-2">
+              Daftar Member
             </h3>
 
             <form onSubmit={handleAddCustomer} className="space-y-6 text-left">
               <div>
-                <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 block mb-1">
+                <label className="text-[10px] font-black uppercase tracking-widest text-white block mb-1">
                   Nama Lengkap
                 </label>
                 <input
@@ -309,13 +304,13 @@ export function CustomerTabContent({
                   required
                   value={newName}
                   onChange={(e) => setNewName(e.target.value)}
-                  placeholder="NAMA_MEMBER_BARU..."
-                  className="w-full border-b-2 border-black py-2.5 text-md font-bold text-black outline-none placeholder:text-zinc-200 bg-transparent"
+                  placeholder="Masukan nama lengkap..."
+                  className="w-full border-b-2 border-zinc-200 py-2 pr-10 text-md font-medium outline-none placeholder:text-zinc-200 transition-colors bg-[#FFFFFF] rounded-lg text-[#333333] px-3"
                 />
               </div>
 
               <div>
-                <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 block mb-1">
+                <label className="text-[10px] font-black uppercase tracking-widest text-white block mb-1">
                   Nomor Telepon
                 </label>
                 <input
@@ -323,26 +318,26 @@ export function CustomerTabContent({
                   required
                   value={newPhone}
                   onChange={(e) => setNewPhone(e.target.value)}
-                  placeholder="CELLPHONE_NUMBER..."
-                  className="w-full border-b-2 border-black py-2.5 text-md font-bold text-black outline-none placeholder:text-zinc-200 bg-transparent"
+                  placeholder="Masukan nomor telepon..."
+                  className="w-full border-b-2 border-zinc-200 py-2 pr-10 text-md font-medium outline-none placeholder:text-zinc-200 transition-colors bg-[#FFFFFF] rounded-lg text-[#333333] px-3"
                 />
               </div>
 
               <div>
-                <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 block mb-1">
+                <label className="text-[10px] font-black uppercase tracking-widest text-white block mb-1">
                   Email (Opsional)
                 </label>
                 <input
                   type="email"
                   value={newEmail}
                   onChange={(e) => setNewEmail(e.target.value)}
-                  placeholder="EMAIL_ADDRESS..."
-                  className="w-full border-b-2 border-black py-2.5 text-md font-bold text-black outline-none placeholder:text-zinc-200 bg-transparent"
+                  placeholder="Masukan email..."
+                  className="w-full border-b-2 border-zinc-200 py-2 pr-10 text-md font-medium outline-none placeholder:text-zinc-200 transition-colors bg-[#FFFFFF] rounded-lg text-[#333333] px-3"
                 />
               </div>
 
               <div>
-                <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 block mb-2">
+                <label className="text-[10px] font-black uppercase tracking-widest text-white block mb-2">
                   Status Akun
                 </label>
                 <div className="flex gap-4">
@@ -351,8 +346,8 @@ export function CustomerTabContent({
                     onClick={() => setNewStatus("Aktif")}
                     className={`flex-1 py-3 px-4 rounded-full text-xs font-black uppercase tracking-widest transition-transform hover:scale-105 cursor-pointer ${
                       newStatus === "Aktif"
-                        ? "bg-black text-white"
-                        : "bg-zinc-100 text-zinc-400"
+                        ? "bg-[#1A1A27] text-white"
+                        : "bg-zinc-100 text-[#333333]"
                     }`}
                   >
                     Aktif
@@ -362,8 +357,8 @@ export function CustomerTabContent({
                     onClick={() => setNewStatus("Nonaktif")}
                     className={`flex-1 py-3 px-4 rounded-full text-xs font-black uppercase tracking-widest transition-transform hover:scale-105 cursor-pointer ${
                       newStatus === "Nonaktif"
-                        ? "bg-black text-white"
-                        : "bg-zinc-100 text-zinc-400"
+                        ? "bg-[#1A1A27] text-white"
+                        : "bg-zinc-100 text-[#333333]"
                     }`}
                   >
                     Nonaktif
@@ -371,13 +366,10 @@ export function CustomerTabContent({
                 </div>
               </div>
 
-              <div className="pt-4 flex justify-between items-center">
-                <span className="text-[10px] font-mono font-bold tracking-widest text-zinc-450 uppercase">
-                  PORT: 3000
-                </span>
+              <div className="pt-4 flex justify-center items-center">
                 <button
                   type="submit"
-                  className="bg-black hover:bg-zinc-800 text-white font-black text-xs px-10 py-4 rounded-full tracking-widest uppercase hover:scale-[1.03] transition-transform cursor-pointer"
+                  className="bg-[#1A1A27] hover:bg-zinc-800 text-white font-black text-xs px-10 py-4 rounded-full tracking-widest uppercase hover:scale-[1.03] transition-transform cursor-pointer"
                 >
                   SIMPAN
                 </button>

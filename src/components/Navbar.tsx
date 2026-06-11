@@ -50,7 +50,7 @@ export function Navbar({
       <div className="flex items-center gap-6">
         {/* Messages Shortcut */}
         <button className="text-[#333333] hover:text-white transition-colors p-2 hover:bg-white/5 rounded-full relative cursor-pointer">
-          <Mail className="w-4.5 h-4.5 text-zinc-400" />
+          <Mail className="w-4.5 h-4.5 text-[#333333]" />
           <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-zinc-100 rounded-full" />
         </button>
 
