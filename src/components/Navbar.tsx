@@ -33,30 +33,30 @@ export function Navbar({
   const [showDropdown, setShowDropdown] = useState(false);
 
   return (
-    <header className="border-b border-white/10 h-20 px-8 flex items-center justify-between sticky top-0 z-40 select-none font-sans text-white">
+    <header className="h-20 px-8 flex items-center justify-between sticky top-0 z-40 select-none font-sans text-white">
       {/* Search Input Bar */}
-      <div className="relative w-96">
+      <div className="relative w-96 ">
         <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 w-4 h-4 pointer-events-none" />
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
           placeholder="CARI DATA SISTEM..."
-          className="w-full bg-[#FFFFFF] text-[#333333] placeholder:text-zinc-650 border border-white/10 rounded-full py-2 pl-11 pr-4 text-xs font-bold tracking-wider focus:outline-none focus:ring-1 focus:ring-white/20 transition-all outline-none"
+          className="w-full bg-[#FFFFFF] text-[#333333] placeholder:text-zinc-650 transition-all rounded-full py-2 pl-11 pr-4 text-xs font-bold tracking-wider focus:outline-none focus:ring-1 focus:ring-white/20 transition-all outline-none border-1 border-[#E6E6E6]"
         />
       </div>
 
       {/* Control Tools and Profile Block */}
       <div className="flex items-center gap-6">
         {/* Messages Shortcut */}
-        <button className="text-zinc-450 hover:text-white transition-colors p-2 hover:bg-white/5 rounded-full relative cursor-pointer">
+        <button className="text-[#333333] hover:text-white transition-colors p-2 hover:bg-white/5 rounded-full relative cursor-pointer">
           <Mail className="w-4.5 h-4.5 text-zinc-400" />
           <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-zinc-100 rounded-full" />
         </button>
 
         {/* Alarm Bell */}
-        <button className="text-zinc-450 hover:text-white transition-colors p-2 hover:bg-white/5 rounded-full relative cursor-pointer">
-          <Bell className="w-4.5 h-4.5 text-zinc-400" />
+        <button className="text-[#333333] hover:text-white transition-colors p-2 hover:bg-white/5 rounded-full relative cursor-pointer">
+          <Bell className="w-4.5 h-4.5 text-[#333333]" />
           <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-red-500 rounded-full" />
         </button>
 
