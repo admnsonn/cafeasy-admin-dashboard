@@ -50,7 +50,7 @@ export function SplashScreen({ onComplete }: SplashScreenProps) {
 
         <div className="space-y-3">
           <h1 className="text-4xl md:text-4xl font-display font-black tracking-tighter leading-none text-white uppercase">
-            ADMIN CAFEASY DASHBOARD
+            Cafeasy Admin Dashboard
           </h1>
         </div>
 
